@@ -1,0 +1,385 @@
+{%- liquid
+  if section.settings.mobile_image
+    assign mobile_image = section.settings.mobile_image
+  else
+    assign mobile_image = section.settings.image
+  endif
+-%}
+
+<div class="color-{{ section.settings.color_schema }}">
+  <div
+    class="section-collection-header-{{ section.id }} {{ settings.reveal_animation_class }}"
+      x-data="section({{ section.settings | json | escape }})"
+      :class="classes"
+  >
+    <div class="{{ section.settings.container_type }}">
+      <div class="react-node w-full">
+
+      {% assign metaobject_name = "collections.featured_collections" %}
+      {% assign metaobject_parts = metaobject_name | split: '.' %}
+      {% assign namespace = metaobject_parts[0] %}
+      {% assign key = metaobject_parts[1] %}
+
+      {% assign featured_collections_metafield = collection.metafields[namespace][key] %}
+      {% assign featured_collections = featured_collections_metafield.value %}
+
+        {% capture data %}
+          {
+            "section": {{ section.settings | json }},
+            "description": "{{ collection.description }}",
+            "mobile_image": "{{ mobile_image | image_url }}",
+            "featured_collections": [
+              {% for collection in featured_collections %}
+                  {% assign collection_object = collections[collection.handle] %}
+
+                      {% if collection_object %}
+                      {
+                          "id": "{{ collection_object.id }}",
+                          "title": "{{ collection_object.title | escape }}",
+                          "image": "{{ collection_object.image | image_url: width: collection_object.image.width }}",
+                          "link": "{{ collection_object.url }}"
+                      }{% if forloop.last == false %},{% endif %}
+                      {% endif %}
+
+              {% endfor %}
+            ]
+          }
+        {% endcapture %}
+        {% assign data = data | escape %}
+
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__collection-header", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Collection Header",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "select",
+        "id": "layout_type",
+        "label": "Layout",
+        "default": "image",
+        "options": [
+          {
+            "value": "image",
+            "label": "Header with Image"
+          },
+          {
+            "value": "no_image",
+            "label": "Header without Image"
+          },
+          {
+            "value": "headercollections",
+            "label": "Header & Collections"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "layout_type_mobile",
+        "label": "Layout (Mobile)",
+        "default": "image",
+        "options": [
+          {
+            "value": "image",
+            "label": "Header with Image"
+          },
+          {
+            "value": "no_image",
+            "label": "Header without Image"
+          },
+          {
+            "value": "headercollections",
+            "label": "Header & Collections"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "id": "content_width",
+        "label": "Description Container Max Width Desktop",
+        "info": "e.g. 400px",
+        "default": "400px"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Title"
+      },
+      {
+        "type": "select",
+        "id": "heading_type_desktop",
+        "options": [
+          {
+            "value": "d1",
+            "label": "Display"
+          },
+          {
+            "value": "h1",
+            "label": "Heading 1"
+          },
+          {
+            "value": "h2",
+            "label": "Heading 2"
+          },
+          {
+            "value": "h3",
+            "label": "Heading 3"
+          },
+          {
+            "value": "h4",
+            "label": "Heading 4"
+          },
+          {
+            "value": "h5",
+            "label": "Heading 5"
+          }
+        ],
+        "default": "h2",
+        "label": "Heading Type Desktop"
+      },
+      {
+        "type": "select",
+        "id": "heading_type_mobile",
+        "options": [
+          {
+            "value": "h1",
+            "label": "Heading 1"
+          },
+          {
+            "value": "h2",
+            "label": "Heading 2"
+          },
+          {
+            "value": "h3",
+            "label": "Heading 3"
+          },
+          {
+            "value": "h4",
+            "label": "Heading 4"
+          },
+          {
+            "value": "h5",
+            "label": "Heading 5"
+          }
+        ],
+        "default": "h2",
+        "label": "Heading Type Mobile"
+      },
+      {
+        "type": "range",
+        "id": "title_margin_bottom_desktop",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Title Margin Bottom Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "title_margin_bottom_mobile",
+        "min": 0,
+        "max": 50,
+        "step": 2,
+        "unit": "px",
+        "label": "Title Margin Bottom Mobile",
+        "default": 0
+      },
+      {
+        "type": "image_picker",
+        "id": "image",
+        "label": "Desktop Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_image",
+        "label": "Mobile Image"
+      },
+      {
+        "type": "select",
+        "id": "container_type",
+        "label": "Container type",
+        "default": "w-full",
+        "options": [
+          {
+            "value": "container",
+            "label": "Use container width"
+          },
+          {
+            "value": "w-full",
+            "label": "Use full width"
+          }
+        ]
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_schema",
+        "label": "Color scheme"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show description?",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "body_type",
+        "options": [
+          {
+            "value": "b1",
+            "label": "Body 1"
+          },
+          {
+            "value": "b2",
+            "label": "Body 2"
+          },
+          {
+            "value": "b3",
+            "label": "Body 3"
+          }
+        ],
+        "default": "b1",
+        "label": "Description Type",
+        "info": "Description Body Type"
+      },
+      {
+        "type": "header",
+        "content": "Padding & Position settings"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Top Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Bottom Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_left_right_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Left & Right Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Top Mobile",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Bottom Mobile",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_left_right_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Left & Right Mobile",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "content_vertical_position_desktop",
+        "options": [
+          {
+            "value": "start",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Centre"
+          },
+          {
+            "value": "end",
+            "label": "Bottom"
+          }
+        ],
+        "default": "center",
+        "label": "Content Vertical Position Desktop"
+      },
+      {
+        "type": "select",
+        "id": "content_vertical_position_mobile",
+        "options": [
+          {
+            "value": "start",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Centre"
+          },
+          {
+            "value": "end",
+            "label": "Bottom"
+          }
+        ],
+        "default": "center",
+        "label": "Content Vertical Position Mobile"
+      },
+      {
+        "type": "header",
+        "content": "CLS / Performance"
+      },
+      {
+        "type": "number",
+        "id": "desktop_min_height",
+        "label": "Min height (Desktop)",
+        "default": 0,
+        "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+      },
+      {
+        "type": "number",
+        "id": "mobile_min_height",
+        "label": "Min height (Mobile)",
+        "default": 0,
+        "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+      }
+    ],
+    "presets": [
+      {
+        "name": "Collection Header"
+      }
+    ],
+    "enabled_on": {
+      "templates": ["collection"]
+    }
+  }
+{% endschema %}

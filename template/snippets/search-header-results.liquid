@@ -1,0 +1,19 @@
+<div class="react-node w-full h-full">
+    {% capture data %}
+        {
+            "section_settings": {{ section.settings | json }},
+            "no_results": {
+                "title": "{{ 'general.search.no_results_text' | t }}",
+                "prompt": "{{ 'general.search.no_results_query_recommendation.prompt' | t }}",
+                "first_recommendation": "{{ 'general.search.no_results_query_recommendation.first' | t }}",
+                "second_recommendation": "{{ 'general.search.no_results_query_recommendation.second' | t }}",
+                "third_recommendation": "{{ 'general.search.no_results_query_recommendation.third' | t }}"
+            },
+            "search_settings": {{ search_settings }}
+        }
+    {% endcapture %}
+    {% assign data = data | escape %}
+
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__search-header-results", props: data, classes: 'h-full z-20' %}
+</div>

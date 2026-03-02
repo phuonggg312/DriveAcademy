@@ -1,0 +1,16 @@
+<script type="application/json" data-ajax-cart-initial-state>
+  {{ cart | json }}
+</script>
+
+<script>
+    function runWhenInit() {
+        window.liquidAjaxCart.conf("quantityTagAllowZero", true);
+    }
+    if (window.liquidAjaxCart?.init) {
+        // if Liquid Ajax Cart is already initialized
+        runWhenInit();
+    } else {
+        // wait for Liquid Ajax Cart to be initialized
+        document.addEventListener("liquid-ajax-cart:init", runWhenInit);
+    }
+</script>

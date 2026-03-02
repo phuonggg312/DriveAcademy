@@ -1,0 +1,10 @@
+.product-gallery {
+  &__thumbnail {
+    .thumbnail-item {
+      img {
+        width: 48px;
+        height: auto;
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+/* PROMO BAR */
+
+.promobar {
+  @apply flex justify-center items-center align-middle relative w-full;
+
+  .promobar-items-container {
+    @apply  flex justify-center items-center w-full relative lg:w-[500px]
+  }
+
+  .promo-button {
+    @apply items-center text-center flex absolute p-[7px] top-0 cursor-pointer z-20;
+  }
+  .promo-button-left {
+    @apply left-0;
+  }
+  .promo-button-right{
+    @apply right-0;
+  }
+
+  .promo-content {
+    @apply text-center w-full text-nowrap flex-nowrap absolute;
+  }
+
+  .promo-container {
+    @apply relative w-full
+  }
+
+  &__container {
+    @apply text-base tracking-wide text-center;
+  }
+}
+
+.site-promotion {
+  .color-default {
+    p {
+      @apply text-black
+    }
+  }
+}
+
+.mobile-menu-list li a {
+  @apply text-black
+}
+
+.slide-in {
+  transform: translateX(0%);
+}
+.slide-out-left {
+  transform: translateX(-100%);
+}
+.slide-in-right {
+  transform: translateX(100%);
+}

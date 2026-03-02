@@ -1,0 +1,98 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-article",
+      "blocks": {
+        "navigation_Pr7qgp": {
+          "type": "navigation",
+          "settings": {}
+        },
+        "title_4MLwhC": {
+          "type": "title",
+          "settings": {
+            "title_width": 0,
+            "title_width_mobile": 0,
+            "content_alignment": "center",
+            "blog_show_date": true,
+            "blog_show_author": true
+          }
+        },
+        "share_KPK7DN": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        },
+        "featured_image_fyHqBh": {
+          "type": "featured_image",
+          "settings": {
+            "image_height": "large"
+          }
+        },
+        "content_8MFBrB": {
+          "type": "content",
+          "settings": {
+            "color_schema": "default",
+            "content": "",
+            "padding_top": 20,
+            "padding_bottom": 20,
+            "gap": 0,
+            "content_alignment": "center"
+          }
+        }
+      },
+      "block_order": [
+        "navigation_Pr7qgp",
+        "title_4MLwhC",
+        "share_KPK7DN",
+        "featured_image_fyHqBh",
+        "content_8MFBrB"
+      ],
+      "settings": {
+        "container_type": "container",
+        "color_schema": "default",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    },
+    "blog_content_LhgE4p": {
+      "type": "blog-content",
+      "settings": {
+        "render_type": "all",
+        "container_type": "container",
+        "color_schema": "",
+        "show_section_borders": false,
+        "custom_class": "",
+        "title_margin_bottom": 31,
+        "paragraph_margin_bottom": 35,
+        "list_margin_bottom": 24,
+        "image_margin_bottom": 50,
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_left_right_desktop": 24,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    }
+  },
+  "order": [
+    "main",
+    "blog_content_LhgE4p"
+  ]
+}

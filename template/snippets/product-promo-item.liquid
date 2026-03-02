@@ -1,0 +1,18 @@
+<div class="bg-black rounded-md text-white product-card product-grid-item relative group flex flex-col space-y-2 my-6 min-h-[300px] {{ settings.animations_hover_elements }}"
+style="grid-column: span {{ block.settings.span }}">
+    <div class="promo-block-item card-{{ settings.product_card_style }} p-8 flex flex-col h-full rounded-md"
+         {% if block.settings.image %}style="background-image: url('{{ block.settings.image | image_url:'500x' }}'), linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)); background-blend-mode: overlay; background-size: cover;"{% endif %}>
+        {% if block.settings.video != blank %}
+            <video src="{{block.settings.video.sources[1].url}}" loop muted playsinline autoplay></video>
+        {% endif %}
+        <div class="image-wrapper flex flex-col relative h-full">
+            <div class="content text-left justify-start flex flex-col space-y-2 h-full">
+                <div class="flex flex-col h-full justify-between">
+                    <h2>{{ block.settings.title }}</h2>
+                    <p>{{ block.settings.content }}</p>
+                    <a href="{{ block.settings.promo_block_cta_url }}" class="btn-secondary btn-link">{{ block.settings.promo_block_cta_text }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

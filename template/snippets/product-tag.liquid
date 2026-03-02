@@ -1,0 +1,12 @@
+{% assign tag_value = "" %}
+{% assign tag_check = block.settings.tag_name | append: block.settings.tag_delimiter %}
+
+{% for tag in product.tags %}
+    {% if tag contains tag_check %}
+        {% assign tag_value = tag | split: block.settings.tag_delimiter | last %}
+    {% endif %}
+{% endfor %}
+
+{% if tag_value != "" %}
+    <span class="bc text-[#54565A]">{{ tag_value }}</span>
+{% endif %}

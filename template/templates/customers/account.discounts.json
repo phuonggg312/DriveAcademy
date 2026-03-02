@@ -1,0 +1,82 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_breadcrumbs_CdE9rd": {
+      "type": "section-breadcrumbs",
+      "settings": {
+        "layout": "default",
+        "container_type": "container",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
+        "spacing": 8,
+        "icon": "icon-caret-right-thin",
+        "icon_size": 18,
+        "text_style": "b2",
+        "text_style_mobile": "b3",
+        "content_alignment": "left",
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_left_right_desktop": 16,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "padding_left_right_mobile": 8
+      }
+    },
+    "main": {
+      "type": "main-account-discounts",
+      "blocks": {
+        "discount_block_yAVGJB": {
+          "type": "discount_block",
+          "settings": {
+            "color": "dark",
+            "title": "10% off for new email subscribers",
+            "expiry_date": "12/11/2024",
+            "code_text": "Apply this code during checkout to get 10% off your order.",
+            "code": "NEW!2345",
+            "is_code_multiple_use": true,
+            "customer_unique_tags": "vip",
+            "code_terms": "<p>Read the Terms And Conditions of this offer.</p>"
+          }
+        },
+        "discount_block_efReaG": {
+          "type": "discount_block",
+          "settings": {
+            "color": "",
+            "title": "Free sample gift for members with orders over $150*",
+            "expiry_date": "12/10/2024",
+            "code_text": "Apply this code during checkout to get 10% off your order.",
+            "code": "SAMPLE12345",
+            "is_code_multiple_use": false,
+            "customer_unique_tags": "silver",
+            "code_terms": "<p>Read the Terms And Conditions of this offer.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "discount_block_yAVGJB",
+        "discount_block_efReaG"
+      ],
+      "settings": {
+        "layout_type": "default",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "section_breadcrumbs_CdE9rd",
+    "main"
+  ]
+}

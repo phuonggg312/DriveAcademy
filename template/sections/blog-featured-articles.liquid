@@ -1,0 +1,190 @@
+<div class="{{ section.settings.container_type }}">
+    <div class="section-blog-featured-articles-{{ section.id }} text-center {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+         x-data="section({{ section.settings | json | escape }})"
+         :class="classes"
+    >
+        <div class="blog-featured-products flex justify-center overflow-hidden w-full">
+            <div class="blog-featured-articles w-full">
+                <div class="blog-featured-articles__header">
+                  <div class="flex items-center mb-4">
+                    <div class="mr-8 text-left">
+                      <h3 class="block lg:hidden">{{ section.settings.section_title }}</h3>
+                      <h2 class="hidden lg:block">{{ section.settings.section_title }}</h2>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="article-list">
+                    {% assign current_article_handle = article.handle %}
+                    {% assign blog_handle = blog.handle %}
+                    {% assign articles = blogs[blog_handle].articles %}
+                    {% assign limited_articles = articles %}
+
+                    <div class="article-items grid grid-cols-1 lg:grid-cols-3 gap-x-[20px]">
+                        {% for article in limited_articles limit:3 %}
+                            <div class="my-4 blog-articles__article article">
+                                {%- render 'article-card-react',
+                                        article: article,
+                                        media_height: section.settings.image_height,
+                                        media_aspect_ratio: article.image.aspect_ratio,
+                                        show_image: section.settings.show_image,
+                                        show_date: section.settings.show_date,
+                                        show_author: section.settings.show_author,
+                                        show_excerpt: true
+                                -%}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <a href="{{ section.settings.button_url }}" class="button btn-dark view-all-articles">
+                  {{ section.settings.button_text }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog Featured Articles",
+  "settings": [
+    {
+      "type": "text",
+      "id": "id",
+      "label": "ID",
+      "info": "This is used to identify the section and can be used for anchoring"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Similar Articles (Style)"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Articles"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Blog Featured Articles",
+      "category": "Blog"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["article"]
+  }
+}
+{% endschema %}

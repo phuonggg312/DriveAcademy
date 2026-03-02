@@ -1,0 +1,242 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_collection_header_4JtVHQ": {
+      "type": "section-collection-header",
+      "settings": {
+        "layout_type": "image",
+        "layout_type_mobile": "image",
+        "content_width": "400px",
+        "title": "{{ collection.title }}",
+        "heading_type_desktop": "h2",
+        "heading_type_mobile": "h2",
+        "title_margin_bottom_desktop": 0,
+        "title_margin_bottom_mobile": 0,
+        "container_type": "w-full",
+        "color_schema": "",
+        "show_description": false,
+        "body_type": "b1",
+        "padding_top_desktop": 50,
+        "padding_bottom_desktop": 50,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 25,
+        "padding_bottom_mobile": 25,
+        "padding_left_right_mobile": 0,
+        "content_vertical_position_desktop": "center",
+        "content_vertical_position_mobile": "center",
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    },
+    "main": {
+      "type": "main-collection",
+      "blocks": {
+        "promo_block_jEU8HW": {
+          "type": "promo_block",
+          "settings": {
+            "metaobject_handle": "",
+            "content_gap_mobile": 0,
+            "content_gap_desktop": 0,
+            "text_colour": "",
+            "title_font_class_mobile": "h3",
+            "title_font_class_desktop": "h3",
+            "subtitle_font_class_mobile": "b2",
+            "subtitle_font_class_desktop": "b2",
+            "button_style_mobile": "text",
+            "has_icon_mobile": false,
+            "button_style_desktop": "text",
+            "has_icon_desktop": false,
+            "content_alignment_desktop": "center",
+            "content_alignment_mobile": "center",
+            "content_vertical_position_desktop": "end",
+            "content_vertical_position_mobile": "end",
+            "padding_top_bottom_desktop": 12,
+            "padding_left_right_desktop": 20,
+            "padding_top_botton_mobile": 20,
+            "padding_left_right_mobile": 12
+          }
+        },
+        "swatches_mwP8gK": {
+          "type": "swatches",
+          "settings": {
+            "use_variants": true,
+            "use_metafields": false,
+            "metafield_name": "",
+            "use_tags": false,
+            "tag_name": ""
+          }
+        }
+      },
+      "block_order": [
+        "promo_block_jEU8HW",
+        "swatches_mwP8gK"
+      ],
+      "settings": {
+        "color_schema": "",
+        "disable_filtering": false,
+        "filter_alignment": "left",
+        "sort_alignment": "right",
+        "promotion_data_source": "metaobject",
+        "metafield_name": "",
+        "frequency": 3,
+        "columns_desktop": 3,
+        "columns_mobile": 3,
+        "column_gap_desktop": 2,
+        "column_gap_mobile": 2,
+        "row_gap_desktop": 2,
+        "row_gap_mobile": 2,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    },
+    "section_breadcrumbs_YHUKW9": {
+      "type": "section-breadcrumbs",
+      "name": "Breadcrumbs",
+      "settings": {
+        "layout": "default",
+        "container_type": "container",
+        "color_schema": "",
+        "default_shop_url": "",
+        "spacing": 8,
+        "spacing_mobile": 4,
+        "icon": "icon-caret-right-thin",
+        "icon_size": 18,
+        "text_style": "b2",
+        "text_style_mobile": "b3",
+        "content_alignment": "left",
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_left_right_desktop": 16,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "padding_left_right_mobile": 8,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    },
+    "section_tabbed_content_ybJiFm": {
+      "type": "section-tabbed-content",
+      "name": "Info & Accordions",
+      "settings": {
+        "layout": "default",
+        "container_type": "container",
+        "color_schema": "",
+        "content_alignment": "left",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    },
+    "section_product_list_wW74YJ": {
+      "type": "section-product-list",
+      "blocks": {
+        "product_item_9p8eNq": {
+          "type": "product_item",
+          "settings": {
+            "product": "bvl",
+            "collection": "glasses",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_item_9p8eNq"
+      ],
+      "name": "Products List",
+      "settings": {
+        "render_type": "all",
+        "container_type": "container",
+        "color_schema": "",
+        "show_section_borders": true,
+        "custom_class": "",
+        "linked_metaobject": "",
+        "title": "",
+        "header_style": "h2",
+        "header_style_mobile": "h3",
+        "subtext": "",
+        "subtext_style": "b2",
+        "layout_type": "list-default",
+        "layout_type_mobile": "list-default",
+        "product_tile_wishlist_show": true,
+        "product_tile_price_show": true,
+        "cta_button_text": "",
+        "cta_style": "text",
+        "cta_url": "",
+        "show_navbuttons": true,
+        "show_indicators": true,
+        "fade_edgeitems": true,
+        "use_freescroll": true,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "content_alignment_desktop": "center",
+        "content_alignment_mobile": "center",
+        "content_position_desktop": "center",
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    },
+    "section_image_hot_spot_bewPJb": {
+      "type": "section-image-hot-spot",
+      "blocks": {
+        "hotspot_block_NwBy3a": {
+          "type": "hotspot_block",
+          "settings": {
+            "product": "bvl",
+            "hotspot_x": 50,
+            "hotspot_y": 50
+          }
+        }
+      },
+      "block_order": [
+        "hotspot_block_NwBy3a"
+      ],
+      "name": "Image Hot Spot",
+      "settings": {
+        "title": "Image Hot Spot",
+        "subheading": "Something about ages",
+        "description": "",
+        "featured_image": "shopify://shop_images/lookbook-t-shirt.png",
+        "color_schema": "",
+        "container_type": "container",
+        "border_radius": "rounded-none",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "margin_top_bottom_desktop": 0,
+        "margin_top_bottom_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "section_collection_header_4JtVHQ",
+    "main",
+    "section_breadcrumbs_YHUKW9",
+    "section_tabbed_content_ybJiFm",
+    "section_product_list_wW74YJ",
+    "section_image_hot_spot_bewPJb"
+  ]
+}

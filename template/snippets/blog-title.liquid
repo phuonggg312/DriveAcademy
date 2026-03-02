@@ -1,0 +1,18 @@
+<header class="text-{{ block.settings.content_alignment }} w-[{{ block.settings.title_width }}px] page-width--narrow{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}"
+        {{ block.shopify_attributes }}>
+    <h1 class="article-template__title m-[16px]" itemprop="headline">
+        {{ article.title | escape }}
+    </h1>
+    {%- if block.settings.blog_show_date -%}
+        <span class="circle-divider caption-with-letter-spacing"
+              itemprop="dateCreated pubdate datePublished">
+                            {{- article.published_at | time_tag: format: 'date' -}}
+                        </span>
+    {%- endif -%}
+    {%- if block.settings.blog_show_author -%}
+        <span class="caption-with-letter-spacing" itemprop="author" itemscope
+              itemtype="http://schema.org/Person">
+                            <span itemprop="name">{{ article.author }}</span>
+                        </span>
+    {%- endif -%}
+</header>

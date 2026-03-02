@@ -1,0 +1,56 @@
+{%- assign current = product.selected_or_first_available_variant -%}
+{%- assign is_available = 'disabled' -%}
+
+{%- if current.available -%}
+    {%- assign is_available = '' -%}
+{%- endif -%}
+
+<div class="{{ settings.reveal_animation_class }} mt-8" data-animation-delay="0.4s">
+    <div
+        x-data="quantity"
+        id="quantityInput"
+        class="quantity-input {{ is_available }}"
+    >
+        <div class="quantity-input__container flex items-center py-[3px]">
+            <div class="quantity-input__container-decrement cursor-pointer" x-on:click="decrement">
+                <i class="icon icon-minus-thin"></i>
+        </div>
+            <div>
+                <label for="quantity-control-input" class="hidden">Quantity</label>
+                <input
+                    class="quantity-control-input"
+                    type="text"
+                    id="quantity-control-input"
+                    value='1'
+                    data-prodify-quantity-presentation
+                />
+            </div>
+
+            <div class="quantity-input__container-increment cursor-pointer" x-on:click="increment">
+                <i class="icon icon-plus-thin"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .quantity-input {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 120px;
+        height:48px;
+    }
+    .quantity-input__container {
+        border-radius: 40px;
+        border: 1px solid black;
+        padding-left: 8px;
+        padding-right: 8px;
+        display: flex;
+        background:white;
+    }
+
+    .quantity-control-input {
+        background:white;
+    }
+</style>

@@ -1,0 +1,145 @@
+
+{% assign months = "January, February, March, April, May, June, July, August, September, October, November, December" | split: ", " %}
+
+<div class="color-{{ section.settings.color_schema }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+    <div class="flex flex-col w-full lg:max-w-[{{ section.settings.form_width }}px] mx-auto">
+        <div class="container py-4" x-data="{ showPasswordReset: false }">
+            <div class="flex flex-col">
+                {% render 'account-register-form' %}
+                {% render 'account-forgotpassword-form' %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Account Register",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading_font_class",
+      "label": "Subheading Font Class",
+      "default": "b1"
+    },
+    {
+      "type": "text",
+      "id": "content_width",
+      "label": "Content Width Desktop (px)"
+    },
+    {
+      "type": "text",
+      "id": "form_width",
+      "label": "Form Width Desktop (px)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subscribe",
+      "label": "Show Marketing Checkbox?",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings for Content & Form"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+<div class="react-node text-[#54565A]">
+    {% capture data %}
+        {
+        "id": "{{ block.id }}",
+        "block_settings": {{ block.settings | json }},
+        "section_settings": {{ section.settings | json }}
+        }
+    {% endcapture %}
+    <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+    {% render 'react-block', name: "theme__block-title", props: data %}
+</div>

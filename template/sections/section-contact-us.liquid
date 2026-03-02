@@ -1,0 +1,394 @@
+<div class="{{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }}">
+  <div class="section-contactus section-contactus-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+       x-data="section({{ section.settings | json | escape }})"
+       :class="classes"
+  >
+  <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }} relative">
+      <div class="react-node">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__contact-us-form", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+            "id": "sort_order",
+            "type": "number",
+            "label": "Sort Order (Mobile)",
+            "info": "Order this will be rendered on mobile",
+            "default": 1
+        },
+        {
+            "id": "column",
+            "type": "number",
+            "label": "Column",
+            "info": "Column that this block is associated to",
+            "default": 1
+        },
+        {
+          "id": "image",
+          "type": "image_picker",
+          "label": "Image"
+        },
+        {
+          "id": "image_mobile",
+          "type": "image_picker",
+          "label": "Image (Mobile)"
+        }
+      ]
+    },
+    {
+      "type": "form",
+      "name": "Form",
+      "settings": [
+        {
+            "id": "sort_order",
+            "type": "number",
+            "label": "Sort Order (Mobile)",
+            "info": "Order this will be rendered on mobile",
+            "default": 1
+        },
+        {
+            "id": "column",
+            "type": "number",
+            "label": "Column",
+            "info": "Column that this block is associated to",
+            "default": 2
+        },
+        {
+          "type": "header",
+          "content": "Form settings"
+        },
+        {
+          "type": "richtext",
+          "id": "terms_message",
+          "label": "Terms Message",
+          "default": "<p>I accept the terms</p>"
+        },
+        {
+          "type": "url",
+          "id": "submit_url",
+          "label": "Submit URL"
+        },
+        {
+          "type": "text",
+          "id": "submit_action",
+          "label": "Submit Action",
+          "default": "POST"
+        },
+        {
+          "type": "text",
+          "id": "submit_button_text",
+          "label": "Submit Button Text",
+          "default": "Submit"
+        },
+      ]
+    },
+    {
+      "type": "header",
+      "name": "Header",
+      "settings": [
+        {
+            "id": "sort_order",
+            "type": "number",
+            "label": "Sort Order (Mobile)",
+            "info": "Order this will be rendered on mobile",
+            "default": 1
+        },
+        {
+            "id": "column",
+            "type": "number",
+            "label": "Column",
+            "info": "Column that this block is associated to",
+            "default": 1
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Contact Us"
+        },
+        {
+          "type": "text",
+          "id": "heading_style",
+          "label": "Heading Style",
+          "default": "h2"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline",
+          "default": "Tagline"
+        },
+        {
+          "type": "text",
+          "id": "tagline_style",
+          "label": "Tagline Style",
+          "default": "bf"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+        },
+        {
+          "type": "text",
+          "id": "description_style",
+          "label": "Description Style",
+          "default": "b2"
+        },
+      ]
+    },
+    {
+      "type": "details",
+      "name": "Details",
+      "settings": [
+        {
+            "id": "sort_order",
+            "type": "number",
+            "label": "Sort Order (Mobile)",
+            "info": "Order this will be rendered on mobile",
+            "default": 1
+        },
+        {
+            "id": "column",
+            "type": "number",
+            "label": "Column",
+            "info": "Column that this block is associated to",
+            "default": 1
+        },
+        {
+            "type": "text",
+            "id": "email",
+            "label": "Email",
+            "default": "hello@store.com"
+        },
+        {
+            "type": "text",
+            "id": "phone",
+            "label": "Phone",
+            "default": "+1 (555) 000-0000"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "Layout",
+      "default": "twocolumn",
+      "options": [
+        {
+          "value": "twocolumn",
+          "label": "Two Column"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout_type_mobile",
+      "label": "Layout (Mobile)",
+      "default": "twocolumn",
+      "options": [
+        {
+          "value": "twocolumn",
+          "label": "Two Column"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Contact Us",
+      "category": "Contact"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,95 @@
+<div class="account-content-area flex flex-col">
+  <!-- Current Date -->
+  {% assign current_date = 'now' | date: "%Y-%m-%d" %}
+
+  {% for block in blocks %}
+    <!-- Extract Expiry Date -->
+    {% assign expiry_date = block.settings.expiry_date | date: "%Y-%m-%d" %}
+
+    <!-- Customer Tag for Code -->
+    {% assign customer_tag = block.settings.code | append: ":true" %}
+
+    <!-- Set Flags -->
+    {% assign valid_code_for_customer = false %}
+    {% assign tag_found = false %}
+    {% assign unique_tag_match = false %}
+
+    <!-- Check if the customer has the relevant tag for the code -->
+    {% for tag in customer.tags %}
+        {% if tag == customer_tag %}
+            {% assign tag_found = true %}
+        {% endif %}
+    {% endfor %}
+
+    <!-- Check if there are unique tags, and if the customer has one of them -->
+    {% if block.settings.customer_unique_tags != blank %}
+        {% assign unique_tags_list = block.settings.customer_unique_tags | split: "," %}
+        {% for unique_tag in unique_tags_list %}
+            {% if customer.tags contains unique_tag %}
+                {% assign unique_tag_match = true %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        {% assign unique_tag_match = true %}
+    {% endif %}
+
+    <!-- Render Logic -->
+    {% if expiry_date >= current_date and unique_tag_match == true %}
+        <!-- For Single Use Codes: render if not already used (i.e., tag_found is false) -->
+        {% if block.settings.is_code_multiple_use == false and tag_found == false %}
+            <div class="discount-box__container text-white color-{{block.settings.color}}">
+                <div class="w-full flex-grow flex-shrink lg:basis-[400px] flex flex-col space-y-[8px]">
+                    <p class="h2">{{ block.settings.title }}</p>
+                    <p class="b4"> Code expires {{ block.settings.expiry_date | date: "%dth %b %Y" }}</p>
+                </div>
+
+                <div class="flex flex-col mt-4 md:mt-0 md:ml-6 space-y-[24px]">
+                    <p class="b2">{{ block.settings.code_text }}</p>
+                    <div class="flex items-center bg-white text-black rounded-full px-4 py-2 items-center justify-between">
+                        <input id="codeInput1" type="text" readonly value="{{ block.settings.code }}" class="b3 w-full lg:w-[180px]" style="padding-bottom:0px;">
+                        <div onclick="copyToClipboard('{{ block.settings.code }}')" class="flex space-x-[8px]">
+                            <div class="flex" style="width: max-content;">Copy Code</div>
+                            <div class="icon icon-ur-arrow"></div>
+                        </div>
+                    </div>
+                    <p class="b3">{{ block.settings.code_terms }}</p>
+                </div>
+            </div>
+        {% endif %}
+
+        <!-- For Multiple Use Codes: always render if not expired and unique tag matched -->
+        {% if block.settings.is_code_multiple_use == true %}
+            <div class="discount-box__container text-white color-{{block.settings.color}}">
+                <div class="w-full flex-grow flex-shrink lg:basis-[400px] flex flex-col space-y-[8px]">
+                    <p class="h2">{{ block.settings.title }}</p>
+                    <p class="b4"> Code expires {{ block.settings.expiry_date | date: "%dth %b %Y" }}</p>
+                </div>
+
+                <div class="flex flex-col mt-4 md:mt-0 md:ml-6 space-y-[24px]">
+                    <p class="b2">{{ block.settings.code_text }}</p>
+                    <div class="flex items-center bg-white text-black rounded-full px-4 py-2 items-center justify-between">
+                        <input id="codeInput1" type="text" readonly value="{{ block.settings.code }}" class="b3 w-full lg:w-[180px]" style="padding-bottom:0px;">
+                        <div onclick="copyToClipboard('{{ block.settings.code }}')" class="flex space-x-[8px]">
+                            <div class="flex" style="width: max-content;">Copy Code</div>
+                            <div class="icon icon-ur-arrow"></div>
+                        </div>
+                    </div>
+                    <p class="b3">{{ block.settings.code_terms }}</p>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+<script>
+  function copyToClipboard(code) {
+    var tempInput = document.createElement("input");
+    tempInput.value = code;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    alert("Copied the code: " + code);
+  }
+</script>

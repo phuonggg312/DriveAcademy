@@ -1,0 +1,21 @@
+.absolute-top-left {
+    @apply top-0 left-0;
+}
+
+.absolute-top-right {
+    div.flex {
+        flex-direction: row-reverse;
+    }
+    @apply top-0 right-0;
+}
+
+.absolute-bottom-left {
+    @apply bottom-0 left-0;
+}
+
+.absolute-bottom-right {
+    div.flex {
+        flex-direction: row-reverse;
+    }
+    @apply bottom-0 right-0;
+}

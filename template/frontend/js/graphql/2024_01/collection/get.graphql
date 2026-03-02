@@ -1,0 +1,122 @@
+query getProductsFromCollection(
+  $handle: String!
+  $first: Int!
+  $after: String
+  $productFilters: [ProductFilter!]
+  $sort: ProductCollectionSortKeys
+  $direction: Boolean
+) {
+  collectionByHandle(handle: $handle) {
+    id
+    title
+    products(
+      first: $first
+      after: $after
+      sortKey: $sort
+      reverse: $direction
+      filters: $productFilters
+    ) {
+      edges {
+        node {
+          id
+          title
+          handle
+          description
+          tags
+          options {
+            name
+            values
+          }
+          featuredImage {
+            altText
+            url
+          }
+          images(first: 2) {
+            edges {
+              node {
+                altText
+                url
+              }
+            }
+          }
+          metafields(
+            identifiers: [
+              { namespace: "custom", key: "bottle_siblings" }
+              { namespace: "custom", key: "bottle_colour" }
+              { namespace: "custom", key: "bottle_colour_name" }
+            ]
+          ) {
+            namespace
+            key
+            value
+            type
+            description
+          }
+          sellingPlanGroups(first: 5) {
+            edges {
+              node {
+                name
+                options {
+                  name
+                  values
+                }
+                sellingPlans(first: 5) {
+                  edges {
+                    node {
+                      id
+                      name
+                      description
+                      priceAdjustments {
+                        adjustmentValue {
+                          ... on SellingPlanFixedPriceAdjustment {
+                            price {
+                              amount
+                              currencyCode
+                            }
+                          }
+                          ... on SellingPlanPercentagePriceAdjustment {
+                            adjustmentPercentage
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          variants(first: 5) {
+            edges {
+              node {
+                id
+                availableForSale
+                sku
+                selectedOptions {
+                  value
+                }
+                compareAtPrice {
+                  amount
+                }
+                image {
+                  altText
+                  url
+                }
+              }
+            }
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+}

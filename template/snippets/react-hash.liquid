@@ -1,0 +1,12 @@
+<div class="hash-container" x-data>
+    <div class="hash">
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                window.addEventListener("hash", function(ev){
+                    let sighash = `{{ query |  base64_encode | hmac_sha256: '56e7cc287404f6c39d723e253799338f' }}`
+                    window.Alpine.store('hasher').setHash(sighash);
+                });
+            });
+        </script>
+    </div>
+</div>

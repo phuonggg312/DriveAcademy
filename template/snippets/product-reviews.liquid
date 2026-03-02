@@ -1,0 +1,18 @@
+{% if block.settings.reviews_system == 'reviews_io' %}
+    <div
+            class="ruk_rating_snippet"
+            data-sku="{{ product.handle }};{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}"
+            onclick="document.querySelector('{{ block.settings.anchor_id }}').scrollIntoView({ behavior: 'smooth' });"
+    ></div>
+{% else %}
+    {% assign count = 5 %}
+    <div class="flex flex-row gap-x-[8px] mt-2">
+        <div class="flex flex-row gap-x-[4px]">
+            {% for i in (1..count) %}
+                <i class="icon icon-star-thin filled"></i>
+            {% endfor %}
+        </div>
+        <div class="count b2">(1140)</div>
+    </div>
+{% endif %}
+

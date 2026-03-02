@@ -1,0 +1,129 @@
+<div class="page__section-container container
+    {{ settings.reveal_animation_class }}
+    color-{{ section.settings.color_schema }} overflow-hidden"
+    :class="classes"
+    x-data="section({{ section.settings | json | escape }})"
+>
+    <h2>SHOP THE LOOK</h2>
+    {% if section.settings.image_one %}
+        <div class="look-slider grid grid-cols-2 gap-4">
+            {% if section.settings.image_one %}
+                <div class="look-slide" style="background-image: url('{{ section.settings.image_one | image_url: '1024x1024' }}');">
+                    <button class="shop-the-look__hot-spot absolute top-1/2 left-20 bg-white rounded-full h-5 w-5 animate-pulse" aria-current="true" aria-label="Go to item 1">
+                        <span class="sr-only">Go to item 1</span>
+                    </button>
+                </div>
+            {% endif %}
+
+            <div class="look-products flex flex-row">
+                {% if section.settings.product_one %}
+                    {% assign product = all_products[section.settings.product_one] %}
+                    <div class="look-product flex flex-col">
+                        <img src="{{ product.featured_image | image_url: '300x300' }}" alt="{{ product.title }}">
+                        <p>{{ product.title }}</p>
+                        <span>{{ product.price | money }}</span>
+                        <button class="btn-primary">View Product</button>
+                    </div>
+                {% endif %}
+
+                {% if section.settings.product_two %}
+                    {% assign product = all_products[section.settings.product_two] %}
+                    <div class="look-product flex flex-col">
+                        <img src="{{ product.featured_image | image_url: '300x300' }}" alt="{{ product.title }}">
+                        <p>{{ product.title }}</p>
+                        <span>{{ product.price | money }}</span>
+                        <button class="btn-primary">View Product</button>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var currentIndex = 0;
+        var slides = document.querySelectorAll('.look-slide');
+        var totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.style.display = 'none');
+            slides[index].style.display = 'block';
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentIndex);
+        }
+
+        // Initialize the first slide
+        showSlide(currentIndex);
+
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Shop the Look",
+  "class": "shop-the-look",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Look Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_one",
+      "label": "Image One"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_two",
+      "label": "Image Two"
+    },
+    {
+      "type": "header",
+      "content": "Associated Products"
+    },
+    {
+      "type": "product",
+      "id": "product_one",
+      "label": "Product One"
+    },
+    {
+      "type": "product",
+      "id": "product_two",
+      "label": "Product Two"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text Blocks",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "TITLE HERE"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop the Look"
+    }
+  ]
+}
+{% endschema %}

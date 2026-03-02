@@ -1,0 +1,54 @@
+<div class="flex flex-col w-full items-center"
+     :class="classes"
+     x-data="section({{ section.settings | json | escape }}),trackorder"
+>
+    {% capture data %}
+    {
+        "settings": {{ block.settings | json }}
+    }
+    {% endcapture %}
+    {% assign data = data %}
+
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__ecommerce-track-your-order", props: data  %}
+
+    {% assign query = 'query GetOrderInfo($id: ID!) {
+    order(id: $id) {
+        name
+        shippingLines(first: 2) {
+            edges {
+                node {
+                    id
+                    title
+                }
+            }
+        }
+        fulfillments {
+            trackingInfo {
+                company
+                number
+                url
+            }
+        }
+    }
+}' %}
+
+    {% render 'react-hash', query: query %}
+</div>
+
+{% schema %}
+{
+  "name": "Track Order",
+  "class": "trackorder-main",
+  "templates": ["page"],
+  "tag": "section",
+  "settings": [
+
+  ],
+  "presets": [
+    {
+      "name": "Track Order"
+    }
+  ]
+}
+{% endschema %}

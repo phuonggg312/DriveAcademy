@@ -1,0 +1,53 @@
+
+.fade-out-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.fade-out-effect::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100px; /* Adjust the width as needed */
+  transition: transform 0.3s ease-in-out;
+  pointer-events: none;
+}
+
+#sticky-bar {
+  position: relative;
+  background-color: white;
+  box-shadow: 0px 4px 11px 0px rgba(84, 86, 90, 0.10);
+  z-index: 5;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  @apply hidden lg:block
+}
+
+/* Sticky styles */
+#sticky-bar.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  @apply block
+}
+//#sticky-bar.slide-in-bottom {
+//  transform: translateY(0);
+//}
+//#sticky-bar.slide-out-bottom {
+//  transform: translateY(100%);
+//}
+
+#sticky-bar button {
+  @apply h-[48px] lg:h-[65px]
+}
+
+#sticky-bar .sticky-bar-nav-item {
+  @apply text-[#99A8B2] cursor-pointer
+}
+
+#sticky-bar .sticky-bar-nav-item.selected {
+  @apply text-black
+}

@@ -1,0 +1,30 @@
+.marquee .marquee-banner {
+  @apply bg-transparent text-inherit;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.marquee {
+  @apply border-b-[1px] border-urchin;
+}
+
+.marquee-banner .marquee-track .marquee-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.marquee-icon {
+  width: 20px; /* Adjust icon size as needed */
+  height: auto;
+}
+
+/* CSS Animation for the marquee effect */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

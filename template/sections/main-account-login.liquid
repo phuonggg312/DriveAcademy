@@ -1,0 +1,218 @@
+{%  assign image_width = section.settings.image_width | times: 2 %}
+
+{% if customer %}
+  customer logged in
+  <script>
+    window.location.href = '{{ routes.account_url }}'
+  </script>
+{% endif %}
+
+<div class="color-{{ section.settings.color_schema }}" x-data="section({{ section.settings | json | escape }})" :class="classes">
+  <div x-cloak class="container login-n-reset-container" x-data="customerlogin">
+    <div class="account-login" x-show="!showPasswordReset">
+      <div class="account-login-inner shell flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}px] mx-auto">
+        <div class="text-center flex flex-col">
+          {% if section.settings.image %}
+            <div class="flex justify-center items-center mb-8">
+              <img src="{{ section.settings.image | image_url: width: image_width }}" alt="{{ section.settings.image.alt }}" height="100%" width="{{ section.settings.image_width }}"/>
+            </div>
+          {% endif %}
+          {% if section.settings.description != blank %}
+            <p class="{{ section.settings.description_font_class }} mb-6">{{ section.settings.description }}</p>
+          {% endif %}
+        </div>
+
+        <div class="react-node">
+          {% include 'react-props' %}
+          <div id="react-data" data-injected-props='{{ data }}'></div>
+          {% render 'react-block', name: "theme__account-landing", props: data %}
+        </div>
+      </div>
+    </div>
+
+    <div class="container account-reset-password" x-show="showPasswordReset">
+      <div class="account-reset-password-inner shell flex flex-col mx-auto w-full lg:max-w-[{{ section.settings.content_width }}px]">
+        <h2 class="account__reset--title mx-auto mb-4 {{ section.settings.heading_font_class }}">{{ 'customer.recover_password.title' | t }}</h2>
+        <div class="form-container">
+          <div class="react-node">
+            {% include 'react-props' %}
+            <div id="react-data" data-injected-props='{{ data }}'></div>
+            {% render 'react-block', name: "theme__account-forgotpassword", props: data %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Account Login",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Render settings"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "twocolumn",
+          "label": "2 Column"
+        },
+        {
+          "value": "loginregister",
+          "label": "Login & Register"
+        }
+      ],
+      "default": "default",
+      "label": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "text",
+      "id": "heading_font_class",
+      "label": "Heading Font Class",
+      "default": "h3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Logo/Image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Logo/Image Width",
+      "default": 100
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "description_font_class",
+      "label": "Description Style",
+      "default": "b2"
+    },
+    {
+      "type": "text",
+      "id": "description_font_class_mobile",
+      "label": "Description Style (Mobile)",
+      "default": "b3"
+    },
+    {
+      "type": "text",
+      "id": "content_width",
+      "label": "Content Width Desktop (px)"
+    },
+    {
+      "type": "header",
+      "content": "Message Settings"
+    },
+    {
+      "type": "richtext",
+      "id": "incorrect_details_message",
+      "label": "Incorrect Details Message",
+      "default": "<p>Oops those details don't seem right! <br/>"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Login successful!"
+    },
+    {
+      "type": "text",
+      "id": "password_reset_success_message",
+      "label": "Password Reset Success Message",
+      "default": "A request to reset your password has been sent to your email. Please follow instructions on the email to reset your password."
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

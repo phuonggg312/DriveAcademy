@@ -1,0 +1,710 @@
+{% assign metafield_notations = section.settings.metafield_name | split: "." %}
+{% assign promotion_blocks_metafield = "" %}
+{% assign count = 0 %}
+{% for notation in metafield_notations %}
+    {% if count == 0 %}
+        {% assign promotion_blocks_metafield = collection.metafields[notation] %}
+    {% else %}
+        {% assign promotion_blocks_metafield = promotion_blocks_metafield[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+{% endfor %}
+
+{% assign promotion_blocks = promotion_blocks_metafield.value %}
+
+{% assign plp_filters = shop.metaobjects['plp_filters'].values %}
+
+{% capture data %}
+  {
+    "section": {{ section.settings | json }},
+    "products_per_page": {{ settings.products_per_page }},
+    "collection": {{ collection | json }},
+    "collection_size": {{ collection.products.size }},
+    "pagination_type": {{ settings.pagination_type }},
+    "promotion_blocks": [
+      {%- for promo_block in promotion_blocks -%}
+      {
+        "type": "promo",
+        "position": {{ promo_block.position }},
+        "title": "{{ promo_block.title }}",
+        "subtitle": "{{ promo_block.subtitle }}",
+        "content_color": "{{ promo_block.content_color }}",
+        "background_color": "{{ promo_block.background_color }}",
+        "image": "{{ promo_block.image | file_url }}",
+        "link": "{{ promo_block.link }}",
+        "link_icon": "{{ promo_block.link_icon }}",
+        "link_label": "{{ promo_block.link_label }}",
+        "column_span": {% if promo_block.column_span %}{{ promo_block.column_span }}{% else %}1{% endif %},
+        "col_span_mobile": {% if promo_block.mobile_column_span %}{{ promo_block.mobile_column_span }}{% else %}1{% endif %},
+        "handle": "{{ promo_block.system.handle }}",
+        "settings":
+          {%- assign promo_block_settings = 'null' -%}
+
+          {%- for block in section.blocks -%}
+
+            {%- if block.type == 'promo_block' -%}
+
+              {%- assign block_handle = block.settings.metaobject_handle -%}
+              {%- if promo_block.system.handle == block_handle -%}
+                {%- assign promo_block_settings = block.settings | json -%}
+              {%- endif -%}
+            {%-  endif -%}
+          {%- endfor -%}
+          {{ promo_block_settings }}{%- unless forloop.last -%},{%- endunless -%}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ],
+    "collection_filters": [
+      {%- for filter in collection.filters -%}
+      {
+        "sort_order": "{{ filter.sort_order.value }}",
+        "key": "{{ filter.label }}",
+        "label": "{{ filter.label }}",
+        "display_name": "{{ filter.label }}",
+        "display_limit": "{{ 5 }}",
+        "values": [
+          {%- for option in filter.values -%}
+            {
+              "key": "{{ option.label }}",
+              "label": "{{ option.label }}",
+              "name": "{{ option.name }}",
+              "url_to_add": "{{ option.url_to_add }}",
+              "url_to_remove": "{{ option.url_to_remove }}",
+              "count": "{{ 0 }}",
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {% endfor %}
+    ],
+    "filters": [
+      {%- for filter in plp_filters -%}
+      {
+        "sort_order": "{{ filter.sort_order.value }}",
+        "filter_name": "{{ filter.filter_name.value }}",
+        "display_name": "{{ filter.display_name.value }}",
+        "display_limit": "{{ filter.display_limit.value }}",
+        "filter_buttons": [
+          {%- assign buttons = filter.filter_buttons.value -%}
+          {%- for button in buttons -%}
+            {
+              "button_name": "{{ button.button_name.value }}",
+              "display_name": "{{ button.display_name.value }}",
+              "colour": "{{ button.colour.value }}",
+              "image": "{{ button.image.value | image_url: width: button.image.width }}"
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {% endfor %}
+    ],
+    "template": {
+      "name": "{{ template.name }}"
+    },
+    "collection": {{ collection | json }},
+    "collection_products": {{ collection.products | json }},
+    "shop": {
+      "name": "{{ shop.name }}",
+      "url": "{{ shop.url }}"
+    },
+    "routes": {
+      "all_products_collection_url": "{{ routes.all_products_collection_url }}"
+    }
+  }
+{% endcapture %}
+{% assign data = data | escape %}
+
+<div
+   class="{{section.id}} collection color-{{ section.settings.color_schema }}"
+   :class="classes"
+   x-data="section({{ section.settings | json | escape }}), searchproductlist"
+>
+  <div class="collection-inner container {{ settings.reveal_animation_class }}">
+    <div class="flex flex-row auto-cols-max {{ settings.reveal_animation_class }}">
+      {% assign count = 0 %}
+
+      <div x-data="pagination" x-init="$watch('totalResults', (value) => init(value, {{ settings.products_per_page }}, true)); init(totalResults, {{ settings.products_per_page }}, true)" id="ProductGridContainer" class="product-grid-container collection-products w-full">
+
+        {%- if collection.products.size > 0 -%}
+            <div class="react-node w-full">
+                {% comment %} {% include 'react-props' %} {% endcomment %}
+                <div id="react-data" data-injected-props='{{ data }}'></div>
+                {% render 'react-block', name: "theme__collection-main", props: data %}
+            </div>
+
+        {% else %}
+            <div class="collection collection--empty page-width" id="product-grid" data-id="{{ section.id }}">
+              <div class="loading-overlay gradient"></div>
+              <div class="title-wrapper center">
+                <h1 class="title title--primary">
+                  {{ 'sections.collection_template.empty' | t -}}
+                  <br>
+                  {{
+                  'sections.collection_template.use_fewer_filters_html'
+                  | t: link: collection.url, class: 'underlined-link link'
+                  }}
+                </h1>
+              </div>
+            </div>
+        {% endif %}
+        <div x-ref="paginationContainer" class="flex justify-center items-center space-x-4 pt-[64px] lg:pt-[87px]"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Collection Section",
+  "class": "section-main-collection",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "filter_tags",
+          "label": "Filter tags",
+          "info": "Add a comma-separated list of product tags. Only the tags found in the collection will be displayed as filters ([?](https://help.outofthesandbox.com/hc/en-us/articles/115008642047))"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_filter_swatches",
+          "label": "Display colour swatches"
+        }
+      ]
+    },
+    {
+      "type": "promo_block",
+      "name": "Promo Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "metaobject_handle",
+          "label": "Promotion Tile Metaobject Handle"
+        },
+        {
+          "type": "range",
+          "id": "content_gap_mobile",
+          "min": 0,
+          "max": 64,
+          "step": 1,
+          "unit": "px",
+          "label": "Content Gap Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "content_gap_desktop",
+          "min": 0,
+          "max": 64,
+          "step": 1,
+          "unit": "px",
+          "label": "Content Gap Desktop",
+          "default": 0
+        },
+        {
+          "type": "color",
+          "id": "text_colour",
+          "label": "Text Colour"
+        },
+        {
+          "type": "text",
+          "id": "title_font_class_mobile",
+          "label": "Title Font Class Mobile",
+          "default": "h3"
+        },
+        {
+          "type": "text",
+          "id": "title_font_class_desktop",
+          "label": "Title Font Class Desktop",
+          "default": "h3"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_font_class_mobile",
+          "label": "Subtitle Font Class Mobile",
+          "default": "b2",
+          "info": "For uppercase: b2 uppercase"
+        },
+        {
+          "type": "text",
+          "id": "subtitle_font_class_desktop",
+          "label": "Subtitle Font Class Desktop",
+          "default": "b2",
+          "info": "For uppercase: b2 uppercase"
+        },
+        {
+          "type": "text",
+          "id": "button_style_mobile",
+          "label": "Button Style Mobile",
+          "default": "text"
+        },
+        {
+          "type": "checkbox",
+          "id": "has_icon_mobile",
+          "label": "Button Icon Mobile?"
+        },
+        {
+          "type": "text",
+          "id": "button_style_desktop",
+          "label": "Button Style Desktop",
+          "default": "text"
+        },
+        {
+          "type": "checkbox",
+          "id": "has_icon_desktop",
+          "label": "Button Icon Desktop?"
+        },
+        {
+          "type": "header",
+          "content": "Alignment & Position Settings"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Mobile"
+        },
+        {
+          "type": "select",
+          "id": "content_vertical_position_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "end",
+          "label": "Content Vertical Position Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_vertical_position_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "end",
+          "label": "Content Vertical Position Mobile"
+        },
+        {
+          "type": "header",
+          "content": "Padding Settings"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Bottom Desktop",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Desktop",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding_top_botton_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top & Bottom Mobile",
+          "default": 20
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Mobile",
+          "default": 12
+        }
+      ]
+    },
+    {
+      "type": "swatches",
+      "name": "Product Swatches",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Standard"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_variants",
+          "label": "Use Variants",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "METAFIELDS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_metafields",
+          "label": "Use Metafields",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "metafield_name",
+          "label": "Metafield Name"
+        },
+        {
+          "type": "paragraph",
+          "content": "TAGS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_tags",
+          "label": "Use Tags",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag_name",
+          "label": "Tag Name"
+        }
+      ]
+    },
+    {
+      "type": "product_tile",
+      "name": "Product Tile",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Tile Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_swatches",
+          "label": "Show Swatches",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Filters & Sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_filtering",
+      "label": "Disable Filtering",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "filter_alignment",
+      "label": "Alignment of the filter button",
+      "default": "left",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "info": "This will be the alignment of the filter button on the collection page."
+    },
+    {
+      "type": "select",
+      "id": "sort_alignment",
+      "label": "Alignment of the sort button",
+      "default": "right",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "info": "This will be the alignment of the sort button on the collection page."
+    },
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "select",
+      "id": "promotion_data_source",
+      "options": [
+          {
+              "value": "metaobject",
+              "label": "Metaobject"
+          },
+          {
+              "value": "theme_settings",
+              "label": "Theme Settings"
+          }
+      ],
+      "default": "metaobject",
+      "label": "Promotion Blocks Data Source"
+    },
+    {
+      "type": "text",
+      "id": "metafield_name",
+      "label": "Metafield Name",
+      "info": "Reference to list of metaobject entries - for metaobject data source"
+    },
+    {
+      "type": "header",
+      "content": "Promotion Block Settings"
+    },
+    {
+      "type": "range",
+      "id": "frequency",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "label": "Show Promo Every (n) Product",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "paragraph",
+      "content": "Specify the filters to show in the sidebar."
+    },
+    {
+      "type": "header",
+      "content": "List Column Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Columns Desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Columns Mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Column Gap Desktop",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Column Gap Mobile",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Row Gap Desktop",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Row Gap Mobile",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ]
+}
+{% endschema %}

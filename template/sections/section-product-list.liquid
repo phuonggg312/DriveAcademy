@@ -1,0 +1,447 @@
+<div class="{{ section.settings.custom_class }} color-{{ section.settings.color_schema }}">
+  <div class="section-quote-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+  >
+    <div class="{{ section.settings.container_type }} overflow-hidden relative w-full flex flex-col align-middle items-center justify-{{ section.settings.content_alignment }}" style="aspect-ratio: {{ section.settings.aspect_ratio | divided_by: 100.0 | round: 2 }}; {% if section.settings.max_height > 0 %}max-height: {{ section.settings.max_height }}px;{% endif %}">
+        <div class="react-node w-full">
+          {% assign product_handles = '' %}
+
+          {% for block in section.blocks %}
+            {% if block.type == 'product_item' %}
+              {% if block.settings.product %}
+                {% assign product_handles = product_handles | append: block.settings.product.id | append: ',' %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+
+          {% for included_product in product.metafields.product.bundle_inclusions.value %}
+            {% if included_product %}
+              {% assign product_handles = product_handles | append: included_product.id | append: ',' %}
+            {% endif %}
+          {% endfor %}
+
+          {% assign product_handles = product_handles | split: ',' %}
+
+          {% capture data %}
+            {
+              "id": "{{ section.id }}",
+              "product_handles": {{ product_handles |  json }},
+              "section": {{ section.settings | json }},
+              "globals": {
+                "mobile_breakpoint": "1024px",
+                "enable_wishlist": "{{ settings.enable_wishlist }}",
+                "is_customer_logged_in": "{% if customer %}true{% endif %}",
+                "customer_name": "{% if customer %}{{ customer.name | default: customer.email }}{% endif %}",
+                "customer_impact": "{% if customer %}{{ customer.metafields.customer.personal_impact }}{% endif %}",
+                "currency": "{{ shop.currency }}",
+                "currency_symbol": "{{ shop.currency_symbol }}",
+                "video_quality": "{{ settings.video_quality }}",
+                "klaviyo_public_api_key": "{{ settings.klaviyo_public_api_key }}",
+                "klaviyo_api_url": "{{ settings.klaviyo_api_url }}",
+                "klaviyo_subscriber_list_id": "{{ settings.klaviyo_subscriber_list_id }}",
+                "carousel_icons": {
+                  "carousel_navigation_arrow_right": "{% if settings.right_arrow_icon %}{{ settings.right_arrow_icon }}{% else %} {{ settings.right_arrow_icon_image | asset_url }} {% endif %}",
+                  "carousel_navigation_arrow_left": "{% if settings.left_arrow_icon %}{{ settings.left_arrow_icon }}{% else %} {{ settings.left_arrow_icon_image | asset_url }} {% endif %}",
+                  "carousel_navigation_arrow_size": "{{ settings.carousel_navigation_arrow_size }}",
+                }
+              }
+            }
+          {% endcapture %}
+          <div id="react-data" data-injected-props='{{ data | escape | replace: "'", "&#39;" }}'></div>
+          {% render 'react-block', name: "theme__list-products", props: data %}
+        </div>
+      </div>
+    </div>
+</div>
+
+{% schema %}
+
+{
+  "name": "Products List",
+  "class": "products-list-section",
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "Product(s)",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product",
+          "info": "Use if you are displaying singular products in a row"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Products List",
+          "info": "Use if you are displaying multiple product lists in tabbed content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Header text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    },
+    {
+      "type": "header",
+      "content": "List settings"
+    },
+    {
+      "type": "text",
+      "id": "linked_metaobject",
+      "label": "Linked Metaobject"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header text"
+    },
+    {
+      "type": "text",
+      "id": "header_style",
+      "default": "h2",
+      "label": "Heading style",
+      "info": "Title style for Desktop"
+    },
+    {
+      "type": "text",
+      "id": "header_style_mobile",
+      "default": "h3",
+      "label": "Heading style (Mobile)",
+      "info": "Title style for Mobile"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Text under header"
+    },
+    {
+      "type": "text",
+      "id": "subtext_style",
+      "label": "Subtext style",
+      "default": "b2"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "list-scrollable",
+          "label": "Scrollable"
+        },
+        {
+          "value": "list-default",
+          "label": "Carousel"
+        },
+        {
+          "value": "list-grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "list-default",
+      "label": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type_mobile",
+      "options": [
+        {
+          "value": "list-scrollable",
+          "label": "Scrollable"
+        },
+        {
+          "value": "list-default",
+          "label": "Carousel"
+        },
+        {
+          "value": "list-grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "list-default",
+      "label": "Layout (Mobile)"
+    },
+    {
+      "type": "paragraph",
+      "content": "Wishlist"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_tile_wishlist_show",
+      "default": true,
+      "label": "Wishlist Enabled on Product Tiles",
+      "info": "Show wishlist on Product Tiles"
+    },
+    {
+      "type": "paragraph",
+      "content": "Prices"
+    },
+    {
+      "type": "checkbox",
+      "id": "product_tile_price_show",
+      "default": true,
+      "label": "Price Enabled on Product Tiles",
+      "info": "Show price on Product Tiles"
+    },
+    {
+      "type": "header",
+      "content": "CTA settings"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Text"
+    },
+    {
+      "type": "text",
+      "id": "cta_style",
+      "label": "CTA Button Style",
+      "default": "text"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA URL"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navbuttons",
+      "label": "Show Navigation Arrows",
+      "default": true,
+      "info": "Enable this option to show the carousel navigation arrows"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators",
+      "label": "Show Indicators",
+      "default": true,
+      "info": "Enable this option to show the carousel indicators"
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_edgeitems",
+      "label": "Fade Edge Items",
+      "default": true,
+      "info": "Enable this option to fade the edge items of the carousel"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_freescroll",
+      "label": "Use Free Scroll",
+      "default": true,
+      "info": "Enable this option to allow the carousel to scroll freely"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products List"
+    }
+  ]
+}
+{% endschema %}

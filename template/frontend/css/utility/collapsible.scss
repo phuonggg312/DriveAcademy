@@ -1,0 +1,81 @@
+.collapsible__title {
+  @apply py-4 px-0 cursor-pointer flex items-center justify-between;
+}
+
+.collapsible__collapse-icon-nested-1 {
+  @apply hidden;
+}
+
+.collapsible__collapse-icon-nested-2 {
+  @apply hidden;
+}
+
+.collapsible__content {
+  @apply overflow-hidden max-h-[0];
+}
+
+.collapsible__expand-icon {
+  @apply transition-transform;
+}
+
+.collapsible--active .collapsible__expand-icon {
+  @apply rotate-180;
+}
+
+.collapsible--active .collapsible__content {
+  @apply max-h-[1000px] transition-['max-height'] duration-300;
+}
+
+.collapsible__content-nested-1 {
+  @apply overflow-hidden max-h-[0];
+}
+
+.collapsible--active-nested-1 .collapsible__expand-icon-nested-1 {
+  @apply rotate-180;
+}
+
+.collapsible--active-nested-1 .collapsible__collapse-icon-nested-1 {
+  @apply hidden;
+}
+
+.collapsible--active-nested-1 .collapsible__content-nested-1 {
+  @apply max-h-[1000px] transition-['max-height'] duration-300;
+}
+
+.collapsible__content-nested-2 {
+  @apply overflow-hidden max-h-[0];
+}
+
+.collapsible--active-nested-2 .collapsible__expand-icon-nested-2 {
+  @apply rotate-180;
+}
+
+.collapsible--active-nested-2 .collapsible__collapse-icon-nested-1 {
+  @apply hidden;
+}
+
+.collapsible--active-nested-2 .collapsible__content-nested-2 {
+  @apply max-h-[1000px] transition-['max-height'] duration-300;
+}
+
+.collapsible--disabled .collapsible__title {
+  @apply cursor-default;
+}
+
+.collapsible--disabled .collapsible__expand-icon,
+.collapsible--disabled .collapsible__collapse-icon {
+  @apply hidden;
+}
+
+.collapsible--desktop-disabled .collapsible__expand-icon,
+.collapsible--desktop-disabled .collapsible__collapse-icon {
+  @apply lg:hidden;
+}
+
+.collapsible--desktop-disabled .collapsible__content {
+  @apply lg:max-h-full lg:transition-none lg:border-none;
+}
+
+.collapsible--desktop-disabled .collapsible__title {
+  @apply lg:cursor-default lg:pointer-events-none lg:pb-2;
+}

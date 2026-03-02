@@ -1,0 +1,345 @@
+{% style %}
+  .section-text-{{ section.id }} ul {
+    list-style: disc;
+    margin: initial;
+    padding: revert;
+  }
+
+  .section-text-{{ section.id }} ol {
+    list-style: decimal;
+    margin: initial;
+    padding: revert;
+  }
+{% endstyle %}
+
+<div {% if section.settings.custom_id %}id={{ section.settings.custom_id }}{% endif %} class="{{ section.settings.custom_column_class }}">
+    <div class="section-text-{{ section.id }}
+      {{ settings.reveal_animation_class }}
+      color-{{ section.settings.color_schema }}
+      text-{{ section.settings.content_alignment_mobile }}"
+      x-data="section({{ section.settings | json | escape }})"
+      :class="classes"
+    >
+        <div class="flex flex-col gap-y-[{{ section.settings.content_gap }}px] w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }}">
+            {% if section.settings.tagline %}<p class="{{ section.settings.tagline_type }}">{{ section.settings.tagline }}</p>{% endif %}
+            {% if section.settings.title %}<p class="{{ section.settings.heading_type }}">{{ section.settings.title }}</p>{% endif %}
+            {% if section.settings.content %}<div class="{{ section.settings.content_type }}">{{ section.settings.content }}</div>{% endif %}
+
+            {% if section.blocks.size > 0 %}
+                <div class="button-container
+                flex
+                space-y-[16px]
+                py-[16px]
+                lg:text-{{ section.settings.content_alignment_desktop }}
+                lg:justify-{{ section.settings.content_position_desktop }}
+                ">
+                    {% for block in section.blocks %}
+                        {% if block.type == 'button_cta' %}
+                            <a href="{{ block.settings.button_url }}" class="button {{ block.settings.button_style }}">
+                                {% if block.settings.button_icon != blank %}
+                                    <i class="{{ block.settings.button_icon }}"></i>
+                                {% endif %}
+                                {{ block.settings.button_text }}
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "button_cta",
+      "name": "Button CTA",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "CTA Text"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "CTA URL"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "label": "Outline",
+              "value": "btn-outline"
+            },
+            {
+              "label": "Primary",
+              "value": "btn-primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "btn-secondary"
+            },
+            {
+              "label": "Outline Light",
+              "value": "btn-outline-light"
+            },
+            {
+              "label": "Dark",
+              "value": "btn-dark"
+            }
+          ],
+          "default": "btn-outline"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Render settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID",
+      "info": "Custom ID"
+    },
+    {
+      "type": "text",
+      "id": "custom_column_class",
+      "label": "Custom Class",
+      "info": "Custom Class"
+    },
+    {
+      "type": "header",
+      "content": "Text settings"
+    },
+    {
+      "type": "number",
+      "id": "content_gap",
+      "label": "Content Gap",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "info": "Tagline text"
+    },
+    {
+      "type": "text",
+      "id": "tagline_type",
+      "default": "bc",
+      "label": "Tagline Type",
+      "info": "Text above title"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title Text"
+    },
+    {
+      "type": "text",
+      "id": "heading_type",
+      "default": "h2",
+      "label": "Heading Type",
+      "info": "Title Heading Type"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "text",
+      "id": "content_type",
+      "default": "b3",
+      "label": "Content Type",
+      "info": "Text below title"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text"
+    }
+  ]
+}
+{% endschema %}

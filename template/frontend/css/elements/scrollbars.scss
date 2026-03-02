@@ -1,0 +1,20 @@
+
+/*  SCROLL BARS  */
+::-webkit-scrollbar {
+  width: 4px; /* Width for vertical scrollbars */
+  height: 4px; /* Height for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #d3d3d3; /* Light grey background */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000; /* Black color for the scrollbar */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Slightly lighter black on hover */
+}

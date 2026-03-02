@@ -1,0 +1,122 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Header",
+  "type": "header",
+  "sections": {
+    "header_promotion": {
+      "type": "header-promotion",
+      "blocks": {
+        "promotion_nYtjyX": {
+          "type": "promotion",
+          "settings": {
+            "promo_bar_content": "<h5>BLACK FRIDAY IS LIVE - 25-50% OFF EVERYTHING <a href=\"/collections/eye-health\" target=\"_blank\" title=\"Eye Health\">SHOP NOW</a><br/><br/></h5>"
+          }
+        },
+        "menu_dwqEAe": {
+          "type": "menu",
+          "settings": {
+            "link_list": "about"
+          }
+        }
+      },
+      "block_order": [
+        "promotion_nYtjyX",
+        "menu_dwqEAe"
+      ],
+      "settings": {
+        "render_type": "all",
+        "container_type": "",
+        "layout": "carousel",
+        "show_promo_bar_on_homepage_only": false,
+        "color_schema": "scheme-a6785905-1459-4f93-be48-f8f8f984a21b",
+        "autoplay": false,
+        "animation_speed": 0,
+        "show_arrows": true,
+        "show_currency": true,
+        "right_link_text": "Rewards",
+        "right_link_url": ""
+      }
+    },
+    "header": {
+      "type": "header",
+      "blocks": {
+        "account_popup_J7HHk7": {
+          "type": "account_popup",
+          "settings": {
+            "cta_title": "",
+            "link_list": "",
+            "cta_text": "",
+            "cta_button_signup_text": "Sign Up",
+            "cta_button_signin_text": "Sign In",
+            "cta_button_signout_text": "Log Out"
+          }
+        }
+      },
+      "block_order": [
+        "account_popup_J7HHk7"
+      ],
+      "settings": {
+        "mobile_menu_icon": "icon-list-thin",
+        "mobile_menu_icon_close": "icon-close",
+        "show_text_no_icons": false,
+        "enable_searchbar": true,
+        "search_icon": "icon-magnifying-glass-thin",
+        "header_search_bar_position": "horizontal",
+        "header_search_bar_position_mobile": "below_header",
+        "menu": "main-menu",
+        "enable_help_link": false,
+        "help_link": "",
+        "sticky_header": false,
+        "container_type": "container",
+        "show_customer": true,
+        "layout": "header-layout-left",
+        "color_schema": "default",
+        "enable_account": true,
+        "account_icon": "icon-user-thin",
+        "use_account_popup": true,
+        "account_popup_trigger": "click",
+        "enable_wishlist": true,
+        "wishlist_icon": "icon-wishlist",
+        "wishlist_url": "",
+        "enable_address": true,
+        "address_icon": "icon-location-pin",
+        "address_url": "",
+        "enable_minicart": true,
+        "cart_icon": "icon-shopping-cart-simple-thin",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 24,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "desktop_min_height": 50,
+        "mobile_min_height": 31
+      }
+    },
+    "minicart": {
+      "type": "header-minicart",
+      "settings": {
+        "minicart_style": "drawer",
+        "show_total_item_price": true,
+        "show_vendor": false,
+        "show_cart_note": false,
+        "empty_text_one": "You have no items in your cart.",
+        "empty_text_two": "",
+        "empty_button": "Continue Shopping"
+      }
+    }
+  },
+  "order": [
+    "header_promotion",
+    "header",
+    "minicart"
+  ]
+}

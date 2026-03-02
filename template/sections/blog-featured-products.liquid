@@ -1,0 +1,164 @@
+<div class="{{ section.settings.container_type }}">
+    <div class="section-blog-featured-products-{{ section.id }} text-center {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+         x-data="section({{ section.settings | json | escape }})"
+         :class="classes"
+    >
+        <div class="blog-featured-products">
+            <div class="product-list">
+                {% assign product_handles_string = article.metafields.custom.featured_products | remove: '["' | remove: '"]' %}
+                {% assign product_handles = product_handles_string | split: '","' %}
+
+                <div class="react-node w-full">
+                    {% capture data %}
+                        {
+                          "product_handles": {{ product_handles | escape }},
+                          "section": {{ section.settings | json }}
+                        }
+                    {% endcapture %}
+                    {% assign data = data %}
+                    <div id="react-data" data-injected-props='{{ data | escape | replace: "'", "&#39;" }}'></div>
+                    {% render 'react-block', name: "theme__blog-featured-products", props: data %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Blog Products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "In This Article"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Products"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Blog Products",
+      "category": "Blog"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["article"]
+  }
+}
+{% endschema %}

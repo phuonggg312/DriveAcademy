@@ -1,0 +1,39 @@
+.blog-article-tile {
+  @apply flex flex-col gap-3 lg:gap-5 relative;
+
+  &__image-container {
+    @apply overflow-hidden relative h-[140px] lg:h-[435px];
+  }
+
+  &__image {
+    @apply object-cover w-full h-full absolute top-0 left-0;
+  }
+
+  &__details {
+    @apply flex flex-col space-y-[12px];
+  }
+
+  &__text-group {
+    @apply flex flex-col gap-1 lg:gap-2;
+  }
+
+  &__header {
+    @apply flex justify-between lg:gap-8;
+  }
+
+  &__category {
+    @apply text-sm;
+  }
+
+  &__title {
+    // Custom styling can be added here if needed
+  }
+
+  &__read-more {
+
+  }
+
+  &__content {
+
+  }
+}

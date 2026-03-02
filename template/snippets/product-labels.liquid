@@ -1,0 +1,45 @@
+{% assign tags = product.tags | split: ',' %}
+{% assign has_valid_tags = false %}
+{% capture data %}
+    {
+        "tags": [
+       {% if tags.size > 1 %}
+            {% for tag in tags %}
+                 {% if tag contains 'label|' %}
+                     {% assign has_valid_tags = true %}
+                    {% assign label_parts = tag | split: '|' %}
+                    {% assign label_value = label_parts[1] %}
+                {
+                    "text": "{{ label_value |  remove: '"' }}",
+                     "color": "color-{{ settings.standard_badge_scheme }}"
+                }{% if forloop.last == true %},{% endif %}
+                 {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if product.compare_at_price_max != blank and product.compare_at_price_max > product.price %}
+            {% if tags.size > 1 %},{% endif %}{
+                "text": "Sale",
+                "color": "bg-red-500 color-{{ settings.sale_badge_color_scheme }}"
+            }
+            {% assign has_valid_tags = true %}
+            {% assign has_sale = true %}
+        {% endif %}
+         {%- if product.selected_or_first_available_variant.inventory_quantity <= 0 -%}
+             {% if tags.size > 1 or has_sale %},{% endif %}{
+             "text": "Sold out",
+             "color": "bg-gray-800 color-{{ settings.sold_out_badge_color_scheme }}"
+             }
+             {% assign has_valid_tags = true %}
+         {% endif %}
+        ]
+    }
+{% endcapture %}
+{% assign data = data  %}
+
+{% if has_valid_tags %}
+    <div class="react-node">
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% liquid render 'react-block', name: "theme__block-tags", props: data %}
+    </div>
+{% endif %}
+

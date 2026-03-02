@@ -1,0 +1,57 @@
+name: Tagged Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  tagged-release:
+    environment: "PROD"
+    name: "Tagged Release"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Authenticate with private NPM package
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - name: "SemVer checks"
+        run: |
+          PACKAGE="@mindarc/arctheme"
+          MANIFEST_VER=$(cat package.json | jq -r ".version")
+          echo "package.json version is: $MANIFEST"
+          PUBLISHED_VER=$(npm view $PACKAGE version)
+          echo "Upstream NPM version is: $PUBLISHED_VER"
+          GH_TAG_VER=$GITHUB_REF_NAME
+          echo "Github tag is: $GITHUB_REF_NAME"
+
+  publish-npm:
+    environment: "PROD"
+    name: "Publish to NPMJS.org"
+    runs-on: ubuntu-latest
+    needs: tagged-release
+    steps:
+      - uses: actions/checkout@v4
+      - name: Authenticate with private NPM package
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+      - name: Publish package on NPM 📦
+        run: npm publish --scope=@mindarc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release:
+    environment: "PROD"
+    name: "Create Github Release"
+    runs-on: ubuntu-latest
+    needs: publish-npm
+    steps:
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          # files: |
+          # LICENSE.txt
+          # *.tgz

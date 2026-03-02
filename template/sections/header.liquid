@@ -1,0 +1,390 @@
+<div
+  class="header-container color-{{ section.settings.color_schema }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  <div class="header react-node {{ section.settings.layout }}">
+    <div class="{{ section.settings.container_type }} relative">
+      {% include 'react-props', additional: settings %}
+      <div id="react-data" data-injected-props='{{ data }}'></div>
+      {% render 'react-block', name: "theme__navigation-header", props: data %}
+      {% render 'header-account-popup' %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header sticky top-0 z-20",
+  "tag": "header",
+  "blocks": [
+    {
+      "type": "account_popup",
+      "name": "Account Dropdown",
+      "settings": [
+        {
+          "type": "text",
+          "id": "cta_title",
+          "label": "CTA Title",
+          "info": "Set the title for the call-to-action in the account dropdown."
+        },
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Links",
+          "info": "Logged In Navigation List"
+        },
+        {
+          "type": "richtext",
+          "id": "cta_text",
+          "label": "CTA Content Text",
+          "info": "Set the content text for the call-to-action in the account dropdown."
+        },
+        {
+          "type": "text",
+          "id": "cta_button_signup_text",
+          "label": "CTA Sign up Button Text",
+          "default": "Sign Up",
+          "info": "Text for the Sign-Up button in the account dropdown."
+        },
+        {
+          "type": "text",
+          "id": "cta_button_signin_text",
+          "label": "CTA Sign In Button Text",
+          "default": "Sign In",
+          "info": "Text for the Sign-In button in the account dropdown."
+        },
+        {
+          "type": "text",
+          "id": "cta_button_signout_text",
+          "label": "CTA Sign Out Button Text",
+          "default": "Log Out",
+          "info": "Text for the Log-Out button in the account dropdown."
+        }
+      ]
+    },
+    {
+      "type": "mobile_megamenu",
+      "name": "Mobile Megamenu",
+      "settings": [
+        {
+          "type": "text",
+          "id": "attach_to",
+          "label": "Parent menu item",
+          "info": "This should be a unique menu item from the parent menu."
+        },
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Mobile Menu",
+          "info": "Select a list of links for the mobile megamenu."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "mobile_menu_icon",
+      "label": "Mobile Menu Icon",
+      "default": "icon-list-thin",
+      "info": "Icon for the mobile menu."
+    },
+    {
+      "type": "text",
+      "id": "mobile_menu_icon_close",
+      "label": "Mobile Menu Icon (Close)",
+      "default": "icon-close",
+      "info": "Icon for closing the mobile menu."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_text_no_icons",
+      "label": "Show text instead of icons",
+      "info": "Show text actions instead of icons in the header."
+    },
+    {
+      "type": "header",
+      "content": "Searchbar"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_searchbar",
+      "label": "Enable searchbar",
+      "info": "Enable or disable the searchbar in the header."
+    },
+    {
+      "type": "text",
+      "id": "search_icon",
+      "label": "Search Icon",
+      "default": "icon-magnifying-glass-thin",
+      "info": "Icon for the searchbar."
+    },
+    {
+      "type": "select",
+      "id": "header_search_bar_position",
+      "label": "Search bar position",
+      "info": "Set the position of the search bar. * Only works with icon in left side layout.",
+      "default": "horizontal",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "Vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "header_search_bar_position_mobile",
+      "label": "Search bar position for mobile",
+      "info": "Set the position of the search bar for mobile. * Only works with icon in left side layout.",
+      "default": "below_header",
+      "options": [
+        {
+          "value": "below_header",
+          "label": "Below header"
+        },
+        {
+          "value": "inside_menu",
+          "label": "Inside Menu"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "info": "Select the main menu for the header."
+    },
+    {
+      "type": "header",
+      "content": "Help Link"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_help_link",
+      "label": "Enable help link",
+      "info": "Enable or disable the help link in the header."
+    },
+    {
+      "type": "url",
+      "id": "help_link",
+      "label": "Help URL",
+      "info": "URL for the help link."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_header",
+      "label": "Sticky Header",
+      "info": "Enable or disable the sticky header feature."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ],
+      "info": "Choose the container width for the header."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_customer",
+      "label": "Show Customer Icon",
+      "info": "Enable or disable the customer icon in the header."
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Menu Layout",
+      "options": [
+        {
+          "label": "Icon in Center",
+          "value": "header-layout-center"
+        },
+        {
+          "label": "Icon in Left",
+          "value": "header-layout-left"
+        }
+      ],
+      "info": "Choose the layout for the menu in the header."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Choose a color scheme for the header."
+    },
+    {
+      "type": "header",
+      "content": "Account Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_account",
+      "label": "Enable account",
+      "info": "Enable or disable the account feature in the header."
+    },
+    {
+      "type": "text",
+      "id": "account_icon",
+      "label": "Account Icon",
+      "default": "icon-user-thin",
+      "info": "Icon for the account feature."
+    },
+    {
+      "type": "checkbox",
+      "id": "use_account_popup",
+      "label": "Use Account Dropdown",
+      "info": "Enable or disable the account dropdown."
+    },
+    {
+      "type": "select",
+      "id": "account_popup_trigger",
+      "label": "Account Trigger",
+      "options": [
+        {
+          "label": "On Hover",
+          "value": "hover"
+        },
+        {
+          "label": "On Click",
+          "value": "click"
+        }
+      ],
+      "default": "click",
+      "info": "Choose how the account dropdown is triggered. * Only used when account dropdown enabled."
+    },
+    {
+      "type": "header",
+      "content": "Minicart Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_minicart",
+      "label": "Enable minicart",
+      "info": "Enable or disable the minicart feature in the header."
+    },
+    {
+      "type": "text",
+      "id": "cart_icon",
+      "label": "Cart Icon",
+      "default": "icon-shopping-cart-simple-thin",
+      "info": "Icon for the minicart feature."
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0,
+      "info": "Adjust the top padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0,
+      "info": "Adjust the bottom padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0,
+      "info": "Adjust the left and right padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0,
+      "info": "Adjust the top padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0,
+      "info": "Adjust the bottom padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0,
+      "info": "Adjust the left and right padding for mobile view."
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ]
+}
+{% endschema %}

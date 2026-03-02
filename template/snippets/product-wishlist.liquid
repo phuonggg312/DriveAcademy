@@ -1,0 +1,13 @@
+{% if settings.enable_wishlist %}
+    <div x-show="!$store.wishlist.isItemInWishlist('{{ product.id }}')" class="wishlist-icon">
+        <div x-on:click="await ($store.wishlist.addToWishlist('{{ product.id }}'))" style="z-index:1" class="wishlist-icon add-to-wishlist {{ settings.reveal_animation_class }}" data-animation-delay="0.1s">
+            {% render 'icons-website-actions', icon: 'wishlist' %}
+        </div>
+    </div>
+
+    <div x-show="$store.wishlist.isItemInWishlist('{{ product.id }}')" class="wishlist-icon">
+        <div x-on:click="await ($store.wishlist.removeFromWishlist({{ product.id }}))" style="z-index:1" class="wishlist-icon add-to-wishlist {{ settings.reveal_animation_class }}" data-animation-delay="0.1s">
+            {% render 'icons-website-actions', icon: 'wishlist-active' %}
+        </div>
+    </div>
+{% endif %}

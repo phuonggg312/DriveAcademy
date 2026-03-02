@@ -1,0 +1,14 @@
+{
+    "name": "@mindarc/arctheme",
+    "version": "1.1.3",
+    "bin": {
+        "arctheme": "./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mindarc/arctheme.git"
+    },
+    "dependencies": {
+        "cross-spawn": "^7.0.3"
+    }
+}

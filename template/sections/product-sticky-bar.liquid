@@ -1,0 +1,267 @@
+<div id="sticky-bar-trigger" class="h-[1px]"></div>
+
+<div id="sticky-bar" class="sticky-bar">
+    <div class="w-full flex justify-between items-center h-auto lg:h-[64px]">
+        <div class="items-center hidden lg:flex">
+            <span class="sticky-bar-nav-item bc px-[24px] cursor-pointer selected" x-on:click="$nextTick(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); })">Details & Features</span>
+            <nav class="flex uppercase fade-out-effect">
+                {% for block in section.blocks %}
+                    <a href="#{{ block.settings.nav_id }}" class="sticky-bar-nav-item bc px-[24px]">{{ block.settings.nav_title }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+        <div class="flex h-full w-full lg:w-auto">
+            <div class="flex-col items-end px-[32px] align-middle justify-center hidden lg:flex">
+                <span class="bc text-[#54565A]">{{ product.title }}</span>
+                {% if product.compare_at_price > product.price %}
+                    <div class="text-right">
+                        <span class="bc line-through text-[#BBBBBD]">{{ product.compare_at_price | money }}</span>
+                        <span class="b1 text-[#54565A]">{{ product.price | money }}</span>
+                    </div>
+                {% else %}
+                    <div class="text-right">
+                        <span class="b1 text-[#54565A]">{{ product.price | money }}</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="w-full lg:w-[246px] p-2 lg:p-0" style="height:100%">
+                <div class="pdp-add-to-cart hidden lg:block">
+                    {% render 'product-add-to-cart', block:section %}
+                </div>
+                <div class="pdp-add-to-cart lg:hidden">
+                    <button class="button btn-primary cursor-pointer" x-on:click="$dispatch('open-size-selector')">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const stickyBar = document.getElementById('sticky-bar');
+        const triggerElement = document.getElementById('sticky-bar-trigger');
+        const navItems = document.querySelectorAll('.sticky-bar-nav-item');
+        const sections = Array.from(navItems).map(item => document.querySelector(item.getAttribute('href')));
+        const offset = -65;
+
+        function getExactYPosition(element) {
+            const rect = element.getBoundingClientRect();
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            return rect.top + scrollTop;
+        }
+
+        function checkScrollPosition() {
+            const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollYThreshold = getExactYPosition(triggerElement);
+
+            if (scrollPosition > ((scrollYThreshold) - (window.innerHeight + offset))) {
+                stickyBar.classList.add('fixed-bottom');
+            } else {
+                stickyBar.classList.remove('fixed-bottom');
+            }
+
+            sections.forEach((section, index) => {
+                if (section) {
+                    const sectionTop = getExactYPosition(section) - window.innerHeight / 2;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        navItems.forEach(item => item.classList.remove('selected'));
+                        navItems[index].classList.add('selected');
+                    }
+                }
+            });
+        }
+
+        function handleNavItemClick(event) {
+            // navItems.forEach(item => item.classList.remove('selected'));
+            // event.currentTarget.classList.add('selected');
+        }
+
+        navItems.forEach(item => {
+            item.addEventListener('click', handleNavItemClick);
+        });
+
+        window.addEventListener('scroll', checkScrollPosition);
+    });
+</script>
+
+{% schema %}
+{
+  "name": "Sticky Product Bar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Bar settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "text",
+      "id": "disabled_text",
+      "label": "Disabled Button Text",
+      "default": "Not Available"
+    },
+    {
+      "type": "text",
+      "id": "adding_message",
+      "label": "Adding to Cart Button Text",
+      "default": "Adding to cart..."
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button Style",
+      "options": [
+        {
+          "label": "Outline",
+          "value": "btn-outline"
+        },
+        {
+          "label": "Primary",
+          "value": "btn-primary"
+        },
+        {
+          "label": "Secondary",
+          "value": "btn-secondary"
+        },
+        {
+          "label": "Outline Light",
+          "value": "btn-outline-light"
+        }
+      ],
+      "default": "btn-primary"
+    },
+    {
+      "type": "checkbox",
+      "id": "snap_when_scroll",
+      "label": "Snap to bottom when scrolled?",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Navigation Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "nav_title",
+          "label": "Navigation Item Title",
+          "default": "Section Title"
+        },
+        {
+          "type": "text",
+          "id": "nav_id",
+          "label": "Navigation Item ID",
+          "default": "section-id"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky Product Bar"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

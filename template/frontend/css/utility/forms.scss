@@ -1,0 +1,334 @@
+[type="text"],
+[type="email"],
+[type="url"],
+[type="password"],
+[type="number"],
+[type="date"],
+[type="datetime-local"],
+[type="month"],
+[type="search"],
+[type="tel"],
+[type="time"],
+[type="week"],
+[multiple],
+textarea,
+select {
+  @apply appearance-none w-full bg-white pb-2 text-base relative;
+}
+
+select {
+  @apply bg-select-arrow bg-no-repeat bg-[length:16px] bg-[right_13px_center] pr-10;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  @apply p-0;
+}
+
+.errors {
+  color: red;
+  background: #f003;
+}
+
+.form-success {
+  color: green;
+  background: #00800033;
+}
+
+.info {
+  color: orange;
+  background: #ffa50033;
+}
+
+.errors,
+.form-success,
+.info {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 7.5px;
+  text-align: center;
+}
+
+/**
+ * Unfortunate hack until https://bugs.webkit.org/show_bug.cgi?id=198959 is fixed.
+ * This sucks because users can't change line-height with a utility on date inputs now.
+ * Reference: https://github.com/twbs/bootstrap/pull/31993
+ */
+::-webkit-date-and-time-value {
+  @apply min-h-[1.5em];
+}
+
+/**
+ * In Safari on macOS date time inputs are 4px taller than normal inputs
+ * This is because there is extra padding on the datetime-edit and datetime-edit-{part}-field pseudo elements
+ * See https://github.com/tailwindlabs/tailwindcss-forms/issues/95
+ */
+::-webkit-datetime-edit,
+::-webkit-datetime-edit-year-field,
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-second-field,
+::-webkit-datetime-edit-millisecond-field,
+::-webkit-datetime-edit-meridiem-field {
+  @apply py-0;
+}
+
+[type="radio"] {
+  @apply appearance-none inline-block flex-shrink-0 w-4 h-4 bg-white bg-origin-border border p-0 text-[#54565A] align-middle select-none;
+
+  &:checked {
+    @apply bg-current bg-no-repeat bg-contain bg-center border-transparent;
+
+    &:hover,
+    &:focus {
+      @apply bg-current border-transparent;
+    }
+  }
+}
+
+[type="checkbox"] {
+  @apply appearance-none inline-block flex-shrink-0 w-4 h-4 bg-white bg-origin-border border p-0 text-[#54565A] align-middle select-none;
+
+  &:checked {
+    @apply bg-checkbox-checked;
+
+    &:focus {
+      @apply bg-current border-transparent;
+    }
+  }
+}
+
+[type="file"] {
+  @apply block bg-none border-current border-0 rounded-none p-0;
+}
+
+[type="search"]::-webkit-search-decoration,
+[type="search"]::-webkit-search-cancel-button,
+[type="search"]::-webkit-search-results-button,
+[type="search"]::-webkit-search-results-decoration {
+  @apply hidden;
+}
+
+[type="search"]::-ms-clear,
+[type="search"]::-ms-reveal {
+  @apply hidden w-0 h-0;
+}
+
+.label {
+  @apply text-sm font-normal;
+
+  + input,
+  + select,
+  + textarea,
+  + .quantity {
+    @apply mt-1;
+  }
+}
+
+input,
+select {
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+input,
+select {
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+.field {
+  + .field {
+    @apply mt-2;
+  }
+
+  + .button {
+    @apply mt-3;
+  }
+
+  > label:first-child {
+    @extend .label;
+  }
+}
+
+.floating-input {
+  @apply relative;
+  background-color: white;
+  letter-spacing: 1.92px;
+  text-transform: uppercase;
+
+  input,
+  select,
+  textarea {
+    @apply block w-full text-[12px] leading-[24px] font-normal text-black bg-transparent border border-[#BBBBBD] min-h-[48px];
+    border-color: black;
+    letter-spacing: 1.92px;
+    text-transform: uppercase;
+  }
+
+  input + label,
+  select:focus + label,
+  textarea:focus + label {
+    @apply absolute text-[12px] font-medium leading-[18px] duration-300 transform -translate-y-4 left-2 top-2 z-10 origin-[0] bg-white px-1;
+    color: #54565a !important;
+  }
+
+  &--dark {
+    input {
+      @apply text-white border-white ring-white;
+    }
+
+    label {
+      @apply text-white bg-black;
+    }
+  }
+
+  &--error {
+    input {
+      @apply text-[#D12727] border-[#D12727] ring-[#D12727];
+    }
+
+    label {
+      @apply text-[#D12727];
+    }
+  }
+
+  input,
+  textarea {
+    &:placeholder-shown {
+      + label {
+        @apply absolute text-[12px] font-medium duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1 uppercase;
+      }
+    }
+
+    &:not(:placeholder-shown) {
+      @apply pl-4 border-[#54565A];
+      + label {
+        @apply absolute text-[12px] font-medium duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1 uppercase;
+        color: #54565a !important;
+      }
+    }
+  }
+
+  select:invalid {
+    + label {
+      @apply text-[16px] leading-[24px] bg-transparent;
+    }
+  }
+
+  select:valid {
+    @apply pl-4 border-[#54565A];
+    + label {
+      @apply absolute text-[#54565A] text-[12px] font-medium leading-[18px] duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1;
+    }
+  }
+
+  input:-webkit-autofill {
+    transition: background-color 1s 5000s;
+  }
+
+  label {
+    position: absolute;
+    top: -6px;
+    left: 12px;
+    background: #fff;
+    padding: 0 4px;
+    z-index: 10;
+    font-weight: 600;
+    font-size: 12px;
+    display:none;
+  }
+}
+
+
+.default-input {
+  @apply relative;
+  background-color: white;
+  letter-spacing: 1.92px;
+  text-transform: uppercase;
+
+  input,
+  select,
+  textarea {
+    @apply block w-full text-[12px] leading-[24px] font-normal text-black bg-transparent border border-[#BBBBBD] min-h-[48px];
+    border-color: black;
+    letter-spacing: 1.92px;
+    text-transform: uppercase;
+  }
+
+  input + label,
+  select:focus + label,
+  textarea:focus + label {
+    @apply absolute text-[12px] font-medium leading-[18px] duration-300 transform -translate-y-4 left-2 top-2 z-10 origin-[0] bg-white px-1;
+    color: #54565a !important;
+  }
+
+  &--dark {
+    input {
+      @apply text-white border-white ring-white;
+    }
+
+    label {
+      @apply text-white bg-black;
+    }
+  }
+
+  &--error {
+    input {
+      @apply text-[#D12727] border-[#D12727] ring-[#D12727];
+    }
+
+    label {
+      @apply text-[#D12727];
+    }
+  }
+
+  input,
+  textarea {
+    &:placeholder-shown {
+      + label {
+        @apply absolute text-[12px] font-medium duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1 uppercase;
+      }
+    }
+
+    &:not(:placeholder-shown) {
+      @apply pl-4 border-[#54565A];
+      + label {
+        @apply absolute text-[12px] font-medium duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1 uppercase;
+        color: #54565a !important;
+      }
+    }
+  }
+
+  select:invalid {
+    + label {
+      @apply text-[16px] leading-[24px] bg-transparent;
+    }
+  }
+
+  select:valid {
+    @apply pl-4 border-[#54565A];
+    + label {
+      @apply absolute text-[#54565A] text-[12px] font-medium leading-[18px] duration-300 transform -translate-y-4 left-[0.8rem] top-2 z-10 origin-[0] bg-white px-1;
+    }
+  }
+
+  input:-webkit-autofill {
+    transition: background-color 1s 5000s;
+  }
+
+  label {
+    position: absolute;
+    top: -6px;
+    left: 12px;
+    background: #fff;
+    padding: 0 4px;
+    z-index: 10;
+    font-weight: 600;
+    font-size: 12px;
+  }
+}
+

@@ -1,0 +1,199 @@
+{% assign has_swatches = false %}
+{% if block.settings.use_variants %}
+    {% capture data %}
+        {
+        "settings": {{ block.settings | json }},
+        "swatches": [
+            {%- for option in product.options_with_values -%}
+                {%- assign downcase_option = option.name | downcase -%}
+                {%- capture option_name -%}option{{ option.position }}{%- endcapture -%}
+
+                {%- if option.name == 'Color' %}
+                       {%- for value in option.values -%}
+                        {%- capture variant_swatch_id -%}{{ option_name }}-{{ forloop.index }}{%- endcapture -%}
+                            {%- for variant in product.variants -%}
+                                {%- if variant[option_name] == value and variant.image -%}
+                                    {
+                                        "name": "{{ variant.title }}",
+                                        "image": "{{ variant.image | image_url: '40x' | escape }}",
+                                        "show_name": false,
+                                        "url": "{{ product.url }}?variant_id={{ variant.id }}"
+                                    },
+                                    {% assign has_swatches = true %}
+                                    {%- break -%}
+                               {%- endif -%}
+                            {%- endfor -%}
+                        {%- endfor -%}
+                {%- endif -%}
+            {% endfor %}
+            ]
+        }
+    {% endcapture %}
+    {% assign data = data %}
+{% endif %}
+
+{% if block.settings.use_tags %}
+    {% assign related_products = "" | split: ", " %}
+
+    {% for tag in product.tags %}
+        {% if tag contains block.settings.tag_name %}
+            {% assign colour_value = tag | split: ':' | last %}
+            {% if colour_tags == "" %}
+                {% assign colour_tags = colour_value %}
+            {% else %}
+                {% assign colour_tags = colour_tags | append: ',' | append: colour_value %}
+                {% assign tagFound = true %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% assign colour_handles = colour_tags | split: ',' %}
+
+    {% if tagFound %}
+        {% assign related_products = "" %}
+        {% assign has_swatches = false %}
+
+        {% for handle in colour_handles %}
+            {% assign related_product = all_products[handle] %}
+            {% if related_product %}
+                {% if related_product.handle != '' and related_product.url != '' and related_product.title != '' %}
+                    {% capture related_product_data %}
+                        {% assign last_image_src = related_product.images | last | image_url: '40x' %}
+                        {% assign image_src = null %}
+
+                        {% for image in related_product.images %}
+                            {% if image.src contains '_s' %}
+                                {% assign image_src = image.src %}
+                                {% break %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if image_src == null %}
+                            {% assign image_src = last_image_src %}
+                        {% endif %}
+                        {
+                            "name": "{{ related_product.title }}",
+                            "image": "{{ image_src | image_url: '40x' }}",
+                            "show_name": false,
+                            "url": "{{ related_product.url }}",
+                            {% if related_product.id == product.id %} "is_product": true {% else %} "is_product": false {% endif %}
+                        }
+                        {% assign has_swatches = true %}
+                    {% endcapture %}
+                    {% if related_products == "" %}
+                        {% assign related_products = related_product_data %}
+                    {% else %}
+                        {% assign related_products = related_products | append: ',' | append: related_product_data %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+
+        {% if related_products != "" %}
+            {% assign related_products = '[' | append: related_products | append: ']' %}
+        {% else %}
+            {% assign related_products = '[]' %}
+        {% endif %}
+
+        {% if product.options.size > 0 %}
+            {% assign first_option = product.options.first %}
+            {% assign first_option_value = product.selected_or_first_available_variant.options[0] %}
+        {% endif %}
+
+        {% capture data %}
+            {
+                "settings": {{ block.settings | json }},
+                "product": {{ product | json }},
+                "swatches": {{ related_products }},
+                "current_colour": "{{ first_option_value }}"
+            }
+        {% endcapture %}
+        {% assign data = data %}
+    {% endif %}
+{% endif %}
+
+
+{% if block.settings.use_metafields %}
+    {% assign metafield_notations = block.settings.metafield_name | split: "." %}
+    {% assign current_metafield_siblings = "" %}
+    {% assign count = 0 %}
+    {% for notation in metafield_notations %}
+        {% if count == 0 %}
+            {% assign current_metafield_siblings = product.metafields[notation] %}
+        {% else %}
+            {% assign current_metafield_siblings = current_metafield_siblings[notation] %}
+        {% endif %}
+        {% assign count = count | plus: 1 %}
+    {% endfor %}
+
+    {% assign metafields_siblings = current_metafield_siblings.value %}
+
+    {% assign related_products = "" | split: ", " %}
+
+    {% for productInMetaObject in metafields_siblings %}
+        {% assign handle = productInMetaObject.handle | split: ", " %}
+        {% assign related_products = related_products | concat: handle %}
+        {% assign productsFound = true %}
+    {% endfor %}
+
+    {% comment %}
+        This is to ensure it doesn't double up on options for Fragrance in the event there is variant option with the same name
+    {% endcomment %}
+    {% assign hasSameVariantName = false %}
+    {% for option in product.options_with_values %}
+        {% if option.name == 'Fragrance' %}
+            {% assign hasSameVariantName = true %}
+        {% endif %}
+    {% endfor %}
+
+    {% if hasSameVariantName == false %}
+        {% if productsFound or product.metafields.custom.bottle_colour_name != blank %}
+            {% assign has_swatches = true %}
+            {% capture data %}
+                {
+                    "settings": {{ block.settings | json }},
+                    "current_colour": "{{ product.metafields.custom.bottle_colour_name }}",
+                    "current_swatch": "{{ product.metafields.custom.bottle_colour }}",
+                    "swatches": [
+                    {% for productInMetaObject in metafields_siblings %}
+                        {% assign productData = collections.all.products | where: 'handle', related_product %}
+                        {% if productInMetaObject.handle != product.handle %}
+                            {
+                                "name": "{{ productInMetaObject.title }}",
+                                "color": "{{ productInMetaObject.metafields.custom.bottle_colour.value }}",
+                                "image": "{{ productInMetaObject.featured_image | img_url: '40x' | escape }}",
+                                "show_name": false,
+                                "url": "{{ productInMetaObject.url }}"
+                            },
+                            {% assign has_swatches = true %}
+                        {% endif %}
+                    {% endfor %}
+                    ]
+                }
+            {% endcapture %}
+            {% assign data = data %}
+        {% endif %}
+    {% endif %}
+{% endif %}
+
+
+{% if has_swatches %}
+    <div class="product__swatches flex flex-col justify-between mt-6 lg:mt-8">
+        <div class="product__swatches-title flex flex-row gap-x-[4px]">
+            <div class="product__option-name {{ block.settings.swatch_name_style}} font-medium">
+                {{ swatchName }}:
+            </div>
+
+            {% if block.settings.show_name %}
+                <div class="product__swatch-name b2">
+                    {{ product.metafields.custom.bottle_colour_name }}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="product__swatch-container justify-end">
+            <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+            {% render 'react-block', name: "theme__product-swatches", props: data  %}
+        </div>
+    </div>
+{% endif %}

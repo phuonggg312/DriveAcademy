@@ -1,0 +1,42 @@
+{% render 'instagram-feed' %}
+
+{% schema %}
+{
+  "name": "Instagram Feed",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section title",
+      "info": "This is where the name of the section will anchor to when the anchor button is clicked. This is optional if the section doesn't need to be anchored anyway."
+    },
+    {
+      "type": "text",
+      "id": "feat_content",
+      "label": "Featured Content from",
+      "placeholder": "Enter the name of your brand"
+    },
+    {
+      "type": "text",
+      "id": "feed_id",
+      "label": "Feed ID for Foursixty",
+      "placeholder": "Enter your feed ID"
+    },
+    {
+      "type": "range",
+      "id": "img_count",
+      "min": 7,
+      "max": 28,
+      "step": 1,
+      "label": "Image count",
+      "default": 12
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Feed",
+      "category": "Blocks"
+    }
+  ]
+}
+{% endschema %}

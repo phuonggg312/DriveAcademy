@@ -1,0 +1,75 @@
+<div class="react-node">
+  {% capture data %}
+    {
+      "section_settings": {{ section.settings | json }},
+      "cart": {{ cart | json }}
+    }
+  {% endcapture %}
+  {% assign data = data | escape %}
+
+  <div id="react-data" data-injected-props='{{ data }}'></div>
+  {% render 'react-block', name: "theme__ecommerce-minicart", props: data %}
+</div>
+
+{% schema %}
+{
+  "name": "Minicart",
+  "class": "site-minicart",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "radio",
+      "label": "Minicart Style",
+      "id": "minicart_style",
+      "options": [
+        {
+          "label": "Model",
+          "value": "modal"
+        },
+        {
+          "label": "Drawer",
+          "value": "drawer"
+        }
+      ],
+      "default": "modal"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_total_item_price",
+      "label": "Show Total Item Price (price x quantity)?",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:settings_schema.cart.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "t:settings_schema.cart.settings.show_cart_note.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Empty State Settings"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text_one",
+      "label": "Empty State Text 1"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text_two",
+      "label": "Empty State Text 2"
+    },
+    {
+      "type": "text",
+      "id": "empty_button",
+      "label": "Empty State Button Label"
+    }
+  ]
+}
+{% endschema %}

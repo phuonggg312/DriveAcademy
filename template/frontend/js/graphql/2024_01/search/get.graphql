@@ -1,0 +1,140 @@
+query searchProducts(
+  $query: String!
+  $first: Int!
+  $after: String
+  $productFilters: [ProductFilter!]
+  $sort: SearchSortKeys
+  $direction: Boolean
+) {
+  search(
+    first: $first
+    after: $after
+    sortKey: $sort
+    reverse: $direction
+    query: $query
+    productFilters: $productFilters
+    types: [PRODUCT, ARTICLE]
+  ) {
+    edges {
+      node {
+        ... on Article {
+          id
+          title
+          excerpt
+          handle
+          content
+          tags
+          blog {
+            handle
+          }
+          onlineStoreUrl
+          image {
+            id
+            url
+            src
+          }
+        }
+        ... on Product {
+          id
+          title
+          handle
+          description
+          tags
+          options {
+            name
+            values
+          }
+          featuredImage {
+            altText
+            url
+          }
+          images(first: 2) {
+            edges {
+              node {
+                altText
+                url
+              }
+            }
+          }
+          metafields(
+            identifiers: [
+              { namespace: "custom", key: "bottle_siblings" }
+              { namespace: "custom", key: "bottle_colour" }
+              { namespace: "custom", key: "bottle_colour_name" }
+              { namespace: "products", key: "how_it_works_title" }
+            ]
+          ) {
+            namespace
+            key
+            value
+            type
+            description
+          }
+          sellingPlanGroups(first: 5) {
+            edges {
+              node {
+                name
+                options {
+                  name
+                  values
+                }
+                sellingPlans(first: 5) {
+                  edges {
+                    node {
+                      id
+                      name
+                      description
+                      priceAdjustments {
+                        adjustmentValue {
+                          ... on SellingPlanFixedPriceAdjustment {
+                            price {
+                              amount
+                              currencyCode
+                            }
+                          }
+                          ... on SellingPlanPercentagePriceAdjustment {
+                            adjustmentPercentage
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+          variants(first: 5) {
+            edges {
+              node {
+                id
+                availableForSale
+                sku
+                selectedOptions {
+                  value
+                }
+                compareAtPrice {
+                  amount
+                }
+                image {
+                  altText
+                  url
+                }
+              }
+            }
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{% capture data %}
+    {
+        "title": "{{ title | escape }}",
+        "content": "{{ content | escape }}",
+        "id": "{{ modal_id | escape }}"
+    }
+{% endcapture %}
+{% assign data = data %}
+
+<div class="modal" x-data="modal">
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% liquid render 'react-block', name: "theme__modal", props: data  %}
+</div>

@@ -1,0 +1,25 @@
+query GetInventoryItems($query: String!) {
+    inventoryItems(first: 1, query: $query) {
+        edges {
+            node {
+                id
+                sku
+                inventoryLevels(first: 5) {
+                    edges {
+                        node {
+                            id
+                            location {
+                                name
+                                id
+                            }
+                            quantities(names: "available") {
+                                name
+                                quantity
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

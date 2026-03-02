@@ -1,0 +1,581 @@
+<div class=" color-{{ section.settings.color_schema }}">
+  <div class="section-banner {{ section.settings.container_type }} flex flex-col align-middle items-center {{ settings.reveal_animation_class }} {{ section.settings.banner_type | default: 'secondary' }}">
+    <div class="section-banner-{{ section.id }} w-full relative items-center overflow-hidden {{ settings.reveal_animation_class }}">
+      <div class="react-node relative">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__hero-banner", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "w-full",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "vertical_content_position_desktop",
+      "label": "Text Content Position",
+      "default": "justify-start",
+      "options": [
+        {
+          "value": "justify-start",
+          "label": "Top"
+        },
+        {
+          "value": "justify-center",
+          "label": "Centre"
+        },
+        {
+          "value": "justify-end",
+          "label": "Bottom"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "horizontal_content_position_desktop",
+      "label": "Text Content Alignment",
+      "default": "justify-start text-left",
+      "options": [
+        {
+          "value": "justify-start text-left",
+          "label": "Left"
+        },
+        {
+          "value": "justify-center text-center",
+          "label": "Centre"
+        },
+        {
+          "value": "justify-end text-right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "is_auto_slide",
+      "label": "Auto play slides",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "auto_slide_duration",
+      "label": "Auto play slides duration",
+      "info": "Sets the time each slide stays on screen before automatically switching to the next one.",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block_image",
+      "name": "Image Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color Scheme"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_text_style",
+          "label": "Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "title_text_style_mobile",
+          "label": "Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "text_under_title",
+          "label": "Text Under Title"
+        },
+        {
+          "type": "text",
+          "id": "text_under_title_text_style",
+          "label": "Text Under Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "text_under_title_text_style_mobile",
+          "label": "Text Under Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "text_above_description",
+          "label": "Text Above Description"
+        },
+        {
+          "type": "text",
+          "id": "text_above_description_text_style",
+          "label": "Text Above Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "text_above_description_text_style_mobile",
+          "label": "Text Above Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "description_text_style",
+          "label": "Description Text Style"
+        },
+        {
+          "type": "text",
+          "id": "description_text_style_mobile",
+          "label": "Description Text Style (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "CTA Buttons Settings"
+        },
+        {
+          "type": "select",
+          "id": "cta_alignment",
+          "label": "CTA Buttons Alignment",
+          "default": "justify-start",
+          "options": [
+            {
+              "label": "Left",
+              "value": "justify-start"
+            },
+            {
+              "label": "Center",
+              "value": "justify-center"
+            },
+            {
+              "label": "Right",
+              "value": "justify-end"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "primary_button_text",
+          "label": "Primary Button Text"
+        },
+        {
+          "type": "url",
+          "id": "primary_button_url",
+          "label": "Primary Button URL"
+        },
+        {
+          "type": "select",
+          "id": "primary_button_style",
+          "label": "Primary Button Style",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Tertiary",
+              "value": "tertiary"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Dark Primary",
+              "value": "dark-primary"
+            },
+            {
+              "label": "Dark Secondary",
+              "value": "dark-secondary"
+            },
+            {
+              "label": "Dark Tertiary",
+              "value": "dark-tertiary"
+            },
+            {
+              "label": "Dark Text",
+              "value": "dark-text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "secondary_button_text",
+          "label": "Secondary Button Text"
+        },
+        {
+          "type": "url",
+          "id": "secondary_button_url",
+          "label": "Secondary Button URL"
+        },
+        {
+          "type": "select",
+          "id": "secondary_button_style",
+          "label": "Secondary Button Style",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Tertiary",
+              "value": "tertiary"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Dark Primary",
+              "value": "dark-primary"
+            },
+            {
+              "label": "Dark Secondary",
+              "value": "dark-secondary"
+            },
+            {
+              "label": "Dark Tertiary",
+              "value": "dark-tertiary"
+            },
+            {
+              "label": "Dark Text",
+              "value": "dark-text"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Secondary Banner Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_contact_links",
+          "label": "Show contact links",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "contact_number",
+          "label": "Contact Number"
+        },
+        {
+          "type": "text",
+          "id": "contact_email",
+          "label": "Contact Email"
+        },
+        {
+          "type": "url",
+          "id": "external_live_chat_url",
+          "label": "External Live Chat Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "text_content_background_image",
+          "label": "Text Content Background Image"
+        }
+      ]
+    },
+    {
+      "type": "block_video",
+      "name": "Video Banner",
+      "settings": [
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "Content Settings"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color scheme"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_text_style",
+          "label": "Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "title_text_style_mobile",
+          "label": "Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "text_under_title",
+          "label": "Text Under Title"
+        },
+        {
+          "type": "text",
+          "id": "text_under_title_text_style",
+          "label": "Text Under Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "text_under_title_text_style_mobile",
+          "label": "Text Under Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "text_above_description",
+          "label": "Text Above Description"
+        },
+        {
+          "type": "text",
+          "id": "text_above_description_text_style",
+          "label": "Text Above Title Text Style"
+        },
+        {
+          "type": "text",
+          "id": "text_above_description_text_style_mobile",
+          "label": "Text Above Title Text Style (Mobile)"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "description_text_style",
+          "label": "Description Text Style"
+        },
+        {
+          "type": "text",
+          "id": "description_text_style_mobile",
+          "label": "Description Text Style (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "CTA Buttons Settings"
+        },
+        {
+          "type": "select",
+          "id": "cta_alignment",
+          "label": "CTA Buttons Alignment",
+          "default": "justify-start",
+          "options": [
+            {
+              "label": "Left",
+              "value": "justify-start"
+            },
+            {
+              "label": "Center",
+              "value": "justify-center"
+            },
+            {
+              "label": "Right",
+              "value": "justify-end"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "primary_button_text",
+          "label": "Primary Button Text"
+        },
+        {
+          "type": "url",
+          "id": "primary_button_url",
+          "label": "Primary Button URL"
+        },
+        {
+          "type": "select",
+          "id": "primary_button_style",
+          "label": "Primary Button Style",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Tertiary",
+              "value": "tertiary"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Dark Primary",
+              "value": "dark-primary"
+            },
+            {
+              "label": "Dark Secondary",
+              "value": "dark-secondary"
+            },
+            {
+              "label": "Dark Tertiary",
+              "value": "dark-tertiary"
+            },
+            {
+              "label": "Dark Text",
+              "value": "dark-text"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "secondary_button_text",
+          "label": "secondary Button Text"
+        },
+        {
+          "type": "url",
+          "id": "secondary_button_url",
+          "label": "Secondary Button URL"
+        },
+        {
+          "type": "select",
+          "id": "secondary_button_style",
+          "label": "Secondary Button Style",
+          "default": "primary",
+          "options": [
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Tertiary",
+              "value": "tertiary"
+            },
+            {
+              "label": "Text",
+              "value": "text"
+            },
+            {
+              "label": "Dark Primary",
+              "value": "dark-primary"
+            },
+            {
+              "label": "Dark Secondary",
+              "value": "dark-secondary"
+            },
+            {
+              "label": "Dark Tertiary",
+              "value": "dark-tertiary"
+            },
+            {
+              "label": "Dark Text",
+              "value": "dark-text"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Secondary Banner Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_contact_links",
+          "label": "Show contact links",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "contact_number",
+          "label": "Contact Number"
+        },
+        {
+          "type": "text",
+          "id": "contact_email",
+          "label": "Contact Email"
+        },
+        {
+          "type": "url",
+          "id": "external_live_chat_url",
+          "label": "External Live Chat Url"
+        },
+        {
+          "type": "image_picker",
+          "id": "text_content_background_image",
+          "label": "Text Content Background Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+
+{% endschema %}

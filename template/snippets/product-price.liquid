@@ -1,0 +1,38 @@
+
+<div x-cloak class="pdp-price stacked-price" data-prodify-price-container x-data="{is_sale:{% if product.compare_at_price > product.price %}true{% else %}false{% endif %}}">
+
+    <div class="flex flex-row justify-between">
+        <div class="price-container lg:flex lg:flex-col">
+            <span class="sr-only">Regular Price</span>
+            <span {% if product.selected_or_first_available_variant.price != 0 %} class="b__price" {% endif %}>
+              {{ product.selected_or_first_available_variant.price | money }}
+            </span>
+
+            {% if product.selected_or_first_available_variant.compare_at_price and product.selected_or_first_available_variant.compare_at_price != 0 %}
+                <span class="b__saleprice line-through">
+                    {{ product.selected_or_first_available_variant.compare_at_price | money }}
+                  </span>
+            {% endif %}
+
+            {% if product.compare_at_price > 0 and template.name == 'product' %}
+                <div class="discount_percent text-xs top hidden">
+                    Save {{ product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round }}%
+                </div>
+            {% endif %}
+        </div>
+        <div>
+            {% assign tag_value = "" %}
+            {% assign tag_check = 'automatic:' %}
+
+            {% for tag in product.tags %}
+                {% if tag contains tag_check %}
+                    {% assign tag_value = tag | split: ":" | last %}
+                {% endif %}
+            {% endfor %}
+
+            {% if tag_value != "" %}
+                <span class="b3 text-[#CDA176]">{{ tag_value }}</span>
+            {% endif %}
+        </div>
+    </div>
+</div>

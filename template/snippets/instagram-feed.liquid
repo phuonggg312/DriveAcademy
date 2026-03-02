@@ -1,0 +1,21 @@
+{% assign setting = section.settings %}
+
+<instagram-feed inline-template img-count="{{ setting.img_count }}" x-data="instagram">
+    <div class="ig-feed__wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-center text-md-left">
+                        {{ setting.section_title }}
+                        <span>{{ setting.feat_content }}</span>
+                    </h4>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 px-0 ig-feed_content"></div>
+            </div>
+        </div>
+    </div>
+</instagram-feed>

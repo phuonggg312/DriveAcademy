@@ -1,0 +1,30 @@
+.font-icon {
+  @apply flex flex-col items-center;
+}
+
+// CONTAINERS
+.container {
+  display:block;
+  padding:0 0 !important;
+}
+
+.grid-container {
+  @apply grid text-center md:text-center lg:text-left sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 space-y-4 md:space-y-0 md:space-x-4 w-full;
+}
+
+// REACT
+.react-node {
+  @apply flex flex-col align-middle items-center;
+}
+.react-node.full {
+  @apply w-full;
+}
+
+// ALPINE
+[x-cloak] {
+  display: none !important;
+}
+
+.section-border {
+  @apply border-t border-black;
+}

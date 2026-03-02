@@ -1,0 +1,15 @@
+@mixin form-field-styles {
+  @apply bg-[#FFFFFF] border border-[#000000] text-[#000000] rounded-lg p-3 py-[11px] outline-none shadow-none;
+
+  &.has-error {
+    @apply border-[#B42318] bg-[#FEF3F2];
+  }
+
+  &.disabled {
+    @apply text-[#AAAAAA] border-[#AAAAAA] bg-[#EEEEEE];
+  }
+
+  &__error-message {
+    @apply text-[#B42318] text-xs mt-1 pl-3;
+  }
+}

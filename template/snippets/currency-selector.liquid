@@ -1,0 +1,20 @@
+{% form 'currency', id: 'currency-form' %}
+    <div class="flex justify-center items-center">
+        <select name="currency" id="currency-selector">
+            {% for currency in shop.enabled_currencies %}
+                {% if currency == cart.currency %}
+                    <option selected="true">{{currency.iso_code}}</option>
+                {% else %}
+                    <option>{{currency.iso_code}}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <i class="icon icon-caret-down-thin text-[23px]"></i>
+    </div>
+{% endform %}
+
+<script>
+    document.getElementById('currency-selector').addEventListener('change', function() {
+        this.form.submit();
+    });
+</script>

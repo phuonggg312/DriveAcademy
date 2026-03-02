@@ -1,0 +1,117 @@
+# This file contains a list of files and folders to be ignored when
+# committing to a git repository.  Ignored files are both Slate project
+# specific files as well as commonly ignored files on any project.
+
+# For more information on this .gitignore files, see GitHub's
+# documentation: https://help.github.com/articles/ignoring-files/
+
+# Project #
+###################
+node_modules
+dist
+upload
+deploy.log
+config/shopify.yml
+npm-debug.log
+.env
+.env.*
+yarn-error.log
+.DS_Store
+.github/workflows/image-transfer/test.js
+storybook-static
+.yalc/
+sections/*.json
+templates/*.json
+templates/customers/*.json
+config/settings_data.json
+
+# Shopify CLI
+
+shopify.theme.toml
+
+# ignore all files inside shopify/assets/ except files with 'static' keyword in their filename
+/assets
+/snippets/vite.liquid
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Custom #
+######################
+*.sass-cache*
+.cache/*
+_site
+/.idea
+/.vscode
+secrets.json
+.jekyll-metadata
+.ruby-version
+
+# Compiled files #
+######################
+public/theme.css
+public/password.css
+public/gift_card.css
+public/styleguide.css
+assets/*.vendors.js
+public/theme.js
+public/password.js
+public/login.js
+public/gift_card.js
+public/checkout.js
+public/styleguide.js
+
+# Cypress Test Media#
+######################
+cypress/downloads/
+cypress/screenshots/
+cypress/videos/
+cypress.env.json
+
+# Playwright
+######################
+/tests/**/*.png
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

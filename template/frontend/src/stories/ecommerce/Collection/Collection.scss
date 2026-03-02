@@ -1,0 +1,15 @@
+.button.toolbar-items__filterbutton {
+  @apply h-auto min-h-[40px] text-sm pl-4 max-lg:justify-start;
+
+  .button__icon {
+    @apply text-lg;
+  }
+
+  select {
+    @apply text-sm;
+  }
+}
+
+.product-form .button {
+  @apply h-[46px];
+}

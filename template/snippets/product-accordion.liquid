@@ -1,0 +1,16 @@
+<div class="{{ settings.reveal_animation_class }}" data-animation-delay="0.5s">
+
+    <div class="react-node">
+        {% capture data %}
+            {
+            "id": "{{ block.id }}",
+            "product_sku": "{{ product.selected_or_first_available_variant.sku |  escape }}",
+            "block_settings": {{ block.settings | json }},
+            "section_settings": {{ section.settings | json }}
+            }
+        {% endcapture %}
+        {% assign data = data |  escape  | replace: "'", "&#39;" %}
+        <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+        {% render 'react-block', name: 'theme__elements-accordion', props: data %}
+    </div>
+</div>

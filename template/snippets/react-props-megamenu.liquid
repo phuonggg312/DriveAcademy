@@ -1,0 +1,20 @@
+{% capture megamenu %}
+  "megamenu": [
+    {%- for first_level_link in section.settings.menu.links -%}
+      {
+        "title": "{{ first_level_link.title }}",
+        "handle": "{{ first_level_link.handle }}",
+        "url": "{{ first_level_link.url }}",
+        "links": [
+          {%- for second_level_link in first_level_link.links -%}
+            {
+              "title": "{{ second_level_link.title }}",
+              "handle": "{{ second_level_link.handle }}",
+              "url": "{{ second_level_link.url }}"
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+{% endcapture %}

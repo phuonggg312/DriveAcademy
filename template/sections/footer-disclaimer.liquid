@@ -1,0 +1,195 @@
+{% render 'footer-ratings', mobile: true  %}
+
+<div class="footer-terms {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}" style="{% if settings.footer_image != blank %} background: transparent; {% endif %}">
+  <div class="flex footer-terms__container flex-row min-h-[40px] items-center w-full max-w-[{{ section.settings.container_width }}]">
+
+    {%- for block in section.blocks -%}
+      <div class="footer-terms__bottom  {{ settings.reveal_animation_class }} footer-terms__bottom-{{block.type}}" data-animation-delay="0.2s">
+        {% if block.type == 'copyright' %}
+          {% render 'footer-copyright', block:block %}
+        {% endif %}
+        {% if block.type == 'logo' %}
+          {% render 'block-logo', block: block %}
+        {% endif %}
+        {% if block.type == 'ratings' %}
+          {% render 'footer-ratings' %}
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer Disclaimer",
+  "class": "footer",
+  "tag": "footer",
+  "blocks": [
+    {
+      "type": "copyright",
+      "name": "Copyright",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "copyright",
+          "label": "Copyright text"
+        },
+        {
+          "type": "richtext",
+          "id": "copyright_mobile",
+          "label": "Copyright text Mobile"
+        }
+      ]
+    },
+    {
+        "type": "ratings",
+        "name": "Ratings",
+        "limit": 1
+    },
+    {
+        "type": "logo",
+        "name": "Logo",
+        "limit": 2,
+        "settings": [
+        {
+            "type": "select",
+            "id": "render_type",
+            "options": [
+            {
+                "value": "all",
+                "label": "All"
+            },
+            {
+                "value": "mobile-only",
+                "label": "Mobile Only"
+            },
+            {
+                "value": "desktop-only",
+                "label": "Desktop Only"
+            }
+            ],
+            "default": "all",
+            "label": "Render Type",
+            "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image"
+        },
+        {
+            "type": "range",
+            "id": "image_width",
+            "min": 0,
+            "max": 200,
+            "step": 2,
+            "unit": "px",
+            "label": "Image Width",
+            "default": 100
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom_desktop",
+            "min": 0,
+            "max": 50,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin Bottom Desktop",
+            "default": 0
+        },
+        {
+            "type": "range",
+            "id": "margin_bottom_mobile",
+            "min": 0,
+            "max": 50,
+            "step": 2,
+            "unit": "px",
+            "label": "Margin Bottom Mobile",
+            "default": 0
+        }
+        ]
+    }
+
+  
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "container_width",
+      "label": "Container Max Width",
+      "placeholder": "1024px",
+      "default": "1024px"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Disclaimer"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

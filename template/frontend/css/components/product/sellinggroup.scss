@@ -1,0 +1,199 @@
+.pdp-details {
+  .product-selling-groups {
+    @apply flex flex-col gap-y-[16px];
+
+    &__inline {
+      @apply flex flex-col gap-y-[8px];
+    }
+
+    &__option {
+      @apply flex items-center py-2;
+    }
+
+    &__radio {
+      @apply h-[20px] w-[20px] border border-black rounded-full appearance-none bg-white;
+
+      &::hover {
+        @apply bg-white;
+      }
+      &:checked::hover {
+        @apply bg-white;
+      }
+      &::focus {
+        @apply bg-white;
+      }
+      &:checked::focus {
+        @apply bg-white;
+      }
+      &::before {
+        content: "";
+        @apply block h-full w-full border-2 border-black rounded-full;
+      }
+
+      &:checked::after {
+        content: "";
+        @apply block h-2.5 w-2.5 bg-black rounded-full m-auto;
+        position: relative;
+        top: -76%; /* Adjust this value to center the dot */
+      }
+    }
+
+    &__label {
+      @apply ml-2;
+    }
+
+    &__price {
+      @apply flex items-center ml-auto;
+    }
+
+    &__badge {
+      @apply ml-4 text-[10px] font-medium border bg-[#FFABED] border-black rounded-[30px] text-center px-[8px] py-[4px];
+    }
+
+    &__final-price {
+      @apply flex gap-x-[4px] items-end ml-2;
+    }
+
+    &__monthly {
+      @apply text-[#BEBEBF];
+    }
+
+    &__tab-list {
+      @apply flex items-center rounded-t-lg bg-[#F5F5F5] text-[#808080];
+    }
+
+    &__tab {
+      @apply w-full text-center b3 p-[8px] cursor-pointer border-black rounded-tl-[12px] rounded-tr-[12px] border-l border-r border-t;
+
+      &--active {
+        @apply bg-white text-black font-medium;
+        border-bottom: solid 1px #fff;
+        margin-bottom: -1px;
+      }
+    }
+
+    &__content {
+      @apply px-2 pb-1 bg-white border border-black rounded-br-[12px] rounded-bl-[12px];
+    }
+
+    &__add-to-cart {
+      @apply flex w-full;
+    }
+
+    &__form {
+      @apply w-full;
+    }
+
+    &__form-inner {
+      @apply w-full;
+    }
+
+    &__button {
+      @apply flex w-full;
+    }
+  }
+}
+
+.productcard__content {
+  .product__swatches-container {
+    @apply flex-row-reverse border-t border-black py-2;
+  }
+
+  .product__swatches-title {
+    @apply flex basis-[200px] items-center text-right justify-end;
+  }
+
+  .product-selling-groups {
+    @apply flex flex-col;
+
+    &__inline {
+      @apply flex flex-col gap-y-[8px];
+    }
+
+    &__option {
+      @apply flex items-center py-2;
+    }
+
+    &__radio {
+      @apply h-[20px] w-[20px] border border-black rounded-full appearance-none bg-white;
+
+      &::hover {
+        @apply bg-white;
+      }
+      &:checked::hover {
+        @apply bg-white;
+      }
+      &::focus {
+        @apply bg-white;
+      }
+      &:checked::focus {
+        @apply bg-white;
+      }
+      &::before {
+        content: "";
+        @apply block h-full w-full border-2 border-black rounded-full;
+      }
+
+      &:checked::after {
+        content: "";
+        @apply block h-2.5 w-2.5 bg-black rounded-full m-auto;
+        position: relative;
+        top: -76%; /* Adjust this value to center the dot */
+      }
+    }
+
+    &__label {
+      @apply ml-2 flex-1;
+    }
+
+    &__price {
+      @apply flex items-center;
+    }
+
+    &__badge {
+      @apply text-[10px] font-medium border bg-[#FFABED] border-black rounded-[30px] text-center px-[8px] py-[4px];
+    }
+
+    &__final-price {
+      @apply flex gap-x-[4px] items-end ml-2;
+    }
+
+    &__monthly {
+      @apply text-[#BEBEBF];
+    }
+
+    &__tab-list {
+      @apply items-center rounded-t-lg bg-[#F5F5F5] text-[#808080] hidden;
+    }
+
+    &__tab {
+      @apply w-full text-center b3 p-[8px] cursor-pointer border-black rounded-tl-[12px] rounded-tr-[12px] border-l border-r border-t;
+
+      &--active {
+        @apply bg-white text-black font-medium;
+        border-bottom: solid 1px #fff;
+        margin-bottom: -1px;
+      }
+    }
+
+    &__content {
+      @apply py-[8px] border-t border-black;
+    }
+
+    &__add-to-cart {
+      @apply flex w-full;
+    }
+
+    &__form {
+      @apply w-full;
+    }
+
+    &__form-inner {
+      @apply w-full;
+    }
+
+    &__button {
+      @apply flex w-full;
+    }
+  }
+}

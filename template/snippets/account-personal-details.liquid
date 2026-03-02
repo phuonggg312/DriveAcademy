@@ -1,0 +1,158 @@
+{% assign months = "January, February, March, April, May, June, July, August, September, October, November, December" | split: ", " %}
+{% assign show_birthday_month = false %}
+{% assign tag_string = '' %}
+{% for tag in customer.tags %}
+    {% assign tag_string = tag_string | append: tag %}
+    {% unless forloop.last %}
+        {% assign tag_string = tag_string | append: "," %}
+    {% endunless %}
+{% endfor %}
+
+{% assign birthday_value = "" %}
+{% for tag in customer.tags %}
+    {% if tag contains "birthday:" %}
+        {% assign birthday_value = tag | split: ':' | last | capitalize %}
+    {% endif %}
+{% endfor %}
+
+<div x-data="account" class="account-content-area account-forms max-lg:px-4">
+    <div class="lg:pt-6">
+        <form
+            id="details-form"
+            class="account__tile"
+        >
+            <div class="lg:py-2">
+                <p class="sh4 mb-5 lg:mb-12 max-lg:py-1 max-lg:px-3 max-lg:mb-[35px]">
+                    Edit Profile
+                </p>
+
+                <div class="flex flex-col gap-12 lg:gap-[55px]">
+                    <input
+                        type="hidden"
+                        name="id"
+                        value="{{ customer.id }}"
+                    />
+                    <input
+                        type="hidden"
+                        name="tags"
+                        value="{{ tag_string }}"
+                    />
+
+                    <div class="flex flex-col lg:flex-row lg:gap-8 gap-12">
+                        <div class="floating-input w-full">
+                            <input
+                                class="py-2 px-4"
+                                type="text"
+                                name="first_name"
+                                value="{{ customer.first_name }}"
+                                placeholder=" "
+                            />
+                            <label for="first_name">First name</label>
+                        </div>
+
+                        <div class="floating-input w-full">
+                            <input
+                                class="py-2 px-4"
+                                type="text"
+                                name="last_name"
+                                value="{{ customer.last_name }}"
+                                placeholder=" "
+                            />
+                            <label for="first_name">Last name</label>
+                        </div>
+                    </div>
+
+                    <div class="floating-input w-full">
+                        <input
+                            class="py-2 px-4 disabled-field"
+                            type="email"
+                            name="email"
+                            value="{{ customer.email }}"
+                            placeholder=" "
+                            readonly="true"
+                            style="background: #f5f5f5;color: #929394;border-color: #bebebf;"
+                        />
+                        <label for="email">Email</label>
+                    </div>
+
+                    <div class="floating-input w-full">
+                        <input
+                            class="py-2 px-4 disabled-field"
+                            type="tel"
+                            name="phone"
+                            value="{{ customer.phone }}"
+                            placeholder=" "
+                        />
+                        <label for="phone">Contact number</label>
+                    </div>
+
+                    {% if show_birthday_month %}
+                        <div class="floating-input">
+                            <select
+                                class="py-2 px-4 w-full lg:max-w-[374px]"
+                                name="birthday"
+                                required
+                            >
+                                <option hidden value=""></option>
+                                {% for month in months %}
+                                    {% if month == birthday_value %}
+                                        <option
+                                            value="birthday:{{ month | downcase }}"
+                                            selected
+                                        >
+                                            {{ month }}
+                                        </option>
+                                    {% else %}
+                                        <option value="birthday:{{ month | downcase }}">
+                                            {{ month }}
+                                        </option>
+                                    {% endif %}
+                                {% endfor %}
+                                </select>
+                            <label for="birthday" class="">{{ 'customer.register.birthday' | t }}</label>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mt-8 lg:mt-10">
+                    <div class="form-success" x-show="updatedSuccessfully" x-text="successMessage"></div>
+                    <div class="errors" x-show="updatedError" x-text="errorMessage"></div>
+
+                    <div class="flex gap-2 lg:gap-4">
+                        <a href="/account"class="button button-tertiary lg:min-w-[150px]">
+                            Cancel
+                        </a>
+
+                        <button x-on:click.prevent="await updateDetailsUnauthenticated();"
+                            class="button button-primary"
+                            :disabled="!hasFormChanged"
+                        >
+                            Update profile
+                            <div class="mr-1 mt-1" x-show="processing">
+                                {% render 'loader', colour: '#00263e' %}
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% assign query = 'mutation UpdateCustomerDetails($input: CustomerInput!){
+  customerUpdate(input: $input) {
+    customer {
+      id
+      firstName
+      lastName
+      phone
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}' %}
+
+{% render 'react-hash', query: query %}

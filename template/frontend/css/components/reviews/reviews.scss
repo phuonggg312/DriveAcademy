@@ -1,0 +1,87 @@
+.reviews__breakdown {
+    @apply my-4
+}
+
+.reviews__breakdown .review__bar-container {
+    @apply flex items-center my-2
+}
+
+.reviews__breakdown .review__bar {
+    @apply flex-1 mx-2 h-4 bg-gray-200 rounded
+}
+
+.reviews__breakdown .review__bar-display {
+    @apply bg-black h-4 rounded
+}
+
+.reviews__breakdown .review__bar-summary {
+    @apply text-gray-600 w-8 text-right
+}
+
+.reviews__breakdown .review__bar-title {
+    @apply text-gray-600 w-8
+}
+
+// Reviews.io
+div[id*="reviews_io_reviewsio"] {
+    background: #f5f5f5;
+}
+
+
+/* REVIEWS */
+.review-breakdown .bar-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.review-breakdown .bar {
+    flex-grow: 1;
+    margin: 0 10px;
+    background-color: #eee;
+    position: relative;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.review-breakdown .bar::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 10px;
+    background-color: #333;
+}
+reviewsio-product-reviews-widget {
+
+    .R-ContentList__item {
+        background: white;
+        border-radius: 20px;
+        padding: 24px;
+        border: 1px solid black;
+    }
+
+    .ElementsWidget-prefix .ElementsWidget {
+        margin-bottom: 0px;
+        .ElementsWidget__header .header__group .R-Button {
+            border-radius: 16px;
+            border:none;
+        }
+    }
+    .ElementsWidget__footer {
+        display: none;
+    }
+    .ElementsWidget__inner {
+        padding: 24px;
+    }
+
+}
+
+.ruk_rating_snippet {
+    font-variant-numeric: normal;
+    font-feature-settings: "tnum" off, "lnum" off, "onum" off;
+    .ruk-rating-snippet-count:nth-last-of-type(2):first-of-type {
+        display: none;
+    }
+}

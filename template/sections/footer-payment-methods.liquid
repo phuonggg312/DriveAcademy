@@ -1,0 +1,57 @@
+<div class="footer-payment w-full flex flex-row align-middle color-{{ section.settings.color_schema }} " style="{% if settings.footer_image != blank %} background: transparent; {% endif %}">
+    <div class="footer-payment__row flex flex-row ">
+      <div class="footer-payment__header font-regular" > {{ section.settings.payment_method_heading }} </div>
+    {% for block in section.blocks %}
+        {% if block.settings.payment_type_image %}
+             <img class="footer-payment__icons" src="{{ block.settings.payment_type_image | image_url: width:block.settings.payment_type_image.width }}" alt="payment_icons" />
+        {% endif %}
+    {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+
+  {
+    "name": "Footer Payments",
+    "class": "payment-section",
+    "blocks": [
+      {
+        "type": "payment_method",
+        "name": "Payment Method",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "payment_type_image",
+            "label": "Payment Type"
+          }
+        ]
+      }
+    ],
+    "settings": [
+      {
+        "type": "header",
+        "content": "General"
+      },
+      {
+        "type": "text",
+        "id": "payment_method_heading",
+        "label": "Heading",
+        "default": "Payment Methods"
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_schema",
+        "label": "Color scheme"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Footer Payment Methods"
+      }
+    ],
+    "enabled_on": {
+      "groups": ["footer"]
+    }
+  }
+{% endschema %}
+

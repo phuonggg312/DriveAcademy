@@ -1,0 +1,259 @@
+<div
+  class="parallax-container
+  color-{{ section.settings.color_schema }}"
+  x-data="section({{ section.settings | json | escape }})"
+  {% if section.settings.padding_area == 'outside'  %}
+  :class="classes"
+  {% endif %}
+>
+    <div class="parallax-section content-over-media" style="background-image: url('{{ section.settings.parallax_image | image_url: width: section.settings.parallax_image.width }}')">
+        <div class="parallax-content"
+        {% if section.settings.padding_area == 'inside'  %}
+          :class="classes"
+        {% endif %}
+        >
+            <h2>{{ section.settings.title }}</h2>
+            <div>
+                <p>{{ section.settings.subtext }}</p>
+            </div>
+            <a href="{{ section.settings.button_url }}" class="btn-secondary btn-link">{{ section.settings.button_text }}</a>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Parallax",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "parallax_image",
+      "label": "Background Image",
+      "info": "Upload the image you want to use for the background parallax effect."
+    },
+    {
+      "type": "range",
+      "id": "parallax_speed",
+      "label": "Parallax Speed",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 50,
+      "info": "Adjust the speed of the parallax effect. A lower number means slower movement."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "<p>CTA Text</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "CTA Button"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "default": "/"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "padding_area",
+      "options": [
+        {
+          "value": "inside",
+          "label": "Inner"
+        },
+        {
+          "value": "outside",
+          "label": "Outer"
+        }
+      ],
+      "default": "outside",
+      "label": "Padding Area"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Mobile"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parallax",
+      "category": "Image"
+    }
+  ]
+}
+{% endschema %}

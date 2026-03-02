@@ -1,0 +1,6 @@
+<div class="footer__ratings color-{{ section.settings.color_schema }}" style="{% if settings.footer_image != blank %} background: transparent; {% endif %}">
+    <div class="{% if mobile %} footer__ratings-mobile {% endif %}">
+        <img src="{{ 'trustpilot_placeholder.png' | file_img_url: 'large'  }}" />
+        <img src="{{ 'google_placeholder.png' | file_img_url: 'large'  }}" />
+    </div>
+</div>

@@ -1,0 +1,95 @@
+<div class="section-filter-buttons container color-{{ section.settings.color_schema }}">
+  <div class="react-node">
+    {% include 'react-props' %}
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__collectionfilters", props: data %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Filter Buttons",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "Button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Filter Buttons"
+    }
+  ]
+}
+
+{% endschema %}

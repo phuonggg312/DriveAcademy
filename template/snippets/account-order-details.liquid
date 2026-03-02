@@ -1,0 +1,172 @@
+{%- for line_item in order.line_items -%}
+    {% assign fulfillment_id = line_item.fulfillment.id %}
+    {% assign tracking_number = line_item.fulfillment.tracking_number %}
+    {% assign tracking_company = line_item.fulfillment.tracking_company %}
+    {% assign tracking_url = line_item.fulfillment.tracking_url %}
+    {% assign tracking_status = line_item.fulfillment.status %}
+{% endfor %}
+
+
+<div class="account-content-area px-4">
+    <div class="order-details order-details__grid grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div class="flex flex-col gap-4">
+        <div class="flex max-lg:flex-col gap-4">
+          <!-- Order Status and Tracking -->
+          <div class="order-details__section order-details__status flex-1">
+            <div class="py-2">
+              <div>{{ order.fulfillment_status | capitalize }}</div>
+              <div class="order-details__date b3 text-[#808080]">{{ order.created_at | date: "%d %B, %Y" }}</div>
+
+              {% if tracking_number %}
+                <div class="order-details__tracking">
+                  Tracking Number:
+                  <a href="{{ tracking_url }}" class="order-details__tracking-link">
+                    {{ tracking_number }}
+                  </a>
+                </div>
+              {% endif %}
+
+              <div class="order-details__contact b4">
+                Haven’t received your delivery?
+
+                <a href="/contact" class="order-details__contact-link underline">
+                  Contact Us
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Information -->
+          <div class="order-details__section order-details__payment flex-1">
+            <div class="py-2">
+              <div>Paid</div>
+              <div class="order-details__date b3 text-[#808080]">{{ order.transactions[0].created_at | date: "%d %B, %Y" }}</div>
+              <div class="order-details__payment-method b3">
+                {{ order.transactions[0].gateway_display_name }}
+                {% if order.transactions[0].payment_details.credit_card_company %}
+                  ({{ order.transactions[0].payment_details.credit_card_company }}) ending in {{ order.transactions[0].payment_details.credit_card_last_four_digits }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information and Addresses -->
+        <div class="order-details__section order-details__info lg:col-span-2">
+          <div class="sh4 mb-6">Order Details</div>
+          
+          <div class="grid grid-cols-2">
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Contact Information</div>
+              <div class="order-details__info-value b3">{{ order.email }}</div>
+            </div>
+
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Shipping Address</div>
+              <div class="order-details__info-value b3">
+                {{ order.shipping_address.first_name }} {{ order.shipping_address.last_name }}<br>
+                {{ order.shipping_address.address1 }}<br>
+                {% if order.shipping_address.address2 %}{{ order.shipping_address.address2 }}<br>{% endif %}
+                {{ order.shipping_address.city }} {{ order.shipping_address.province }} {{ order.shipping_address.zip }}<br>
+                {{ order.shipping_address.country }}
+              </div>
+            </div>
+
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Billing Address</div>
+              <div class="order-details__info-value b3">
+                {{ order.billing_address.first_name }} {{ order.billing_address.last_name }}<br>
+                {{ order.billing_address.address1 }}<br>
+                {% if order.billing_address.address2 %}{{ order.billing_address.address2 }}<br>{% endif %}
+                {{ order.billing_address.city }} {{ order.billing_address.province }} {{ order.billing_address.zip }}<br>
+                {{ order.billing_address.country }}
+              </div>
+            </div>
+
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Shipping Method</div>
+              <div class="order-details__info-value b3">{{ order.shipping_method.title }}</div>
+            </div>
+
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Payment</div>
+              <div class="order-details__info-value b3">{{ order.transactions[0].gateway_display_name }}
+                  {% if order.transactions[0].payment_details.credit_card_last_four_digits %}
+                  ending in {{ order.transactions[0].payment_details.credit_card_last_four_digits }}
+                  {% endif %}
+              </div>
+            </div>
+
+            <div class="order-details__info-block">
+              <div class="order-details__info-label b3 text-[#808080]">Company</div>
+              <div class="order-details__info-value b3">{{ order.shipping_address.company | default: '-' }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-details__section order-details__summary space-y-[24px]">
+        <div class="sh4 mb-6">Order Summary ( {{ order.line_items.size }} )</div>
+        {% for line_item in order.line_items %}
+          <div class="order-details__product">
+            <div class="w-[118px] h-[101px]">
+              <img src="{{ line_item.image | img_url:'400x' }}" alt="{{ line_item.title }}" class="order-details__product-image">
+            </div>
+
+            <div class="order-details__product-info flex justify-between grow">
+              <div class="flex flex-col">
+                <div class="order-details__product-title">{{ line_item.title }}</div>
+                <div class="order-details__product-variant">{{ line_item.variant_title }}</div>
+                <div class="order-details__product-quantity mt-auto">QTY: {{ line_item.quantity }}</div>
+              </div>
+
+              <div class="order-details__product-price ml-auto font-medium">
+                {% if line_item.compare_at_price > line_item.price %}
+                  <span class="order-details__product-price--original">
+                    {{ line_item.compare_at_price | money }}
+                  </span>
+                {% endif %}
+
+                <span class="order-details__product-price--final">
+                  {{ line_item.price | money }}
+                </span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
+        <!-- Subtotals -->
+        <div class="order-details__subtotals flex flex-col gap-3 py-2">
+          <div class="text-sm flex items-center justify-between">
+            <div>Subtotal</div>
+            <div class="font-medium">{{ order.subtotal_price | money }}</div>
+          </div>
+
+          <div class="text-sm flex items-center justify-between">
+            <div>Total Savings</div>
+            <div class="savings-pill bh flex bg-[#FFABED] rounded-[30px] border-solid border border-black px-[8px] py-[4px]">
+              {{ order.total_discounts | money }}
+            </div>
+          </div>
+
+          <div class="text-sm flex items-center justify-between">
+            <div>Shipping</div>
+            <div class="font-medium">{{ order.shipping_price | money }}</div>
+          </div>
+
+          <div class="text-sm flex items-center justify-between">
+            <div>Taxes (included)</div>
+            <div class="font-medium">{{ order.total_tax | money }}</div>
+          </div>
+
+          <div class="text-sm flex items-center justify-between">
+            <div class="font-medium">Total</div>
+            <div class="font-medium">{{ order.total_price | money }}</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>

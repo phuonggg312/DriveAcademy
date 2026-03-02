@@ -1,0 +1,18 @@
+.category-carousel .multicolumn-grid .multicolumn-tile, .multicolumn-grid .tile-item {
+  height: inherit;
+  max-height: inherit;
+  width: 300px;
+  padding: 10px;
+}
+
+.category-carousel .multicolumn .multicolumn-grid {
+  @apply flex w-full
+}
+
+.category-carousel .flickity-slider {
+  height:initial;
+}
+
+.multicolumn-grid .image-container {
+  height:100%;
+}

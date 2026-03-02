@@ -1,0 +1,39 @@
+.look-slider {
+  @apply relative max-w-full overflow-hidden;
+
+  .look-slide {
+    @apply bg-cover bg-center;
+  }
+
+  .look-products {
+    @apply flex justify-center;
+
+    .look-product {
+      @apply text-center;
+
+      img {
+        @apply max-w-full h-auto;
+      }
+
+      p {
+        @apply my-2 mx-0;
+      }
+
+      span {
+        @apply font-bold;
+      }
+    }
+  }
+
+  .look-slider-arrow {
+    @apply absolute top-1/2 bg-white border-none rounded-full cursor-pointer z-10;
+
+    .left {
+      @apply left-2;
+    }
+
+    .right {
+      @apply right-2;
+    }
+  }
+}

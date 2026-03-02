@@ -1,0 +1,20 @@
+query GetOrderInfo($id: ID!) {
+    order(id: $id) {
+        name
+        shippingLines(first: 2) {
+            edges {
+                node {
+                    id
+                    title
+                }
+            }
+        }
+        fulfillments {
+            trackingInfo {
+                company
+                number
+                url
+            }
+        }
+    }
+}

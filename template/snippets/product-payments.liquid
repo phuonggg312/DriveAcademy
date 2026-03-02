@@ -1,0 +1,5 @@
+<div class="product-payments my-4 modal-btn" x-data="modal" x-on:click="openModal('payments')">
+        {% if block.settings.payment_image %}
+                <img src="{{ block.settings.payment_image | image_url: width: block.settings.payment_image.width }}" alt="payment_icons" />
+        {% endif %}
+</div>

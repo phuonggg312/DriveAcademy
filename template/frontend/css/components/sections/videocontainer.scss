@@ -1,0 +1,33 @@
+.video-section {
+  @apply py-8 flex flex-col items-center justify-center gap-2;
+}
+
+.video-grid {
+  @apply grid grid-cols-2 gap-4 my-4;
+}
+
+.video-container {
+  @apply flex flex-row items-center justify-center;
+
+  .with-details {
+    video {
+      @apply w-6/12 p-4;
+    }
+  }
+
+  .video-content {
+    @apply flex flex-col;
+
+    .video-tags {
+      @apply flex flex-row;
+
+      p {
+        @apply w-auto bg-gray-100 rounded-full p-2 text-xs;
+      }
+    }
+
+    .video-date-read-time {
+      @apply inline-flex text-xs my-2 gap-2;
+    }
+  }
+}

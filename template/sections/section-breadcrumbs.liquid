@@ -1,0 +1,230 @@
+<div
+  class="color-{{ section.settings.color_schema }}"
+  x-data="section({{ section.settings | json | escape }})"
+>
+  <div class="{{ section.settings.custom_column_class }}">
+      <div
+        class="section-breadcrumbs-{{ section.id }}
+          {{ settings.reveal_animation_class }}
+          color-{{ section.settings.color_schema }}"
+          :class="classes"
+      >
+        <div class="{{ section.settings.container_type }}">
+          <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}]">
+              <div class="react-node relative">
+                {% include 'react-props' %}
+                <div id="react-data" data-injected-props='{{ data }}'></div>
+                {% render 'react-block', name: "theme__section-breadcrumbs", props: data %}
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Breadcrumbs",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titles & Content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Standalone"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Breadcrumb settings"
+    },
+    {
+      "type": "url",
+      "id": "default_shop_url",
+      "label": "Default Shop All URL",
+      "info": "This will be the first link in the breadcrumb if page is directly navigated to on PDP"
+    },
+    {
+      "type": "number",
+      "id": "spacing",
+      "label": "Spacing between Links",
+      "info": "Will be based on px",
+      "default": 8
+    },
+    {
+      "type": "number",
+      "id": "spacing_mobile",
+      "label": "Spacing between Links (Mobile)",
+      "info": "Will be based on px",
+      "default": 4
+    },
+    {
+      "type": "text",
+      "id": "icon",
+      "label": "Icon",
+      "info": "Icon used between each link",
+      "default": "icon-caret-right-thin"
+    },
+    {
+      "type": "number",
+      "id": "icon_size",
+      "label": "Icon Size",
+      "info": "Icon Size",
+      "default": 18
+    },
+    {
+      "type": "text",
+      "id": "text_style",
+      "label": "Text Style",
+      "info": "Text style for desktop",
+      "default": "b2"
+    },
+    {
+      "type": "text",
+      "id": "text_style_mobile",
+      "label": "Text Style (Mobile)",
+      "info": "Text style for mobile",
+      "default": "b3"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Breadcrumbs"
+    }
+  ]
+}
+
+{% endschema %}

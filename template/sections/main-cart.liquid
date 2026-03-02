@@ -1,0 +1,349 @@
+<div
+    class="{{ section.settings.custom_column_class }}"
+    x-data="section({{ section.settings | json | escape }})"
+>
+  <div class="cart__top border-b border-black px-4 py-5 lg:p-[40px]">
+    <div class="lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }}">
+      <h2 class="hidden lg:block {{ section.settings.cart_title_style }}">
+        {{ section.settings.cart_title }}
+      </h2>
+      <h4 class="lg:hidden">
+        {{ section.settings.cart_title }}
+      </h4>
+    </div>
+  </div>
+
+  <div class="
+    section-cart-{{ section.id }}
+    {{ settings.reveal_animation_class }}
+    color-{{ section.settings.color_schema }}"
+    :class="classes"
+  >
+    <div class="cart flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }}" >
+      <div class="bg-white cart__inner lg:flex gap-[48px]">
+        {% if cart.item_count > 0 %}
+          <div class="react-node shrink-0 grow max-lg:p-4">
+            {% include 'react-props' %}
+            <div id="react-data" data-injected-props='{{ data }}'></div>
+            {% render 'react-block', name: "theme__cart-items", props: data %}
+          </div>
+
+          <div class="react-node lg:w-[421px]" >
+            {% include 'react-props' %}
+            <div id="react-data" data-injected-props='{{ data }}'></div>
+            {% render 'react-block', name: "theme__cart-summary", props: data %}
+          </div>
+
+        {% else %}
+          <p class="b2">You have no items in your cart.</p>
+        {% endif %}
+      </div>
+    </div>
+</div>
+
+{% comment %} Remove to allow user to key in quantity {% endcomment %}
+<script>
+  document.addEventListener("wheel", function(event){
+    if(document.activeElement.type === "number" &&
+       document.activeElement.classList.contains("noscroll"))
+    {
+        event.preventDefault();
+        document.activeElement.blur();
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Cart Section",
+  "class": "section-main-collection",
+  "tag": "section",
+  "settings": [
+    {
+        "type": "select",
+        "id": "render_type",
+        "options": [
+        {
+            "value": "all",
+            "label": "All"
+        },
+        {
+            "value": "mobile-only",
+            "label": "Mobile Only"
+        },
+        {
+            "value": "desktop-only",
+            "label": "Desktop Only"
+        }
+        ],
+        "default": "all",
+        "label": "Render Type",
+        "info": "This will display the support pill based on the selected device type (Desktop, Mobile, or both)."
+    },
+    {
+        "type": "select",
+        "id": "container_type",
+        "label": "Container type",
+        "default": "container",
+        "options": [
+        {
+            "value": "container",
+            "label": "Use container width"
+        },
+        {
+            "value": "w-full",
+            "label": "Use full width"
+        }
+        ],
+        "info": "Defines whether the support pill should use the container width or the full width of the screen."
+    },
+    {
+        "type": "color_scheme",
+        "id": "color_schema",
+        "label": "Color scheme",
+        "info": "Color scheme for the support pill, allowing you to choose from the predefined theme color schemes."
+    },
+    {
+        "type": "text",
+        "id": "cart_title",
+        "label": "Cart Title",
+        "default": "Cart",
+        "info": "This is the title of the cart section"
+    },
+    {
+        "type": "text",
+        "id": "cart_title_style",
+        "label": "Cart Title Style",
+        "default": "h2",
+        "info": "This is the title style of the cart title"
+    },
+    {
+        "type": "select",
+        "id": "product_layout",
+        "label": "Product Layout",
+        "default": "table",
+        "options": [
+            {
+                "value": "table",
+                "label": "Table"
+            },
+            {
+                "value": "grid",
+                "label": "Grid"
+            }
+        ],
+        "info": "Rendering style of the products in the cart."
+    },
+    {
+      "type": "text",
+      "id": "summary-message",
+      "label": "Cart Summary Message",
+      "default": "Taxes and shipping calculated at checkout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": "t:settings_schema.cart.settings.show_vendor.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart_note",
+      "label": "t:settings_schema.cart.settings.show_cart_note.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings",
+      "info": "Configure padding and alignment for the support pill."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 8,
+      "info": "Top padding for the support pill on desktop devices, in pixels."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 8,
+      "info": "Bottom padding for the support pill on desktop devices, in pixels."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 8,
+      "info": "Left and right padding for the support pill on desktop devices, in pixels."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 8,
+      "info": "Top padding for the support pill on mobile devices, in pixels."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 8,
+      "info": "Bottom padding for the support pill on mobile devices, in pixels."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 8,
+      "info": "Left and right padding for the support pill on mobile devices, in pixels."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop",
+      "info": "Horizontal alignment of the content within the support pill on desktop devices."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile",
+      "info": "Horizontal alignment of the content within the support pill on mobile devices."
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop",
+      "info": "Position of the content within the support pill on desktop devices."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "payment_icons",
+      "name": "Payment Icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+          "type": "select",
+          "id": "payments_render_type",
+          "options": [
+            {
+              "value": "store",
+              "label": "Store"
+            },
+            {
+              "value": "Image",
+              "label": "Image"
+            }
+          ],
+          "default": "store",
+          "label": "Icons rendered from",
+          "info": "How the rendering will be done for icons?"
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_icons",
+          "label": "Payment Icons Image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

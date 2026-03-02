@@ -1,0 +1,14 @@
+<div
+    x-data="account"
+    class="hidden account-navigation__tabbed">
+    {% for link in linklists[settings.secondary_account_menu].links %}
+        <a
+            href="{{ link.url }}"
+            class="account-navigation__tabbed-link bc"
+            :class="{ 'account-navigation__tabbed-link--active': isActiveAccount('{{ link.url }}') }"
+        >
+            {{ link.title | escape }}
+        </a>
+    {% endfor %}
+    <div class="hidden"></div>
+</div>

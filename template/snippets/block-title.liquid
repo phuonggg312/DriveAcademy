@@ -1,0 +1,12 @@
+<div class="react-node">
+    {% capture data %}
+        {
+            "id": "{{ block.id }}",
+            "block_settings": {{ block.settings | json }},
+            "section_settings": {{ section.settings | json }}
+        }
+    {% endcapture %}
+    {% assign data = data %}
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% liquid render 'react-block', name: "theme__block-title", props: data %}
+</div>

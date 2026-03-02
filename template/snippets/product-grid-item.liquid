@@ -1,0 +1,65 @@
+<div class="react-node">
+    {% assign product_tags = prod.tags %}
+    {% assign colour_tags = "" %}
+
+    {% comment %}
+    Extract all tags starting with "colour:"
+    {% endcomment %}
+    {% for tag in product_tags %}
+        {% if tag contains 'colour:' %}
+            {% assign colour_value = tag | split: ':' | last %}
+            {% if colour_tags == "" %}
+                {% assign colour_tags = colour_value %}
+            {% else %}
+                {% assign colour_tags = colour_tags | append: ',' | append: colour_value %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% assign colour_handles = colour_tags | split: ',' %}
+    {% assign related_products = "" %}
+
+    {% for handle in colour_handles %}
+        {% assign related_product = all_products[handle] %}
+        {% if related_product %}
+            {% capture related_product_data %}
+                {
+                "id": "{{ related_product.id }}",
+                "handle": "{{ related_product.handle }}",
+                "images": [
+                {% for image in related_product.images %}
+                    {
+                    "src": "{{ image.src | image_url }}",
+                    "alt": "{{ image.alt }}"
+                    }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+                ]
+                }
+            {% endcapture %}
+            {% if related_products == "" %}
+                {% assign related_products = related_product_data %}
+            {% else %}
+                {% assign related_products = related_products | append: ',' | append: related_product_data %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if related_products != "" %}
+        {% assign related_products = '[' | append: related_products | append: ']' %}
+    {% else %}
+        {% assign related_products = '[]' %}
+    {% endif %}
+
+    {% assign product = prod %}
+    {% capture data %}
+        {
+            "product": {{ prod | json }},
+            "related_products": {{ related_products }}
+        }
+    {% endcapture %}
+    {% assign data = data %}
+    <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+    {% render 'react-block', name: "theme__product-tile", props: data %}
+
+
+</div>

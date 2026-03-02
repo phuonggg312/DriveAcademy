@@ -1,0 +1,19 @@
+.styleguide-components {
+    @apply space-y-2 my-8;
+
+    &.component-header {
+        @apply relative w-full border-b py-4 my-8;
+    }
+
+    &.component {
+        @apply py-2;
+    }
+
+    &.component-group {
+        @apply flex gap-2;
+    }
+}
+
+.color-grid {
+    @apply relative flex flex-row gap-2;
+}

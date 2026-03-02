@@ -1,0 +1,109 @@
+@layer base {
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    @apply uppercase;
+    font-weight: 500;
+  }
+
+  sh1,
+  .sh1,
+  sh2,
+  .sh2,
+  sh3,
+  .sh3,
+  sh4,
+  .sh4,
+  sh5,
+  .sh5,
+  sh6,
+  .sh6,
+  bh,
+  .bh,
+  bfb,
+  .bfb {
+    @apply uppercase;
+    font-weight: 500;
+  }
+
+  b1,
+  .b1,
+  b2,
+  .b2,
+  b3,
+  .b3,
+  b4,
+  .b4,
+  bc,
+  .bc,
+  bp,
+  .bp,
+  bpb,
+  .bpb,
+  br,
+  .br,
+  brs,
+  .brs {
+    font-weight: 300;
+  }
+
+  bl,
+  .bl {
+    font-weight: 300;
+  }
+
+  .b__price {
+    font-weight: 500;
+  }
+
+  .b3__regular,
+  .b4__regular {
+    font-weight: 400;
+  }
+  .b3__semibold,
+  .b2__semibold {
+    font-weight: 500;
+  }
+
+  .b3 {
+    @apply uppercase;
+  }
+}
+
+.button {
+  @apply uppercase;
+  font-weight: 500;
+}
+.bh {
+  @apply uppercase;
+}
+
+.sm-text {
+  @apply text-gray-400 text-sm font-light;
+}
+
+.md-text {
+  @apply inline text-2xl font-bold;
+}
+
+small,
+.small {
+  @apply text-sm;
+}
+
+.lead {
+  @apply text-xl;
+}
+
+strong {
+  font-weight: bold;
+}

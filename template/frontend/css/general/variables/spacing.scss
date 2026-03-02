@@ -1,0 +1,27 @@
+:root {
+  // GENERAL SPACING
+  --padding-x-small: 30px;
+  --padding-y-small: 4px;
+  --padding-x-medium: 6px;
+  --padding-y-medium: 6px;
+  --margin-bottom-small: 30px;
+  --margin-bottom-large: 10px;
+  --grid-gap-small: 3px;
+  --grid-gap-large: 4px;
+
+  // HEADERS
+  --padding-y-header: 20px;
+
+  // PROMOTIONAL TILE
+  --promo-padding-y-mobile: 24px;
+  --promo-padding-y-desktop: 24px;
+  --promo-padding-x-mobile: 24px;
+  --promo-padding-x-desktop: 24px;
+  --promo-content-gap-mobile: 4px;
+  --promo-content-gap-desktop: 8px;
+  --promo-background-color: rgba(98, 93, 156, 0.3);
+  --promo-min-height: 223px;
+
+  --breadcrumb-icon-spacing-desktop: 16px;
+  --breadcrumb-icon-spacing-mobile: 8px;
+}

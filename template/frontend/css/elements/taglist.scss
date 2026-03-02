@@ -1,0 +1,17 @@
+.taglist {
+    &__container {
+        @apply relative top-0 my-2 flex flex-row w-full;
+    }
+
+    & {
+        @apply max-w-6xl;
+    }
+
+    &__header {
+        @apply py-4;
+    }
+
+    &__tags {
+        @apply flex flex-auto gap-1;
+    }
+}

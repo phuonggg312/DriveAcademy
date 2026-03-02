@@ -1,0 +1,332 @@
+{%- if section.settings.usp_enabled -%}
+  {% assign show_usp = false %}
+
+  {% if section.settings.show_on_product_page and template.name == "product" %}
+    {% assign show_usp = true %}
+  {% elsif section.settings.show_only_on_homepage and template.name == "index" %}
+    {% assign show_usp = true %}
+  {% elsif section.settings.show_on_all_pages and template.name != "product"%}
+    {% assign show_usp = true %}
+  {% endif %}
+
+    {% if show_usp %}
+        <div class="{{ section.settings.container_type }} max-w-full overflow-x-auto justify-between items-center color-{{ section.settings.color_schema }} lg:block">
+            <div
+                class="section-usp-{{ section.id }}
+                {{ settings.reveal_animation_class }}
+                color-{{ section.settings.color_schema }}"
+                :class="classes"
+                x-data="section({{ section.settings | json | escape }})"
+            >
+                <div class="w-full h-full grid lg:grid-cols-{{ section.blocks | size }} gap-y-[24px]">
+                    {%- for block in section.blocks -%}
+                      {% assign can_show_divider = false %}
+                      {% assign can_show_divider_mobile = false %}
+                      {% if section.settings.show_divider_lines %}
+                        {% if forloop.last == false %}
+                          {% assign can_show_divider = true %}
+                        {% endif %}
+                      {% endif %}
+                      {% if section.settings.show_divider_lines_mobile %}
+                        {% if forloop.last == false %}
+                          {% assign can_show_divider_mobile = true %}
+                        {% endif %}
+                      {% endif %}
+
+                        <div id="usp-{{ block.id }}" class="usp-container justify-start lg:justify-center self-start lg:w-full flex flex-nowrap mx-3 lg:mx-0 px-3 items-center {% if can_show_divider %}lg:border-r{% endif %}">
+                            <a href="{{ block.settings.url }}">
+                                <div class="flex text-left">
+                                    <div class="usp-content flex flex-col gap-y-[8px]">
+                                        <div class="flex flex-row pt-[8px]">
+                                            {% if block.settings.icon %}
+                                                <svg width="{{ block.settings.icon_size }}" height="{{ block.settings.icon_size }}" fill="white" class="flex-none">
+                                                    <image xlink:href="{{ block.settings.icon | image_url: width: block.settings.icon_size }}" width="{{ block.settings.icon_size }}" height="{{ block.settings.icon_size }}" class="text-white" alt="{{ block.settings.icon.alt }}" />
+                                                </svg>
+                                            {% endif %}
+
+                                            <div class="flex flex-col pl-[13px] gap-y-[8px]">
+                                                <div class="{{ block.settings.title_class }} font-{{ block.settings.title_weight }}">{{ block.settings.message }}</div>
+                                                <p class="{{ block.settings.description_class }}">{{ block.settings.description }}</p>
+                                            </div>
+                                        </div>
+                                      {% if can_show_divider_mobile %}<hr class="lg:hidden border-b block my-[16px] w-[115px]"/>{% endif %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    {%- endfor -%}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Selling Propositions",
+  "class": "site-usp",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "usp",
+      "name": "Selling Proposition",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Recommended image size 16px x 16px"
+        },
+        {
+          "type": "number",
+          "id": "icon_size",
+          "label": "Icon Size",
+          "default": 32,
+          "info": "Scale of icon"
+        },
+        {
+          "type": "richtext",
+          "id": "message",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "title_weight",
+          "label": "Title Weight",
+          "options": [
+            {
+              "label": "Regular",
+              "value": "regular"
+            },
+            {
+              "label": "Medium",
+              "value": "medium"
+            },
+            {
+              "label": "Bold",
+              "value": "bold"
+            }
+          ],
+          "default": "regular"
+        },
+        {
+          "type": "text",
+          "id": "title_class",
+          "label": "Title Font Class",
+          "default": "b2"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Under Title Text"
+        },
+        {
+          "type": "text",
+          "id": "description_class",
+          "label": "Description Font Class",
+          "default": "b3"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "USP Bar"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "w-full",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "usp_enabled",
+      "label": "Show USP bar",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_all_pages",
+      "label": "Show On All Pages",
+      "default": false,
+      "info": "This will override options below if ticked"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_only_on_homepage",
+      "label": "Show Only on Homepage",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_product_page",
+      "label": "Show on Product Page",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider_lines",
+      "label": "Show Divider Lines",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_divider_lines_mobile",
+      "label": "Show Divider Lines (Mobile)",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Selling Propositions"
+    }
+  ]
+}
+{% endschema %}

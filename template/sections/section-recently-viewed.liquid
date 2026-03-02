@@ -1,0 +1,230 @@
+<div
+  x-data="recentlyviewed"
+  class="section-recentlyviewed
+  {{ section.settings.custom_column_class }}
+  color-{{ section.settings.color_schema }}"
+  x-show="recentlyviewedproducts.length > 0"
+>
+  <div
+    class="section-recentlyviewed-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+    :class="classes"
+    x-data="section({{ section.settings | json | escape }})"
+  >
+    <div class="{{ section.settings.container_type }}">
+     <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}]">
+        <div class="recently-viewed-list">
+            <div class="w-full h-full">
+              <div class="recentlyviewed-container {{ settings.reveal_animation_class }}" x-data="carouselFilter()">
+                <div class="recentlyviewed-items py-2">
+                  <div class="react-node w-full">
+                    {% include 'react-props' %}
+                    <div id="react-data" data-injected-props='{{ data }}'></div>
+                    {% render 'react-block', name: "theme__list-recently-viewed-products", props: data %}
+                  </div>
+
+                  <div x-show="recentlyviewedproducts.length <= 0" class="hidden">
+                    There are no recently viewed products history.
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+
+{
+  "name": "Recently Viewed Products",
+  "class": "recently-viewed-products-list-section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header text",
+      "default": "Recently viewed products"
+    },
+    {
+      "type": "text",
+      "id": "header_style",
+      "label": "Header style",
+      "default": "sh3"
+    },
+    {
+      "type": "text",
+      "id": "header_style_mobile",
+      "label": "Header style (Mobile)",
+      "default": "sh5"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Text under header"
+    },
+    {
+      "type": "text",
+      "id": "subtext_style",
+      "label": "Subtext style",
+      "default": "b2"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "list-scrollable",
+          "label": "Scrollable"
+        },
+        {
+          "value": "list-default",
+          "label": "Carousel"
+        },
+        {
+          "value": "list-grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "list-default",
+      "label": "Layout Type",
+      "info": "Layout for Recently Viewed"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recently Viewed Products"
+    }
+  ]
+}
+{% endschema %}

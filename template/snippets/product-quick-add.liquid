@@ -1,0 +1,53 @@
+
+{% assign metafield_notations = block.settings.metafield_name | split: "." %}
+{% assign current_metafield_siblings = "" %}
+{% assign count = 0 %}
+{% for notation in metafield_notations %}
+    {% if count == 0 %}
+        {% assign current_metafield_siblings = product.metafields[notation] %}
+    {% else %}
+        {% assign current_metafield_siblings = current_metafield_siblings[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+{% endfor %}
+
+{% assign metafields_siblings = current_metafield_siblings.value %}
+
+{% assign related_products = "" | split: ", " %}
+
+{% for productInMetaObject in metafields_siblings %}
+    {% assign handle = productInMetaObject.handle | split: ", " %}
+    {% assign related_products = related_products | concat: handle %}
+    {% assign productsFound = true %}
+{% endfor %}
+
+
+<div class="pdp__quick-add quick-add">
+    <div class="react-node">
+        {% capture data %}
+        {
+            "id": "{{ block.id }}",
+            "block": {{ block.settings | json }},
+            "products": [
+            {% for related_product in related_products %}
+                {% assign productData = collections.all.products | where: 'handle', related_product %}
+                {% if related_product != product.handle %}
+                    {
+                        "title": "{{ productData[0].title }}",
+                        "images": {{ productData[0].images | json }},
+                        "url": "{{ productData[0].url }}",
+                        "compare_at_price": "{{ productData[0].compare_at_price }}",
+                        "price": "{{ productData[0].price }}",
+                         "variants": {{ productData[0].variants | json }}
+                    },
+                    {% assign has_swatches = true %}
+                {% endif %}
+            {% endfor %}
+            ],
+            "additional": {{ product.media | json }}
+        }
+        {% endcapture %}
+        <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+        {% render 'react-block', name: "theme__product-quickadd", props: data %}
+    </div>
+</div>

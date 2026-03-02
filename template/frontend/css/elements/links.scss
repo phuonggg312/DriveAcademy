@@ -1,0 +1,22 @@
+
+.link-generic {
+  @apply text-gray-500 font-light hover:underline;
+}
+
+a:hover {
+  @apply underline;
+  text-decoration: underline;
+}
+
+.link {
+  @apply text-[14px] font-normal leading-[18px];
+
+  @media (max-width: 1023px) {
+    @apply underline underline-offset-2 decoration-1;
+  }
+
+  &:hover {
+    @apply underline underline-offset-2 decoration-1;
+  }
+}
+

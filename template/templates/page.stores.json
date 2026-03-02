@@ -1,0 +1,55 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "page_stores_eRYLQL": {
+      "type": "page-stores",
+      "blocks": {
+        "store_fRMaXG": {
+          "type": "store",
+          "settings": {
+            "name": "Blacktown",
+            "address": "Shop 1016, Level 1 Westpoint Shopping Centre, 17 Patrick Street",
+            "hours": "<p>Monday: 9 am - 5.30 pm</p><p>Tuesday: 9 am - 5.30 pm</p><p>Wednesday: 9 am - 5.30 pm</p><p>Thursday: 9 am - 5.30 pm</p><p>Friday: 9 am - 5.30 pm</p><p>Saturday: 9 am - 5.30 pm</p><p>Sunday: 9 am - 4.00 pm</p>",
+            "telephone": "02 9574 4848",
+            "lat": "-33.7695",
+            "lng": "150.9071"
+          }
+        },
+        "store_9AmwER": {
+          "type": "store",
+          "settings": {
+            "name": "Marsden Park",
+            "address": "8 Luthell Street",
+            "hours": "<p>Monday: 9 am - 5.30 pm</p><p>Tuesday: 9 am - 5.30 pm</p><p>Wednesday: 9 am - 5.30 pm</p><p>Thursday: 9 am - 5.30 pm</p><p>Friday: 9 am - 5.30 pm</p><p>Saturday: Closed</p><p>Sunday: Closed</p>",
+            "telephone": "",
+            "lat": "",
+            "lng": ""
+          }
+        }
+      },
+      "block_order": [
+        "store_fRMaXG",
+        "store_9AmwER"
+      ],
+      "settings": {
+        "maps_api_key": "AIzaSyCHHI8cQq33cOIcxZYQk_TbwskX04ga0tM"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "page_stores_eRYLQL"
+  ]
+}

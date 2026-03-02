@@ -1,0 +1,359 @@
+<div class="footer-links-section w-full flex flex-col align-middle lg:items-center color-{{ section.settings.color_schema }} {{ settings.reveal_animation_class }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+    <div class="w-full" style="aspect-ratio: {{ section.settings.aspect_ratio | divided_by: 100.0 | round: 2 }}; {% if section.settings.max_height > 0 %}max-height: {{ section.settings.max_height }}px;{% endif %}">
+        <div class="react-node {{ section.settings.layout }}">
+            {% include 'react-props', additional: settings %}
+            <div id="react-data" data-injected-props='{{ data }}'></div>
+            {% render 'react-block', name: "theme__navigation-footer", props: data %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer Menu",
+  "class": "links-section",
+  "blocks": [
+    {
+      "type": "list",
+      "name": "Links",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Link List",
+          "info": "Select a link list to display in this footer column."
+        },
+        {
+          "type": "text",
+          "id": "text_column_width",
+          "label": "Text Column Width",
+          "placeholder": "200px",
+          "info": "Specify the width of the text column."
+        },
+        {
+          "type": "header",
+          "content": "Padding & alignment settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left & Right Desktop",
+          "default": 0,
+          "info": "Adjust the left and right margins for desktop view."
+        },
+        {
+          "type": "range",
+          "id": "margin_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left & Right Mobile",
+          "default": 0,
+          "info": "Adjust the left and right margins for mobile view."
+        }
+      ]
+    },
+    {
+      "type": "email_subscribe",
+      "name": "Email Subscribe",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Text settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_social_icons",
+          "label": "Show Social Icons",
+          "info": "Show social icons above subscribe.",
+          "default": false
+        },
+        {
+          "type": "inline_richtext",
+          "id": "title",
+          "label": "Heading",
+          "default": "About our store",
+          "info": "Set the heading for the subscription block."
+        },
+        {
+          "type": "text",
+          "id": "header_style",
+          "label": "Heading Style",
+          "default": "h2",
+          "info": "Set the heading style for the subscription block."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "top_text",
+          "label": "Top Text",
+          "info": "Enter the text displayed above the subscription input."
+        },
+        {
+          "type": "richtext",
+          "id": "contact_info",
+          "label": "Contact information",
+          "info": "Provide contact information for customer inquiries."
+        },
+        {
+          "type": "inline_richtext",
+          "id": "sign_up_message",
+          "label": "Sign Up message",
+          "info": "Message that appears below the sign up button.",
+          "default": "By signing up, you agree to our <a href='#'>Privacy Policy</a>"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "Use this text area to tell your customers about your brand and vision. You can change it in the theme editor.",
+          "info": "Set the main content for the subscription block."
+        },
+        {
+          "type": "text",
+          "id": "text_column_width",
+          "label": "Text Column Width",
+          "placeholder": "200px",
+          "info": "Specify the width of the text column."
+        },
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "Choose where to display this block (desktop, mobile, or both)."
+        },
+        {
+          "type": "header",
+          "content": "Padding & alignment settings"
+        },
+        {
+          "type": "range",
+          "id": "margin_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left & Right Desktop",
+          "default": 0,
+          "info": "Adjust the left and right margins for desktop view."
+        },
+        {
+          "type": "range",
+          "id": "margin_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Margin Left & Right Mobile",
+          "default": 0,
+          "info": "Adjust the left and right margins for mobile view."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Footer Menu Layout",
+      "options": [
+        {
+          "label": "Multicolumns",
+          "value": "multicolumns"
+        },
+        {
+          "label": "Stacked",
+          "value": "stacked"
+        }
+      ],
+      "default": "multicolumns",
+      "info": "Choose the layout style for the footer menu."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ],
+      "info": "Select the container width for the footer."
+    },
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "links_container_width",
+      "label": "Links Container Max Width",
+      "placeholder": "1024px",
+      "default": "1024px",
+      "info": "Specify the maximum width for the links container."
+    },
+    {
+      "type": "text",
+      "id": "column_width",
+      "label": "Column Width",
+      "placeholder": "200px",
+      "info": "Set the width of each column in the footer."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Choose a color scheme for the footer."
+    },
+    {
+      "type": "header",
+      "content": "Padding & alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment",
+      "info": "Align the content in the footer."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0,
+      "info": "Adjust the top padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0,
+      "info": "Adjust the bottom padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0,
+      "info": "Adjust the left and right padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0,
+      "info": "Adjust the top padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0,
+      "info": "Adjust the bottom padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0,
+      "info": "Adjust the left and right padding for mobile view."
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Footer Menu"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

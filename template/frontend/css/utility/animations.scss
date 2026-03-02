@@ -1,0 +1,246 @@
+/* REVEAL SLIDERS */
+@keyframes slide-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.slide-fade-in-element {
+    animation-name: slide-fade-in;
+    animation-duration: 1s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0.3s; /* You can add a delay if you want */
+}
+
+.animated-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s, transform 1s;
+}
+.animated-element.start-animation {
+    animation-name: slide-fade-in;
+    animation-duration: 1s;
+    animation-fill-mode: forwards; /* This makes sure the final styles apply after the animation ends */
+}
+
+
+/* HOVER EFFECTS */
+.lift-3d {
+  @apply transition-all hover:shadow hover:scale-105 hover:-translate-y-1
+}
+
+.vertical-lift {
+    @apply transition-all hover:-translate-y-2
+}
+
+/* NAVIGATION */
+
+@keyframes slide-in {
+    from {
+        opacity:0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in-element {
+    animation-name: slide-in;
+    animation-duration: 0.25s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0s; /* You can add a delay if you want */
+    z-index: 30;
+}
+
+@keyframes slide-out {
+    from {
+        opacity:1;
+        transform: translateY(0px);
+    }
+    to {
+        opacity:0;
+        transform: translateY(-30px);
+    }
+}
+.slide-out-element {
+    animation-name: slide-out;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+/* TEST ANIMATIONS */
+/* Sliding animations menu */
+.slide-enter {
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-enter-secondary {
+    display:block;
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-enter-active {
+    transform: translateX(0);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-exit {
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-exit-secondary {
+    display:block;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.slide-exit-active {
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
+@keyframes slideInBottom {
+    from {
+        transform: translateY(100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutBottom {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(100%);
+    }
+}
+
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutToRight {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.slide-in-left {
+    animation: slideInLeft 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.slide-out-left {
+    animation: slideOutLeft 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.slide-in-from-right {
+    animation: slideInFromRight 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.slide-out-to-right {
+    animation: slideOutToRight 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    animation-fill-mode: both; /* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes */
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.slide-in-bottom {
+    animation: slideInBottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    /*animation-fill-mode: both; !* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes *!*/
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.slide-out-bottom {
+    animation: slideOutBottom 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    animation-duration: 0.5s; /* This controls the speed of the animation */
+    /*animation-fill-mode: both; !* This ensures that the final state (opacity: 1, transform: translateY(0)) is retained after the animation completes *!*/
+    animation-delay: 0s; /* You can add a delay if you want */
+    display:block
+}
+
+.transition {
+    transition-property: all;
+}
+
+.duration-300 {
+    transition-duration: 300ms;
+}
+
+.ease-out {
+    transition-timing-function: ease-out;
+}
+
+.ease-in {
+    transition-timing-function: ease-in;
+}
+
+.off-screen-right {
+    right: -100px;
+    transform: translateX(120%);
+}
+
+.right-50 {
+    right: 50px;
+    transform: translateX(0%);
+}
+
+@media (max-width: 576px) {
+    .right-50 {
+        right: 20px;
+        transform: translateX(0%);
+    }
+}

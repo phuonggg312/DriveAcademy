@@ -1,0 +1,798 @@
+<div
+  class="{{ section.settings.container_type }}
+  {{ section.settings.custom_class }}"
+  :class="classes"
+  x-data="section({{ section.settings | json | escape }})"
+>
+  <div class="section-banner flex flex-col align-middle items-center {{ settings.reveal_animation_class }} {% if section.settings.is_primary %} primary-banner {% endif %}" style="padding-top:{{ section.settings.padding_top }}px; padding-bottom:{{ section.settings.padding_bottom }}px">
+    <div class="section-banner-{{ section.id }} w-full relative items-center overflow-hidden">
+      <div class="react-node relative">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__banner", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "block_image",
+      "name": "Image Banner",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Image size should be 1920x1080px"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Image (Mobile)",
+          "info": "Image size should be atleast 1080x1920px"
+        },
+        {
+          "type": "checkbox",
+          "id": "darken_image",
+          "label": "Overlay darken",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image URL",
+          "info": "If you don't want an overlay, you can link the image to a URL"
+        },
+        {
+          "type": "header",
+          "content": "Banner overlay settings"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color scheme",
+          "info": "Choose the color scheme for the overlay"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Show overlay",
+          "default": true
+        },
+        {
+          "type": "number",
+          "id": "content_width_desktop",
+          "label": "Content Width"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline"
+        },
+        {
+            "type": "richtext",
+          "id": "title",
+          "label": "Overlayed title"
+        },
+        {
+          "type": "text",
+          "id": "title_heading_type",
+          "label": "Title Style",
+          "default": "h2"
+        },
+        {
+          "type": "text",
+          "id": "title_heading_type_mobile",
+          "label": "Title Style (Mobile)",
+          "default": "h3"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Text under title"
+        },
+        {
+          "type": "text",
+          "id": "subtext_type",
+          "label": "Text type",
+          "default": "b2"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "text",
+          "id": "button_style",
+          "label": "Button Style",
+          "default": "button-text"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon",
+          "default": "ur-arrow"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_reverse_icon",
+          "label": "Button Reverse Icon",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Alignment settings"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Mobile"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center",
+          "label": "Content Position Desktop (Vertical)"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop_hor",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Position Desktop (Horizontal)"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Mobile",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "block_video",
+      "name": "Video Banner",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Media settings"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "video",
+          "id": "video_mobile",
+          "label": "Video (Mobile)"
+        },
+        {
+          "type": "checkbox",
+          "id": "darken_image",
+          "label": "Overlay darken",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "should_autoplay",
+          "label": "Autoplay",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_controls",
+          "label": "Show Controls",
+          "default": false
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "Video URL",
+          "info": "If you don't want an overlay, enable this option to make video linkable"
+        },
+        {
+          "type": "checkbox",
+          "id": "should_loop",
+          "label": "Loop",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Banner overlay settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Show overlay",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "content_width_desktop",
+          "label": "Content Width"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color scheme"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline"
+        },
+        {
+        "type": "richtext",
+          "id": "title",
+          "label": "Overlayed title"
+        },
+        {
+          "type": "text",
+          "id": "title_heading_type",
+          "label": "Title Style",
+          "default": "h2"
+        },
+        {
+          "type": "text",
+          "id": "title_heading_type_mobile",
+          "label": "Title Style (Mobile)",
+          "default": "h3"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Text under title"
+        },
+        {
+          "type": "text",
+          "id": "subtext_type",
+          "label": "Text type",
+          "default": "b2"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "text",
+          "id": "button_style",
+          "label": "Button Style",
+          "default": "button-text"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon",
+          "default": "ur-arrow"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_reverse_icon",
+          "label": "Button Reverse Icon",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Alignment settings"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Alignment Mobile"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center",
+          "label": "Content Position Desktop (Vertical)"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop_hor",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Content Position Desktop (Horizontal)"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Mobile",
+          "default": 0
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_primary",
+      "label": "Is Primary/Hero Banner",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "use_carousel",
+      "label": "Use Carousel",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buttons",
+      "label": "Show Previous / Next Buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buttons_mobile",
+      "label": "Show Previous / Next Buttons (Mobile)",
+      "default": false
+    },
+    {
+      "type": "number",
+      "id": "autoplay_speed",
+      "label": "Autoplay speed",
+      "default": 3,
+      "info": "Setting a value here other than 0 will turn on autoplay and scroll automatically based on seconds"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title",
+      "default": "Custom React Block"
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom Class"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "w-full",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Height & Width settings"
+    },
+    {
+      "type": "number",
+      "id": "mobile_height",
+      "label": "Height (Mobile)"
+    },
+    {
+      "type": "number",
+      "id": "content_width",
+      "label": "Content Width",
+      "default": 844
+    },
+    {
+      "type": "number",
+      "id": "mobile_content_width",
+      "label": "Content Width (Mobile)",
+      "default": 311
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner"
+    }
+  ]
+}
+
+{% endschema %}

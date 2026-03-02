@@ -1,0 +1,8 @@
+.breadcrumb__item {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  i {
+    @apply text-black;
+  }
+}

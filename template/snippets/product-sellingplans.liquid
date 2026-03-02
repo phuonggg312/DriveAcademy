@@ -1,0 +1,16 @@
+{% if product.selling_plan_groups != blank %}
+  <div class="pdp__selling-groups selling-groups">
+    <div class="react-node">
+      {% capture data %}
+        {
+          "id": "{{ block.id }}",
+          "section": {{ section.settings | json }},
+          "product": {{ product | json }},
+          "additional": {{ product.media | json }}
+        }
+      {% endcapture %}
+      <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+      {% render 'react-block', name: "theme__ecommerce-product-sellingplans", props: data %}
+    </div>
+  </div>
+{% endif %}

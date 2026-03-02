@@ -1,0 +1,49 @@
+.blog-articles-carousel {
+  .carousel-item {
+    @apply w-[168px] lg:w-[379px] px-[0px];
+  }
+
+  .section-toprow {
+    &__actions {
+      .flickity-dots-container {
+        @apply hidden;
+      }
+    }
+  }
+}
+
+.blog-article-tile {
+  @apply text-black;
+}
+
+.article-featured {
+  @apply h-full;
+
+  .blog-article-tile {
+    @apply h-full;
+  }
+
+  .blog-article__image-container {
+    @apply flex-1 min-h-[376px];
+  }
+
+  .blog-article__details {
+    @apply absolute bottom-0 lg:p-8 p-3 text-white w-full;
+  }
+
+  .blog-article__title {
+    font-size: 16px !important;
+
+    @media (min-width: 1024px) {
+      font-size: 24px !important;
+    }
+  }
+
+  .blog-article__category {
+    font-weight: normal;
+  }
+
+  .blog-article__read-more {
+    @apply max-lg:hidden shrink-0;
+  }
+}

@@ -1,0 +1,58 @@
+{%- assign locationLockEnabled = settings.location_lock_enabled -%}
+{%- assign allowedCountries = settings.allowed_countries | split: ',' -%}
+{%- assign countryRedirectUrls = settings.country_redirect_urls -%}
+{%- assign fallbackUrl = settings.fallback_redirect_url -%}
+
+{%- if locationLockEnabled -%}
+    <script>
+        if (!Shopify.designMode) {
+            document.addEventListener("DOMContentLoaded", function () {
+
+                fetch(window.Shopify.routes.root + 'browsing_context_suggestions.json?country[enabled]=true&country[exclude]={{ window.Shopify.country }}&language[enabled]=true&language[exclude]={{ window.Shopify.language }}')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Geolocation', data);
+                        const userCountry = data.detected_values.country.handle;
+                        const allowedCountries = {{ allowedCountries | json }};
+
+                        // Convert the newline-separated string into a JavaScript object
+                        const rawRedirectUrls = `{{ countryRedirectUrls | split: '\n' }}`;
+                        const lines = rawRedirectUrls.split('\n');
+                        console.log('Geolocation', lines);
+                        const countryRedirectUrls = {};
+
+                        lines.forEach(line => {
+                            const [key, value] = line.split('|');
+                            if (key && value) {
+                                countryRedirectUrls[key.trim()] = value.trim();
+                            }
+                        });
+
+                        console.log('Geolocation', countryRedirectUrls);
+                        console.log('Geolocation', allowedCountries);
+                        console.log('Geolocation', `Country: ${userCountry}`);
+
+                        if (!allowedCountries.includes(userCountry)) {
+                            console.log('Geolocation', `Not allowed`);
+                            const targetUrl = "{{ fallbackUrl }}"; // Replace with your desired URL
+                            if (!window.location.pathname.includes(targetUrl)) {
+                                // Redirect to a different page or show a message to the user
+                                window.location.href = targetUrl;
+                            }
+                        } else if (countryRedirectUrls[userCountry]) {
+                            const targetUrl = countryRedirectUrls[userCountry];
+                            console.log('Geolocation', `Redirecting to: ${targetUrl}`);
+                            console.log('Geolocation', window.location.href);
+                            console.log('Geolocation', targetUrl);
+                            if (!window.location.href.includes(targetUrl)) {
+                                // Redirect to the specific URL for the user's country
+                                window.location.href = targetUrl;
+                            }
+                        } else {
+                            console.log('Geolocation', `No match in rules for ${userCountry}`);
+                        }
+                    });
+            });
+        }
+    </script>
+{%- endif -%}

@@ -1,0 +1,64 @@
+.account-orders,
+.account-order {
+  table {
+    thead {
+      @apply max-lg:hidden;
+    }
+
+    tbody {
+      @apply max-lg:block;
+
+      tr {
+        @apply max-lg:flex flex-col max-lg:border-b border-opacity-60 max-lg:py-4;
+
+        td {
+          @apply max-lg:before:pr-10 max-lg:before:content-[var(--mobile-head)] max-lg:flex items-center justify-between max-lg:border-0 before:text-black/40;
+        }
+      }
+    }
+
+    tfoot {
+      @apply max-lg:block;
+
+      tr {
+        @apply max-lg:flex;
+        td {
+          &:first-child {
+            @apply max-lg:hidden;
+          }
+
+          &:last-child {
+            @apply max-lg:w-full max-lg:before:content-[var(--mobile-head)] max-lg:flex items-center justify-between;
+          }
+        }
+      }
+    }
+  }
+}
+
+.account-order {
+  table {
+    ul {
+      @apply mt-4 text-xs;
+
+      li {
+        @apply flex lg:flex-col;
+      }
+
+      span {
+        &:last-child {
+          @apply ml-2 lg:ml-3 mb-1;
+        }
+      }
+    }
+    tfoot {
+      tr {
+        &:last-child {
+          td {
+            @apply text-lg font-medium;
+          }
+        }
+      }
+    }
+  }
+}

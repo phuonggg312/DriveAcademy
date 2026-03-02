@@ -1,0 +1,279 @@
+{% assign area_max_width = 0 %}
+
+<div class="section-cta-{{ section.id }}
+  flex {{ settings.reveal_animation_class }}
+  color-{{ section.settings.color_schema }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  <div class="{{ section.settings.container_type }} flex flex-col lg:flex-row text-center w-full max-w-[{{area_max_width}}px] min-h-[770px] gap-y-[24px] color-{{ section.settings.color_schema }}">
+    <div class="content flex flex-col pt-[40px] px-[16px] lg:p-[88px] justify-{{ section.settings.content_position_mobile }} lg:justify-{{ section.settings.content_position_desktop }}">
+      <div class="flex flex-col text-{{ section.settings.content_alignment_mobile }} lg:text-{{ section.settings.content_alignment_desktop }}">
+
+        <h1 class="{{ section.settings.title_style }} mb-[24px] hidden lg:block">{{ section.settings.title }}</h1>
+        <h3 class="mb-[24px] block lg:hidden">{{ section.settings.title }}</h3>
+        <p class="{{ section.settings.text_style }}">{{ section.settings.message }}</p>
+
+        <div class="404-actions mt-[24px] lg:mt-[64px]">
+          <a class="button button-{{ section.settings.button_style }}" href="{{ section.settings.button_url }}">
+            {{ section.settings.button_text }}
+          </a>
+
+          {% if section.settings.show_back_button %}
+            <span id="back-link" class="cursor-pointer a hover:underline" onclick="window.history.back();">
+              Back
+            </span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% if section.settings.image %}
+        <div class="image">
+          <img class="h-full object-cover" src="{{ section.settings.image | image_url: height:section.settings.image.height }}" alt="{{ section.settings.title }}">
+        </div>
+    {% endif %}
+   </div>
+</div>
+
+{% schema %}
+{
+  "name": "404 Section",
+  "class": "section-404",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings",
+      "info": "Settings to control the section's rendering."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ],
+      "info": "Choose the width type of the container."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Select the color scheme for the section."
+    },
+    {
+      "type": "header",
+      "content": "Content settings",
+      "info": "Settings to control the section's content."
+    },
+    {
+      "type": "richtext",
+      "id": "title",
+      "label": "Title",
+      "default": "<p>Page not found</p>",
+      "info": "Set the title text for the 404 page."
+    },
+    {
+      "type": "text",
+      "id": "title_style",
+      "label": "Title Style",
+      "default": "h1",
+      "info": "Setting for the title style."
+    },
+    {
+      "type": "richtext",
+      "id": "message",
+      "label": "Message",
+      "default": "<p>We are sorry that we can’t find the page, please go back or try again</p>",
+      "info": "Set the message displayed on the 404 page."
+    },
+    {
+      "type": "text",
+      "id": "text_style",
+      "label": "Text Style",
+      "default": "b2",
+      "info": "Setting for the text style."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Select an image to display on the 404 page."
+    },
+    {
+      "type": "header",
+      "content": "Button Settings",
+      "info": "Settings to control the button's appearance and behavior."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_back_button",
+      "label": "Show back button",
+      "info": "Toggle the visibility of the back button."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Continue Shopping",
+      "info": "Set the text for the button."
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL",
+      "default": "/",
+      "info": "Set the URL for the button link."
+    },
+    {
+      "type": "text",
+      "id": "button_style",
+      "label": "Button Style",
+      "default": "primary",
+      "info": "Set the style class for the button."
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings",
+      "info": "Settings to control padding and alignment."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0,
+      "info": "Set the top padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0,
+      "info": "Set the bottom padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0,
+      "info": "Set the left and right padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0,
+      "info": "Set the top padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0,
+      "info": "Set the bottom padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0,
+      "info": "Set the left and right padding for mobile view."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop",
+      "info": "Set the alignment of the content for desktop view."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile",
+      "info": "Set the alignment of the content for mobile view."
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop",
+      "info": "Set the position of the content for desktop view."
+    }
+  ]
+}
+{% endschema %}

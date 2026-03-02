@@ -1,0 +1,155 @@
+<div class="flex flex-col align-middle items-center color-{{ section.settings.color_schema }} {{ settings.reveal_animation_class }}" data-animation-delay="0.5s"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+    {% render 'block-id', id: 'theme__ecommerce-pdp-tabs' %}
+    <div class="container py-4">
+        <div class="pdp-tabs grid sm:grid-cols-1 md:grid-cols-{{ section.blocks.size }} lg:grid-cols-{{ section.blocks.size }} mx-auto auto-rows-max">
+            {% for block in section.blocks %}
+                <button class="tab-link {% if forloop.first %}active{% endif %}" onclick="openTab(event, 'Tab{{ forloop.index }}')">
+                    <img class="icon icon-accordion inline" src="{{ block.settings.icon.src | image_url: width: block.settings.icon.src.width }}"  width="25px"/>
+                    <span>{{ block.settings.title }}</span>
+                </button>
+            {% endfor %}
+        </div>
+
+        <div class="flex w-full mx-auto text-center">
+            {% for block in section.blocks %}
+                <div id="Tab{{ forloop.index }}" class="w-full tab-content mx-auto border-t-gray-100 p-8"  {% if forloop.first %} style="display:block" {% endif %}>
+                    <p>{{ block.settings.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-link");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "tab",
+      "name": "Tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Tab Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Tab Content"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Tab Icon"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title",
+      "default": "Custom React Block"
+    },
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Center"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_under_pdp",
+      "label": "Show under PDP Block"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Tabs"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+
+{% endschema %}

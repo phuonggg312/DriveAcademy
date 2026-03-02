@@ -1,0 +1,103 @@
+@import "./account-orders.scss";
+@import "./account-discounts.scss";
+@import "./customer.scss";
+
+.account-login {
+  .submit a:hover {
+    @apply no-underline;
+  }
+  &__recover-success-message {
+    @apply mb-4 py-4 bg-[#36573B] px-4;
+  }
+}
+
+.account-register {
+  &__inputs {
+    &-title {
+      @apply uppercase mb-4;
+    }
+  }
+}
+
+.account__tile {
+  @apply bg-white py-[24px] px-[16px] rounded-[16px] gap-y-4 space-y-[32px];
+}
+.account-container {
+  @apply flex flex-col-reverse lg:flex-col gap-y-[66px] gap-x-[99px] mx-auto overflow-x-hidden;
+}
+
+.account {
+  .account-nav-bar {
+    @apply flex justify-between w-full items-center p-[21px] border-b border-[#F5F5F5] hidden;
+  }
+
+  &__signin--title,
+  &__register--title {
+    @media (max-width: 1023px) {
+      font-size: 32px !important;
+    }
+  }
+}
+
+.account__stacked {
+  @apply flex flex-col;
+  .account-menu {
+    @apply w-full flex flex-row px-6 lg:px-10 pt-8 pb-10 lg:pb-14;
+    &__list {
+      @apply flex flex-row;
+
+      li {
+        border-radius: var(--4, 4px) 0px 0px 0px;
+        border: 1px solid var(--Border-primary, #000);
+        padding: 16px 16px;
+        width: 248px;
+        text-align: center;
+      }
+    }
+    &__nav {
+      @apply w-full flex flex-col justify-center items-center;
+    }
+  }
+}
+
+.account__default {
+  @apply flex flex-col lg:flex-row w-full;
+  .account-menu {
+    @apply flex lg:border-r lg:border-black lg:basis-[320px] py-[16px] lg:p-[40px]  border-black border-b;
+
+    &__nav {
+      @apply w-full px-[16px] lg:px-[24px];
+    }
+  }
+
+  .account-details {
+    @apply px-[16px] lg:px-[24px];
+    flex-basis: 80%;
+  }
+
+  .account-header {
+    @apply lg:border-b lg:border-black w-full p-[16px] lg:p-[40px];
+  }
+  .account-content-area {
+    @apply gap-[16px] pb-[64px] lg:pb-[112px] lg:pt-[64px] lg:px-[40px];
+  }
+}
+
+
+.account-popup-details {
+  &__link {
+    @apply flex items-center min-h-[19px];
+
+    &__icon {
+      @apply hidden;
+    }
+
+    &:hover &__title {
+      @apply underline;
+    }
+
+    &:hover &__icon {
+      @apply inline-block
+    }
+  }
+}

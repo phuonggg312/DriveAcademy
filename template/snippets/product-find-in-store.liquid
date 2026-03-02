@@ -1,0 +1,38 @@
+{% capture data %}
+    {
+        "settings": {{ block.settings | json }},
+        "product_sku": "{{ product.selected_or_first_available_variant.sku }}"
+    }
+{% endcapture %}
+{% assign data = data %}
+
+<div id="react-data" data-injected-props='{{ data }}'></div>
+{% liquid render 'react-block', name: "theme__ecommerce-find-in-store", props: data  %}
+
+{% assign query = 'query GetInventoryItems($query: String!) {
+    inventoryItems(first: 1, query: $query) {
+        edges {
+            node {
+                id
+                sku
+                inventoryLevels(first: 5) {
+                    edges {
+                        node {
+                            id
+                            location {
+                                name
+                                id
+                            }
+                            quantities(names: "available") {
+                                name
+                                quantity
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}' %}
+
+{% render 'react-hash', query: query %}

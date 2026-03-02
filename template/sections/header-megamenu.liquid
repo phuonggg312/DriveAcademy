@@ -1,0 +1,819 @@
+<div class="section-megamenu section-megamenu-{{ section.id }} {{ section.settings.custom_column_class }} flex flex-col w-full {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}">
+  <div class="react-node">
+    {% include 'react-props' %}
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__navigation-megamenu", props: data %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Megamenu",
+  "tag": "section",
+  "class": "section megamenu-sticky",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "overlay",
+      "name": "Overlay",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Overlay Settings",
+          "info": "Configure this if you want to adjust the page overlay that happens behind the Megamenu"
+        },
+        {
+          "type": "select",
+          "id": "mask",
+          "label": "Overlay",
+          "default": "none",
+            "options": [
+                {
+                  "value": "none",
+                  "label": "None"
+                },
+                {
+                  "value": "blur",
+                  "label": "Blur"
+                },
+                {
+                  "value": "darken",
+                  "label": "Darken"
+                }
+            ],
+          "info": "Select the overlay style for the megamenu."
+        },
+        {
+          "type": "number",
+          "id": "effect_size",
+          "label": "Effect Size",
+          "info": "This will be the value of the effect applied, blur will be in pixels, darken will be in percentage"
+        }
+      ]
+    },
+    {
+      "type": "images",
+      "name": "Images",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Featured Blocks Settings",
+          "info": "Configure the featured blocks that will be displayed in the megamenu."
+        },
+        {
+          "type": "select",
+          "id": "button_layout",
+          "label": "Button Layout",
+          "options": [
+            {
+              "value": "megamenu__cta-item-underneath",
+              "label": "Under"
+            },
+            {
+              "value": "megamenu__cta-item-overlay",
+              "label": "Overlay"
+            }
+          ],
+          "info": "Select the layout for buttons in the CTA block."
+        },
+        {
+          "type": "number",
+          "id": "column",
+          "label": "Column",
+          "default": 2,
+          "info": "Column this will be rendered in"
+        },
+        {
+          "type": "number",
+          "id": "width",
+          "label": "Column Width",
+          "default": 0,
+          "info": "In percentage how much space you want this block to take"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Linked Submenu",
+          "info": "Title for the linked submenu section."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1",
+          "info": "Select the first image for the submenu."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_1",
+          "label": "Image 1 (Mobile)",
+          "info": "Select the mobile version of the first image."
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1",
+          "info": "Title for the first link."
+        },
+        {
+          "type": "text",
+          "id": "icon_1",
+          "label": "Icon 1",
+          "info": "Icon for the first link."
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "Link 1",
+          "info": "URL for the first link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_1",
+          "label": "Button Text 1",
+          "info": "Text for the first button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2",
+          "info": "Select the second image for the submenu."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_2",
+          "label": "Image 2 (Mobile)",
+          "info": "Select the mobile version of the second image."
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2",
+          "info": "Title for the second link."
+        },
+        {
+          "type": "text",
+          "id": "icon_2",
+          "label": "Icon 2",
+          "info": "Icon for the second link."
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "Link 2",
+          "info": "URL for the second link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_2",
+          "label": "Button Text 2",
+          "info": "Text for the second button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3",
+          "info": "Select the third image for the submenu."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_3",
+          "label": "Image 3 (Mobile)",
+          "info": "Select the mobile version of the third image."
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3",
+          "info": "Title for the third link."
+        },
+        {
+          "type": "text",
+          "id": "icon_3",
+          "label": "Icon 3",
+          "info": "Icon for the third link."
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "Link 3",
+          "info": "URL for the third link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_3",
+          "label": "Button Text 3",
+          "info": "Text for the third button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image 4",
+          "info": "Select the fourth image for the submenu."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_4",
+          "label": "Image 4 (Mobile)",
+          "info": "Select the mobile version of the fourth image."
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title 4",
+          "info": "Title for the fourth link."
+        },
+        {
+          "type": "text",
+          "id": "icon_4",
+          "label": "Icon 4",
+          "info": "Icon for the fourth link."
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "Link 4",
+          "info": "URL for the fourth link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_4",
+          "label": "Button Text 4",
+          "info": "Text for the fourth button."
+        }
+      ]
+    },
+    {
+      "type": "toparea",
+      "name": "Top Level",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Top Level Featured Blocks Settings",
+          "info": "Configure the featured blocks that will be displayed in the top level of the megamenu when first hovered/clicked."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image 1",
+          "info": "Select the first top-level image."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_1",
+          "label": "Image 1 (Mobile)",
+          "info": "Select the mobile version of the first top-level image."
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title 1",
+          "info": "Title for the first top-level link."
+        },
+        {
+          "type": "text",
+          "id": "icon_1",
+          "label": "Icon 1",
+          "info": "Icon for the top-level link."
+        },
+        {
+          "type": "url",
+          "id": "url_1",
+          "label": "Link 1",
+          "info": "URL for the first top-level link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_1",
+          "label": "Button Text 1",
+          "info": "Text for the first top-level button."
+        },
+        {
+          "type": "text",
+          "id": "button_text_style_1",
+          "label": "Button Style 1",
+          "default": "b2",
+          "info": "Style for the first top-level button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2",
+          "info": "Select the second top-level image."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_2",
+          "label": "Image 2 (Mobile)",
+          "info": "Select the mobile version of the second top-level image."
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title 2",
+          "info": "Title for the second top-level link."
+        },
+        {
+          "type": "text",
+          "id": "icon_2",
+          "label": "Icon 2",
+          "info": "Icon for the second link."
+        },
+        {
+          "type": "url",
+          "id": "url_2",
+          "label": "Link 2",
+          "info": "URL for the second top-level link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_2",
+          "label": "Button Text 2",
+          "info": "Text for the second top-level button."
+        },
+        {
+          "type": "text",
+          "id": "button_text_style_2",
+          "label": "Button Style 2",
+          "default": "b2",
+          "info": "Style for the second top-level button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3",
+          "info": "Select the third top-level image."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_3",
+          "label": "Image 3 (Mobile)",
+          "info": "Select the mobile version of the third top-level image."
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title 3",
+          "info": "Title for the third top-level link."
+        },
+        {
+          "type": "text",
+          "id": "icon_3",
+          "label": "Icon 3",
+          "info": "Icon for the third link."
+        },
+        {
+          "type": "url",
+          "id": "url_3",
+          "label": "Link 3",
+          "info": "URL for the third top-level link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_3",
+          "label": "Button Text 3",
+          "info": "Text for the third top-level button."
+        },
+        {
+          "type": "text",
+          "id": "button_text_style_3",
+          "label": "Button Style 3",
+          "default": "b2",
+          "info": "Style for the third top-level button."
+        },
+        {
+          "type": "image_picker",
+          "id": "image_4",
+          "label": "Image 4",
+          "info": "Select the fourth top-level image."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image_4",
+          "label": "Image 4 (Mobile)",
+          "info": "Select the mobile version of the fourth top-level image."
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title 4",
+          "info": "Title for the fourth top-level link."
+        },
+        {
+          "type": "text",
+          "id": "icon_4",
+          "label": "Icon 4",
+          "info": "Icon for the fourth link."
+        },
+        {
+          "type": "url",
+          "id": "url_4",
+          "label": "Link 4",
+          "info": "URL for the fourth top-level link."
+        },
+        {
+          "type": "text",
+          "id": "button_text_4",
+          "label": "Button Text 4",
+          "info": "Text for the fourth top-level button."
+        },
+        {
+          "type": "text",
+          "id": "button_text_style_4",
+          "label": "Button Style 4",
+          "default": "b2",
+          "info": "Style for the fourth top-level button."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "custom_column_class",
+      "label": "Custom Class",
+      "info": "Custom Class"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Select a color scheme for the megamenu."
+    },
+    {
+      "type": "header",
+      "content": "Megamenu Text Settings"
+    },
+    {
+      "type": "text",
+      "id": "title_style",
+      "label": "Title Style",
+      "info": "Style of the titles above links",
+      "default": "b1"
+    },
+    {
+      "type": "text",
+      "id": "link_style",
+      "label": "Link Style",
+      "info": "Style of the links displayed",
+      "default": "b2"
+    },
+    {
+      "type": "range",
+      "id": "gap_between_text_y",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Gap between links and titles (Vertical)",
+      "default": 2,
+      "info": "Gap between links and titles in pixels."
+    },
+    {
+      "type": "header",
+      "content": "Megamenu Options"
+    },
+    {
+      "type": "select",
+      "id": "container_type_inner",
+      "label": "Container type (Inner)",
+      "default": "container",
+      "info": "Use this if you want the content inside the megamenu to be full width or not.",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondlevel_open_always",
+      "label": "Show 2nd Level Menu Open At All Times",
+      "info": "This will apply if you want to show 2nd level menus open all the time, without a hover effect.",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thirdlevel_open_always",
+      "label": "Show 3rd Level Menu Open At All Times",
+      "info": "This will apply if you want to show 3rd level menus open all the time, without a hover effect.",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "column_spacing",
+      "label": "Column Spacing",
+      "options": [
+        {
+          "value": "none",
+          "label": "Manual"
+        },
+        {
+          "value": "justify-between",
+          "label": "Even Spacing"
+        },
+        {
+          "value": "justify-center",
+          "label": "Centered"
+        }
+      ],
+      "default": "justify-between",
+      "info": "Use this if you want even spacing between the columns, this should be used primarily on the Default layout"
+    },
+    {
+      "type": "number",
+      "id": "column_width",
+      "label": "Column Width",
+      "info": "Set this if above is none, this will be the width of the columns in percentage, leave as 0 for auto"
+    },
+    {
+      "type": "range",
+      "id": "column_gap_x",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Gap between columns (Horizontal)",
+      "default": 8,
+      "info": "Gap between columns in pixels."
+    },
+    {
+      "type": "range",
+      "id": "column_gap_y",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Gap between columns (Vertical)",
+      "default": 8,
+      "info": "Gap between columns in pixels."
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "info": "Select the main menu for the megamenu."
+    },
+    {
+      "type": "select",
+      "id": "megamenu_trigger",
+      "options": [
+        {
+          "value": "onclick",
+          "label": "On Click"
+        },
+        {
+          "value": "onhover",
+          "label": "On Hover"
+        }
+      ],
+      "default": "onclick",
+      "label": "Megamenu Trigger",
+      "info": "Choose how the megamenu is triggered: by clicking or hovering."
+    },
+    {
+      "type": "text",
+      "id": "attach_to",
+      "label": "Parent menu item",
+      "info": "Specify a unique menu item from the parent menu to attach the megamenu."
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "sidebar",
+          "label": "Sidebar"
+        }
+      ],
+      "default": "default",
+      "label": "Layout",
+      "info": "Choose the layout style for the megamenu on desktop devices."
+    },
+    {
+      "type": "select",
+      "id": "layout_mobile",
+      "options": [
+        {
+          "value": "drilldown",
+          "label": "Drill Down"
+        },
+        {
+          "value": "Accordion",
+          "label": "Accordion"
+        }
+      ],
+      "default": "drilldown",
+      "label": "Layout (Mobile)",
+      "info": "Choose the layout style for the megamenu on mobile devices"
+    },
+    {
+      "type": "header",
+      "content": "Featured Image Settings"
+    },
+    {
+      "type": "select",
+      "id": "image_layout",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "grid",
+      "label": "Image Layout",
+      "info": "Choose the layout for featured images."
+    },
+    {
+      "type": "range",
+      "id": "featured_column_gap_x",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Gap between columns (Horizontal)",
+      "default": 8,
+      "info": "Gap between columns in pixels."
+    },
+    {
+      "type": "range",
+      "id": "featured_column_gap_y",
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "label": "Gap between columns (Vertical)",
+      "default": 8,
+      "info": "Gap between columns in pixels."
+    },
+    {
+      "type": "range",
+      "id": "col_count",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "label": "Column Count (Grid)",
+      "default": 4,
+      "info": "Set the number of columns in the grid layout."
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Megamenu"
+    }
+  ],
+  "enabled_on": {
+    "groups": ["header"]
+  }
+}
+{% endschema %}

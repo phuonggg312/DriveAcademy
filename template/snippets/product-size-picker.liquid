@@ -1,0 +1,35 @@
+<div id="size-selector" class="size-selector-container p-[16px] flex flex-col items-center justify-center lg:hidden">
+    <h4>Select Size</h4>
+
+    <div class="size-guide-header flex items-center justify-center">
+        <div class="size-actions">
+            <span class="bc" x-on:click="$refs.sizeGuideButton.click()">Size Guide</span>
+        </div>
+    </div>
+    <div class="size-grid">
+        {% render 'product-variant-picker', product: product, form_name: 'size-selector', picker_type: section.settings.picker_type, block: block %}
+    </div>
+
+    <div class="size-guide-footer flex w-full gap-[8px]">
+        <button class="button btn-outline back-button" x-on:click="$dispatch('close-size-selector')"><i class="icon-chevron-left text-lg"></i></button>
+        <div class="pdp-add-to-cart w-full">
+            {% assign product_add_block = null %}
+            {% for section_block in section.blocks %}
+                {% if section_block.type == 'add' %}
+                    {% assign product_add_block = section_block %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+            {% render 'product-add-to-cart', block: product_add_block %}
+        </div>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('open-size-selector', function(){
+        document.getElementById('size-selector').classList.add('open');
+    });
+    window.addEventListener('close-size-selector', function(){
+        document.getElementById('size-selector').classList.remove('open');
+    });
+</script>

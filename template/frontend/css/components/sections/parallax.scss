@@ -1,0 +1,16 @@
+.parallax-container {
+  @apply min-h-[400px];
+}
+.parallax-container {
+  @apply overflow-hidden relative;
+  height: 400px; /* Adjust this value as needed, or use a Tailwind class if it exists */
+}
+.parallax-section {
+  /* For background-attachment, you might need to add custom utilities or use inline styles */
+  background-attachment: fixed;
+  @apply bg-fixed bg-center bg-no-repeat bg-cover relative z-[5] flex justify-center items-center min-h-full;
+}
+
+.parallax-content {
+  @apply min-h-[150px] absolute flex flex-col items-center justify-center text-center p-4 rounded-md space-y-2 z-10;
+}

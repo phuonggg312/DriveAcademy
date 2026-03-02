@@ -1,0 +1,38 @@
+@import "./testimonials.scss";
+@import "./quicklinks.scss";
+@import "./multicolumn.scss";
+@import "./textwithimage.scss";
+@import "./faq.scss";
+@import "./marquee.scss";
+@import "./banner.scss";
+@import "./complete-the-look.scss";
+@import "./breadcrumbs.scss";
+@import "./recommended-products.scss";
+@import "./featured-companies.scss";
+@import "./parallax.scss";
+@import "./videocontainer.scss";
+@import "./track-your-order.scss";
+@import "./shop-the-look.scss";
+@import "./newsletter.scss";
+@import "./product-list.scss";
+@import "./calltoaction.scss";
+
+.section-top {
+  @apply py-2 items-center flex flex-col;
+}
+
+.page__description {
+  @apply max-w-4xl mx-auto min-h-[250px];
+}
+
+.page__header {
+  @apply mb-4 max-w-max mx-auto text-3xl font-bold sm:text-4xl md:text-5xl xl:text-[3.4rem] 2xl:text-[3.75rem];
+}
+
+.page__section-container {
+  @apply flex flex-col align-middle items-center mt-10 min-h-[100px];
+}
+
+.page__description-content {
+  @apply min-h-[250px];
+}

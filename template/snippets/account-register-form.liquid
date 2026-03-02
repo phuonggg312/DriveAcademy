@@ -1,0 +1,141 @@
+{% assign show_customer_name_fields = false %}
+{% assign show_buttons_instead_of_text = false %}
+{% assign show_cancel_button = false %}
+{% assign show_forgot_password_in_bottom = true %}
+{% assign show_signup_in_bottom = true %}
+
+<div class="account-register" x-show="!showPasswordReset">
+    <div class="account-register-inner shell flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}px] mx-auto">
+            <div class="account-register__header flex flex-col mx-auto mb-8 text-center gap-y-[24px]">
+                <h1 class="account__register--title">{{ section.settings.title }}</h1>
+
+                {% if  section.settings.subheading %}
+                <p class="{{ section.settings.subheading_font_class }} mb-2">
+                    {{ section.settings.subheading }}
+                </p>
+                {% endif %}
+            </div>
+
+            <div class="register-form__container form-container flex flex-col w-full space-y-[48px]">
+                {% form 'create_customer' %}
+                    <div class="register-form__container-form flex flex-col w-full space-y-[40px] lg:space-y-[48px]">
+                        {{ form.errors | default_errors }}
+                        <div class="register-form__inputs flex flex-col gap-y-[24px]">
+                            {% if show_customer_name_fields %}
+                            <div>
+                                <p class="account-register__inputs-title">About You</p>
+                                <div class="flex flex-col lg:flex-row gap-5">
+                                    <div class="floating-input lg:w-1/2">
+                                        <input
+                                                class="w-full p-2"
+                                                type="text"
+                                                name="customer[first_name]"
+                                                placeholder=" "
+                                                required
+                                        >
+                                        <label for="first-name" class="visually-hidden">{{ 'customer.register.first_name' | t }}</label>
+                                    </div>
+
+                                    <div class="floating-input lg:w-1/2">
+                                        <input
+                                                class="w-full p-2"
+                                                type="text"
+                                                name="customer[last_name]"
+                                                placeholder=" "
+                                                required
+                                        >
+                                        <label for="last-name" class="visually-hidden">{{ 'customer.register.last_name' | t }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+
+                                <p class="account-register__inputs-title hidden">Your Login Details</p>
+                                <div class="floating-input">
+                                    <input
+                                            class="w-full p-2"
+                                            type="email"
+                                            name="customer[email]"
+                                            placeholder="Email@email.com"
+                                            required
+                                    >
+                                    <label for="email" class="visually-hidden">{{ 'customer.register.email' | t }}</label>
+                                </div>
+                                <div class="floating-input" x-data="{inputVal: null}">
+                                    <input
+                                            class="w-full p-2 tracking-[0.35rem]"
+                                            type="password"
+                                            name="customer[password]"
+                                            x-model="inputVal"
+                                            autocomplete="off"
+                                            placeholder="******"
+                                            required
+                                    >
+                                    <label for="password" x-show="inputVal == '' || inputVal == null" class="">{{ 'customer.register.password' | t }}</label>
+                                </div>
+
+
+                            {% if section.settings.use_birthday %}<div>
+                                <p class="account-register__inputs-title hidden">Your Birth Month</p>
+                                <div class="floating-input">
+                                    <select
+                                            class="p-2"
+                                            type="birthday"
+                                            id="birthday"
+                                            name="customer[tags]"
+                                            required
+                                    >
+                                        <option hidden value=""></option>
+                                        {% for month in months %}
+                                            <option value="birthday:{{ month | downcase }}">{{ month }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="birthday" class="">{{ 'customer.register.birthday' | t }}</label>
+                                </div>
+                                </div>
+                            {% endif %}
+
+                            {% if section.settings.show_subscribe %}
+                                <div id="accepts_marketing" class="b2 text-center">
+                                    <label for="marketing">
+                                        {{ 'customer.register.marketing' | t }}
+                                    </label>
+                                    <br/>
+                                    <span class="font-light text-xs">{{ 'customer.register.marketing_terms' | t }}</span>
+                                    <input class="p-2" type="checkbox" name="customer[accepts_marketing]" checked="checked"
+                                        value="true" id="marketing"/>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="register-form__container-buttons">
+                            <div class="submit">
+                                <button class="button-tertiary w-full" type="submit">Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                {% endform %}
+
+                <div class="register-form__actions text-center flex flex-col items-center justify-center space-y-[8px] lg:space-y-[12px]">
+                    {% if show_forgot_password_in_bottom == true %}
+                        <div class="forgot-password b3">
+                            <a href="{{ routes.account_recover_url }}" @click="$event.preventDefault(), showPasswordReset = true" class="underline">
+                                {{ 'customer.login_page.forgot_password' | t }}
+                            </a>
+                        </div>
+                    {% endif %}
+                    {% if show_signup_in_bottom == true %}
+                        <div class="account-inquiry b3">
+                            <span>Already have an account? <a href="{{ routes.account_login_url }}" class="underline">Log In</a></span>
+                        </div>
+                    {% endif %}
+
+                    {% if show_cancel_button %}
+                    <div class="account-inquiry blabel font-medium">
+                        <a href="{{ routes.root_url }}">{{ 'customer.register.cancel' | t }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+</div>

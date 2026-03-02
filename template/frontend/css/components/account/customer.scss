@@ -1,0 +1,23 @@
+.account-addresses .field {
+    @apply my-2
+}
+
+.account-addresses .field input, .account-addresses .field select {
+    @apply w-full p-2
+}
+
+.account-addresses .field label {
+    @apply hidden
+}
+
+.account-dashboard .links, .account-addresses .links {
+    @apply flex gap-1 my-2
+}
+
+.account-dashboard .links a, .account-addresses .links a {
+    @apply bg-black text-white p-2
+}
+
+.account-dashboard table {
+    @apply w-full
+}

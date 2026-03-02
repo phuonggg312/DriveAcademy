@@ -1,0 +1,96 @@
+{% assign show_buttons_instead_of_text = false %}
+{% assign show_register_button = false %}
+{% assign show_cancel_button = false %}
+{% assign show_forgot_password_in_bottom = true %}
+{% assign show_signup_in_bottom = true %}
+
+<div class="account-login" x-show="!showPasswordReset">
+    <div class="account-login-inner shell flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}px] mx-auto space-y-[40px] lg:space-y-[48px]">
+        <div class="text-center flex flex-col gap-4">
+            <h1 class="account__signin--title mx-auto">{{ section.settings.title }}</h1>
+            {% if section.settings.image %}
+                <div class="flex justify-center items-center mb-8">
+                    <img src="{{ section.settings.image | image_url: width: image_width }}" alt="{{ section.settings.image.alt }}" height="100%" width="{{ section.settings.image_width }}"/>
+                </div>
+            {% endif %}
+
+            {% if section.settings.description != blank %}
+                <p class="{{ section.settings.description_font_class }}">{{ section.settings.description }}</p>
+            {% endif %}
+        </div>
+
+        <div class="login-form__container form-container flex flex-col w-full space-y-[40px] lg:space-y-[48px]">
+            {%- if recover_success == true -%}
+                <div class="account-login__recover-success-message" role="alert">
+                    <p class="b3">{{ 'customer.recover_password.success' | t }}</p>
+                </div>
+            {%- endif -%}
+
+            {% form 'customer_login', return_to: routes.account_url %}
+                <div class="login-form__container-form flex flex-col w-full space-y-[40px] lg:space-y-[48px]">
+                {{ form.errors | default_errors }}
+
+                <div class="login-form__inputs flex flex-col gap-y-[24px]">
+                    <div class="email floating-input">
+                        <input class="w-full p-2" type="email" name="customer[email]" placeholder="Email@email.com">
+                        <label for="email">{{ 'customer.login_page.email' | t }}</label>
+                    </div>
+
+                    <div class="password floating-input" x-data="{inputVal: null}">
+                        <input class="w-full p-2" type="password" x-model="inputVal" name="customer[password]" placeholder="******">
+                        <label for="password" x-show="inputVal == '' || inputVal == null">{{ 'customer.login_page.password' | t }}</label>
+                    </div>
+
+                    {% if show_forgot_password_in_bottom == false %}
+                        <div class="forgot-password blabel font-medium flex justify-end mb-4">
+                            <a
+                                href="{{ routes.account_recover_url }}"
+                                @click="$event.preventDefault(), showPasswordReset = true"
+                                class="underline"
+                            >
+                                {{ 'customer.login_page.forgot_password' | t }}
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="login-form__container-buttons">
+                    <div class="submit">
+                        <button class="button-tertiary w-full" type="submit">Log In</button>
+                    </div>
+                    {%if show_register_button %}
+                        <div class="submit">
+                            <a class="button button-tertiary w-full" href="/account/register">{{ 'customer.login_page.create_account' | t }}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endform %}
+
+            <div class="login-form__actions text-center flex flex-col items-center justify-center space-y-[8px] lg:space-y-[12px]">
+                {% if show_forgot_password_in_bottom == true %}
+                    <div class="forgot-password b3">
+                        <a
+                            href="{{ routes.account_recover_url }}"
+                            @click="$event.preventDefault(), showPasswordReset = true"
+                            class="underline"
+                        >
+                            {{ 'customer.login_page.forgot_password' | t }}
+                        </a>
+                    </div>
+                {% endif %}
+                {% if show_signup_in_bottom == true %}
+                    <div class="account-inquiry b3">
+                        <span>Don't have an account? <a href="{{ routes.account_register_url }}" class="underline">Sign Up</a></span>
+                    </div>
+                {% endif %}
+
+                {% if show_cancel_button %}
+                <div class="account-inquiry blabel font-medium">
+                    <a href="/">{{ 'customer.login_page.cancel' | t }}</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

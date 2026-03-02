@@ -1,0 +1,147 @@
+
+<div class="account-dashboard color-{{ section.settings.color_schema }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+  >
+    <div class="account">
+      {% render 'account-topbar' %}
+      <div class="account-wrapper">
+        <div class="account-container">
+          {% if section.settings.layout_type == 'default' %}
+          <div class="account__{{ section.settings.layout_type}}">
+            {% elsif section.settings.layout_type == 'stacked' %}
+            <div class="account__{{ section.settings.layout_type }}">
+              {% endif %}
+              {% render 'account-sidebar' %}
+
+              <div class="account-details">
+
+                <p class="lg:hidden -mb-3 b3 px-4 pt-6">
+                    <a
+                        href="/account"
+                        class="flex items center gap-2 no-underline hover:no-underline"
+                    >
+                        <i class="icon icon-caret-left-thin text-lg"></i>
+                        <span class="hover:underline">
+                            {{ 'customer.account.back_to_my_account_details' | t }}
+                        </span>
+                    </a>
+                </p>
+
+                {% render 'account-header', title: "Addresses", subtext: "My Account" %}
+
+                <div class="max-w-[calc(1440px-320px)]">
+                  {% render 'account-addresses' %}
+                </div>
+              </div>
+            </div>
+
+            {% render 'account-links' %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% schema %}
+{
+  "name": "Account Addresses",
+  "tag": "header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Render settings"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "default",
+          "label": "Default"
+        },
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        }
+      ],
+      "default": "default",
+      "label": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image for tiles"
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

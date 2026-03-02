@@ -1,0 +1,681 @@
+<div
+  class="section-featured-collections color-{{ section.settings.color_schema  }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  <div class="{{ section.settings.container_type }}">
+    <div class="react-node">
+      {% include 'react-props' %}
+      <div
+              id="react-data"
+              data-injected-props='{{ data }}'
+      ></div>
+      {% render 'react-block', name: "theme__featured-collections", props: data %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collections",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "desktop-only",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container Type",
+      "default": "container",
+      "info": "Contained: Maximum width(Theme settings > Layout > Container Width) ",
+      "options": [
+        {
+          "label": "Contained",
+          "value": "container"
+        },
+        {
+          "label": "Full Width",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Container Colour Scheme",
+      "info": "Container background, header heading & description colour"
+    },
+    {
+      "type": "header",
+      "content": "Section Header Settings"
+    },
+    {
+      "type": "number",
+      "id": "header_max_width",
+      "label": "Header Max Width",
+      "default": 750,
+      "info": "Max 2000"
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "label": "Header Margin Bottom - Desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom_mobile",
+      "label": "Header Margin Bottom - Mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "select",
+      "id": "header_alignment",
+      "label": "Header Alignment",
+      "default": "items-center text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "items-start text-left"
+        },
+        {
+          "label": "Center",
+          "value": "items-center text-center"
+        },
+        {
+          "label": "Right",
+          "value": "items-end text-right"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "heading_type",
+      "label": "Heading Type - Desktop",
+      "info": "Theme settings > Typography > Headings",
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "heading_type_mobile",
+      "label": "Heading Type - Mobile",
+      "info": "Theme settings > Typography > Headings",
+      "default": "h4"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "text",
+      "id": "body_type",
+      "label": "Description Body Type - Desktop",
+      "info": "Theme settings > Typography > Body",
+      "default": "b3"
+    },
+    {
+      "type": "text",
+      "id": "body_type_mobile",
+      "label": "Description Body Type - Mobile",
+      "info": "Theme settings > Typography > Body",
+      "default": "b3"
+    },
+    {
+      "type": "header",
+      "content": "Tabs Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "nav_color_schema",
+      "label": "Tab Navigation Color Scheme",
+      "info": "Button text, background and hover colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_all",
+      "label": "Enable All Collections ?",
+      "info": "If checked, All Collections tab will be added with collections from all of the tabs",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "all_collections_label",
+      "label": "All Collections Tab Label",
+      "default": "All Collections"
+    },
+    {
+      "type": "text",
+      "id": "show_more",
+      "label": "Show More Button Label",
+      "default": "Show More"
+    },
+    {
+      "type": "header",
+      "content": "Collection Column Settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "column_color_schema",
+      "label": "Column Color scheme",
+      "info": "Texts, Background colour"
+    },
+    {
+      "type": "checkbox",
+      "id": "animation_on_hover",
+      "label": "Animation on Hover ?",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "title_type",
+      "label": "Title Heading Type - Desktop",
+      "info": "Theme settings > Typography > Headings",
+      "default": "h5"
+    },
+    {
+      "type": "text",
+      "id": "title_type_mobile",
+      "label": "Title Heading Type - Mobile",
+      "info": "Theme settings > Typography > Headings",
+      "default": "h6"
+    },
+    {
+      "type": "number",
+      "id": "image_height",
+      "label": "Media Height - Desktop",
+      "default": 384
+    },
+    {
+      "type": "number",
+      "id": "image_height_mobile",
+      "label": "Media Height - Mobile",
+      "default": 288
+    },
+    {
+      "type": "checkbox",
+      "id": "content_full_width",
+      "label": "Content Full Width ?",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal_position",
+      "label": "Content Horizontal Position - Desktop",
+      "default": "lg:justify-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "lg:justify-start"
+        },
+        {
+          "label": "Center",
+          "value": "lg:justify-center"
+        },
+        {
+          "label": "Right",
+          "value": "lg:justify-end"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal_position_mobile",
+      "label": "Content Horizontal Position - Mobile",
+      "default": "justify-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "justify-start"
+        },
+        {
+          "label": "Center",
+          "value": "justify-center"
+        },
+        {
+          "label": "Right",
+          "value": "justify-end"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal_alignment",
+      "label": "Content Horizontal Alignment - Desktop",
+      "default": "lg:items-center lg:text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "lg:items-start lg:text-left"
+        },
+        {
+          "label": "Center",
+          "value": "lg:items-center lg:text-center"
+        },
+        {
+          "label": "Right",
+          "value": "lg:items-end lg:text-right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_horizontal_alignment_mobile",
+      "label": "Content Horizontal Alignment - Mobile",
+      "default": "items-center text-center",
+      "options": [
+        {
+          "label": "Left",
+          "value": "items-start text-left"
+        },
+        {
+          "label": "Center",
+          "value": "items-center text-center"
+        },
+        {
+          "label": "Right",
+          "value": "items-end text-right"
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Top Inner Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Bottom Inner Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_left_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Left Inner Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Right Inner Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Top Inner Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Bottom Inner Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Left Inner Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Right Inner Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Top Outer Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Bottom Outer Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_left_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Left Outer Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Content Right Outer Padding - Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Top Outer Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Bottom Outer Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_left_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Left Outer Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Content Right Outer Padding - Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Grid/Carousel Settings"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - Desktop",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap - Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "number_of_columns",
+      "min": 1,
+      "max": 8,
+      "step": 1,
+      "label": "Number of Columns - Desktop",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_list",
+      "name": "Collection List",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tab_navigation_label",
+          "label": "Tab Navigation Label"
+        },
+        {
+          "type": "collection_list",
+          "id": "collection_list",
+          "label": "Collection List"
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "presets": [
+    {
+      "name": "Featured Collections"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{
+  "version": "v1",
+  "packages": {
+    "arctheme": {
+      "version": "1.0.0",
+      "signature": "c71ab1f322d47f7e4694b29b0170536e",
+      "pure": true
+    },
+    "@mindarc/arctheme-components": {
+      "signature": "8449b682c2d209dd148362d7ec38ffd1",
+      "replaced": "1.0.11"
+    }
+  }
+}

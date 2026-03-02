@@ -1,0 +1,32 @@
+{% assign currency_codes = "USD,CAD,EUR,GBP,AUD,JPY" | split: "," %}
+{% assign country_names = "United States,Canada,European Union,United Kingdom,Australia,Japan" | split: "," %}
+
+
+{% form 'currency', id: 'currency-form' %}
+    <div class="inline-flex lg:flex justify-center items-center gap-x-[8px]">
+        <label for="currency" class="hidden">Country Select</label>
+        <select name="currency" id="currency-selector" class="bg-transparent text-white border-none text-xs lg:text-sm font-light">
+            {% for currency in shop.enabled_currencies %}
+                {% assign country_name = "" %}
+                {% for code in currency_codes %}
+                    {% if currency.iso_code == code %}
+                        {% assign index = forloop.index0 %}
+                        {% assign country_name = country_names[index] %}
+                    {% endif %}
+                {% endfor %}
+                {% if currency == cart.currency %}
+                    <option selected="true">{{ country_name }} {{ currency.symbol }}{{ currency.iso_code }}</option>
+                {% else %}
+                    <option>{{ country_name }} {{ currency.symbol }}{{ currency.iso_code }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+        <i class="icon icon-caret-down-thin lg:text-[23px] lg:text-[18px]"></i>
+    </div>
+{% endform %}
+
+<script>
+    document.getElementById('currency-selector').addEventListener('change', function() {
+        this.form.submit();
+    });
+</script>

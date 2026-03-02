@@ -1,0 +1,260 @@
+<div class="section-recommendedproducts {{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }} hidden">
+    <div class="section-recommendedproducts-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+         x-data="section({{ section.settings | json | escape }})"
+         :class="classes"
+    >
+      <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }} relative">
+        <div class="react-node">
+
+          {% assign products = '' %}
+          {% for handle in product_handles %}
+            {% if handle != '' %}
+              {% assign product = all_products[handle] %}
+              {% assign products = products | append: product | append: ',' %}
+            {% endif %}
+          {% endfor %}
+          {% assign products = products | slice: 0, -1 %}
+          {% assign first_line_item = cart.items | first %}
+
+          {% capture data %}
+            {
+            "id": "{{ section.id }}",
+            "product": {
+              {% if product %}
+                "id": "{{ product.id }}",
+              {% endif %}
+              {% if first_line_item %}
+                "id": {{ first_line_item.variant.product.id | json }},
+              {% endif %}
+            },
+            "section": {{ section.settings | json }},
+            "globals": {
+                "mobile_breakpoint": "1024px",
+                "enable_wishlist": "{{ settings.enable_wishlist }}",
+                "is_customer_logged_in": "{% if customer %}true{% endif %}",
+                "customer_name": "{% if customer %}{{ customer.name | default: customer.email }}{% endif %}",
+                "customer_impact": "{% if customer %}{{ customer.metafields.customer.personal_impact }}{% endif %}",
+                "currency": "{{ shop.currency }}",
+                "currency_symbol": "{{ shop.currency_symbol }}",
+                "video_quality": "{{ settings.video_quality }}",
+                "klaviyo_public_api_key": "{{ settings.klaviyo_public_api_key }}",
+                "klaviyo_api_url": "{{ settings.klaviyo_api_url }}",
+                "klaviyo_subscriber_list_id": "{{ settings.klaviyo_subscriber_list_id }}",
+                "carousel_icons": {
+                  "carousel_navigation_arrow_right": "{% if settings.right_arrow_icon %}{{ settings.right_arrow_icon }}{% else %} {{ settings.right_arrow_icon_image | asset_url }} {% endif %}",
+                  "carousel_navigation_arrow_left": "{% if settings.left_arrow_icon %}{{ settings.left_arrow_icon }}{% else %} {{ settings.left_arrow_icon_image | asset_url }} {% endif %}",
+                  "carousel_navigation_arrow_size": "{{ settings.carousel_navigation_arrow_size }}",
+                }
+              }
+            }
+          {% endcapture %}
+
+          <div id="react-data" data-injected-props='{{ data }}'></div>
+          {% render 'react-block', name: "theme__recommendedproducts", props: data %}
+
+          <div class="viewed-tracker" x-data="recentlyviewed" x-init="await store('{{ product.id }}')"></div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Recommended Products",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Titles & Content"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "list-scrollable",
+          "label": "Scrollable"
+        },
+        {
+          "value": "list-default",
+          "label": "Carousel"
+        },
+        {
+          "value": "list-grid",
+          "label": "Grid"
+        }
+      ],
+      "default": "list-default",
+      "label": "Layout Type",
+      "info": "Layout for Recently Viewed"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "You may also like"
+    },
+    {
+      "type": "text",
+      "id": "header_style",
+      "label": "Header style",
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "header_style_mobile",
+      "label": "Header style (Mobile)",
+      "default": "sh5"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Text under header"
+    },
+    {
+      "type": "text",
+      "id": "subtext_style",
+      "label": "Subtext style",
+      "default": "b2"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Recommended Products"
+    }
+  ]
+}
+
+{% endschema %}

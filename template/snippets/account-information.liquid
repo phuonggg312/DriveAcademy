@@ -1,0 +1,112 @@
+<div class="account-content-area">
+
+    <div class="account-information flex flex-col space-y-[16px] lg:pt-6 max-lg:px-4">
+        <!-- Your Details -->
+        <div class="account-information__details" x-data="account" x-init="getNotifications()">
+            <div class="account-information-columns bg-white p-3 lg:py-8 lg:px-4 rounded-[16px] gap-y-4 space-y-5 lg:space-y-8">
+                <div class="flex space-x-[8px] items-center max-lg:justify-between">
+                    <p class="lg:text-lg font-medium">Profile</p>
+                    <a class="b3 text-black-50 underline" href="/account?view=personal-details">Edit</a>
+                </div>
+
+                <div class="flex flex-col space-y-5 lg:space-y-8">
+                    {% if customer.name %}
+                        <div class="flex flex-col">
+                            <p class="b3 text-black-50">Name</p>
+                            <p class="b3">{{ customer.name }}</p>
+                        </div>
+                    {% endif %}
+
+                    <div class="flex flex-col">
+                        <p class="b3 text-black-50">Email</p>
+                        <p class="b3">{{ customer.email }}</p>
+                    </div>
+
+                    {% if customer.phone %}
+                        <div class="flex flex-col">
+                            <p class="b3 text-black-50">Contact number</p>
+                            <p class="b3">{{ customer.phone }}</p>
+                        </div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Address Book -->
+        <div class="flex flex-col bg-white p-3 lg:py-8 lg:px-4 rounded-[16px] space-y-5 lg:space-y-8">
+            <p class="lg:text-lg font-medium">{{ 'customer.addresses.your_address_book' | t }}</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-[24px] mt-8">
+                <div class="flex flex-col  space-y-[8px]">
+                    <div class="account-information__address-header account-information__address-link b3 text-black-50">  <p> {{ 'customer.addresses.default_address' | t }}  </p> <a href="/account?view=addresses"> <i class="icon icon-pencil"></i> </a> </div>
+                    <div class="account-information__address-column space-y-[8px] b3">
+                        <p> {{ customer.default_address.name }} </p>
+                        <p> {{ customer.default_address.address1 }} </p>
+                        <p> {{ customer.default_address.address2 }} </p>
+                        <p> {{ customer.default_address.city }} </p>
+                        <p> {{ customer.default_address.country }} </p>
+                    </div>
+
+                    <div class="address-actions flex space-x-[16px] items-center">
+                        <a class="b3 underline text-black-50" href="/account?view=addresses">Edit</a>
+
+                        <form @submit="deleteAddress" method="post" action="/account/addresses/{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button type="submit" class="button-text b3 underline text-black-50" style="height:auto; padding:0px;">
+                                {{ 'customer.addresses.delete' | t }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% for address in customer.addresses %}
+                    <div class="flex flex-col  space-y-[8px]">
+                        <div class="account-information__address-header account-information__address-link b3 text-black-50"> 
+                            <p> Address {{ forloop.index }} </p>
+
+                            <a href="/account?view=addresses">
+                                <i class="icon icon-pencil"></i>
+                            </a>
+                        </div>
+
+                        <div class="account-information__address-column space-y-[8px] b3">
+                            <p> {{ address.name }} </p>
+                            <p> {{ address.address1 }} </p>
+                            <p> {{ address.address2 }} </p>
+                            <p> {{ address.city }} </p>
+                            <p> {{ address.country }} </p>
+                        </div>
+                        <div class="address-actions flex space-x-[16px] items-center">
+                            <a class="b3 underline text-black-50" href="/account?view=addresses">Edit</a>
+                            <form @submit="deleteAddress" method="post" action="/account/addresses/{{ address.id }}" data-confirm-message="{{ 'customer.addresses.delete_confirm' | t }}">
+                                <input type="hidden" name="_method" value="delete"/>
+                                <button type="submit" class="button-text b3 underline text-black-50" style="height:auto; padding:0px;">
+                                    {{ 'customer.addresses.delete' | t }}
+                                </button>
+                            </form>
+                            {%- form 'customer_address', address -%}
+                               <input
+                                 type="hidden"
+                                 id="address_default_address_new"
+                                 name="address[default]"
+                                 value="1"
+                               >
+                               <button type="submit" class="button-text b3 underline text-black-50" value="Set As Default" style="height:auto; padding:0px;">
+                                Set As Default
+                               </button>
+                             {%- endform -%}
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="account-information__address-link button button-primary">
+                <a href="/account?view=addresses">Add a new address </a>
+            </div>
+        </div>
+    </div>
+</div>

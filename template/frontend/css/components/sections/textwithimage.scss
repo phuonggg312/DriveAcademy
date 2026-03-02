@@ -1,0 +1,32 @@
+/* TEXT WITH IMAGE */
+.twi-container {
+  @apply p-[16px] space-y-4 lg:p-0;
+}
+
+.twi-content {
+  @apply gap-2;
+}
+
+// OVERLAYED
+.twi-overlayed {
+  @apply h-[500px] min-h-[500px];
+  .twi-container {
+    @apply w-8/12 gap-4 z-[5];
+  }
+  .overlay {
+    @apply min-h-[500px];
+  }
+}
+
+// TWO COLUMN
+.twi-2column, .twi-twocolumn-grid {
+  &__content {
+
+  }
+  &__data {
+    @apply gap-y-[24px];
+    .buttons-container {
+
+    }
+  }
+}

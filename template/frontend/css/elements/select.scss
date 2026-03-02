@@ -1,0 +1,74 @@
+@import '../mixins/forms-mixins';
+
+.form-field__select {
+
+  &.form-field {
+    @include form-field-styles();
+
+    @apply py-[5px] px-1;
+
+    &:hover {
+      @apply border border-black;
+    }
+
+    [class*="indicatorSeparator"] {
+      @apply hidden;
+    }
+
+    .form-field__select-icon {
+      @apply text-2xl py-0 px-2 text-black;
+
+      font-family: 'icomoon' !important;
+      speak: never;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      svg {
+        @apply hidden;
+      }
+
+      &:before {
+        content: "\e9cd";
+      }
+    }
+  }
+
+  &-container {
+    .form-field__select-option {
+      @apply cursor-pointer bg-white;
+
+      &:hover {
+        @apply bg-gray-100;
+      }
+
+      &.selected {
+        @apply text-white;
+      }
+    }
+
+    .form-field__select-menu {
+      @apply m-0 border border-black border-t-white rounded-t-none shadow-none;
+    }
+
+    .form-field__select-menu-takover {
+      @apply hidden;
+    }
+
+    &.is-open {
+      .form-field__select-icon:before {
+        content: "\e9d6";
+      }
+
+      .form-field__select {
+        @apply rounded-b-none border-b-white;
+      }
+    }
+  }
+}

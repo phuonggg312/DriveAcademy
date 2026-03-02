@@ -1,0 +1,10 @@
+const path = require('path')
+
+module.exports = {
+  plugins: [
+    require('tailwindcss/nesting'),
+    require('tailwindcss'),
+    require('autoprefixer'),
+    require('postcss-import')
+  ]
+}

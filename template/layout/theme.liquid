@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js font-open-sans">
+    <head>
+        {% render 'head-meta' %}
+
+        <link rel="icon" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+        <link rel="canonical" href="{{ canonical_url }}">
+        <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+
+        {%- if settings.is_indexing_disabled -%}
+            <meta name="robots" content="noindex, nofollow" />
+        {%- else -%}
+            <meta name="robots" content="index, follow" />
+        {% endif %}
+
+        {% render 'head-meta' %}
+
+        <title>
+            {{ page_title }}
+            {%- if current_tags %}
+                &ndash; tagged "{{ current_tags | join: ', ' }}"{%- endif -%}
+            {%- if current_page != 1 %}
+                &ndash; Page {{ current_page -}}{%- endif -%}
+            {%- unless page_title contains shop.name %}
+                &ndash; {{ shop.name -}}{%- endunless -%}
+        </title>
+        {% liquid
+            render 'vite' with 'theme.jsx'
+        %}
+        {% liquid
+            render 'vite' with 'theme.css', preload_stylesheet: true
+        %}
+
+        {% render 'head-fonts' %}
+
+        <!-- header hook for Shopify plugins -->
+        {{ content_for_header }}
+
+        {% comment %}{% if template == 'product' and product.media.size > 0 %}{% endcomment %}
+            {% comment %}<link rel="preload" as="image" href="{{ product.media[0].src | img_url:'master' }}&width=1440">{% endcomment %}
+            {% comment %}<link rel="preload" as="image" href="{{ product.media[1].src | img_url:'master' }}&width=1440">{% endcomment %}
+        {% comment %}{% endif %}{% endcomment %}
+
+        {% render 'head-css' %}
+        {% render 'head-scripts' %}
+
+        {% if settings.use_page_animation %}
+            <style>
+                body:not(.password)  {
+                    height: 100%;
+                    width: 100%;
+                    background: white;
+                    opacity: 0;
+                    transition: all 0.25s ease;
+                }
+                body.page-transition {
+                    position: unset;
+                    opacity: 1;
+                }
+            </style>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    setTimeout(function () {
+                        document.body.classList.add('page-transition');
+                    }, 1000);
+                });
+                document.addEventListener("load", function () {
+                    setTimeout(function () {
+                        document.body.classList.add('page-transition');
+                    }, 300);
+                });
+
+                window.addEventListener('beforeunload', function () {
+                    document.body.classList.remove('page-transition');
+                });
+            </script>
+        {% endif %}
+
+        {% if settings.debug_bear_id != blank %}
+            {% if shop.design_mode != true %}
+                <script src="https://cdn.debugbear.com/{{settings.debug_bear_id}}.js" async></script>
+            {% endif %}
+        {% endif %}
+    </head>
+
+    {% if settings.use_transparent_header %}
+        {% liquid
+            assign bodyClasses = template | handleize | append: '-template'
+            assign bodyClasses = bodyClasses | append: ' antialiased using-mouse'
+
+            if settings.show_promo_bar
+                assign bodyClasses = bodyClasses | append: ' promo-bar-visible'
+            endif
+
+            if template contains 'collection'
+                assign collection_metafield = collection.metafields.custom.transparent_header
+                if collection_metafield == true
+                    assign bodyClasses = bodyClasses | append: ' transparent-header'
+                endif
+            endif
+
+            if template contains 'index'
+                assign bodyClasses = bodyClasses | append: ' transparent-header'
+            endif
+        %}
+    {% endif %}
+
+    <body class="{{ bodyClasses }}" :class="$store.global.bodyClasses" x-data  x-init='await $store.currency.initialise()' x-scrolled>
+        {% render 'head-styles' %}
+        {% render 'head-styles-custom' %}
+
+        <a class="skip-to-content-link" href="#main-content">
+            Skip to content
+        </a>
+
+        {% sections 'header-group' %}
+        {% sections 'search-group' %}
+
+        <main id="main-content" role="main" class="site-main-tw-component relative" data-template="{{ template.name }}">
+            {% if settings.show_breadcrumbs %}
+                {% if template.name == 'product' or template.name == 'collection' or template.name == 'search' or template.name == 'page' %}
+                    {% render 'breadcrumbs' %}
+                {% endif %}
+            {% endif %}
+
+            {{ content_for_layout }}
+        </main>
+
+        {% sections 'footer-group' %}
+
+        {% if settings.enable_modal %}
+            {% section 'modal' %}
+        {% endif %}
+
+        {% render 'liquid-ajax-cart' %}
+
+        {% if settings.is_consent_tracking_enabled %}
+            {% render 'consent-tracking' %}
+        {% endif %}
+    </body>
+</html>

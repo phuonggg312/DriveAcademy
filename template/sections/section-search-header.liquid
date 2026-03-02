@@ -1,0 +1,228 @@
+<div
+  x-data="searchproductlist"
+  class="{{ section.settings.custom_column_class }}
+  color-{{ section.settings.color_schema }}"
+>
+  <div
+    class="section-search-header section-search-header-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+    x-data="section({{ section.settings | json | escape }})"
+    :class="classes"
+  >
+    <div class="{{ section.settings.container_type }}">
+      <div class="react-node">
+        {% capture data %}
+          {
+              "section_settings": {{ section.settings | json }}
+          }
+        {% endcapture %}
+        {% assign data = data | escape %}
+
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__search-results-header", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Search Header",
+    "tag": "section",
+    "class": "section",
+    "settings": [
+      {
+        "type": "select",
+        "id": "heading_type_desktop",
+        "options": [
+          {
+            "value": "d1",
+            "label": "Display"
+          },
+          {
+            "value": "h1",
+            "label": "Heading 1"
+          },
+          {
+            "value": "h2",
+            "label": "Heading 2"
+          },
+          {
+            "value": "h3",
+            "label": "Heading 3"
+          },
+          {
+            "value": "h4",
+            "label": "Heading 4"
+          },
+          {
+            "value": "h5",
+            "label": "Heading 5"
+          }
+        ],
+        "default": "h2",
+        "label": "Heading Type Desktop"
+      },
+      {
+        "type": "select",
+        "id": "heading_type_mobile",
+        "options": [
+          {
+            "value": "h1",
+            "label": "Heading 1"
+          },
+          {
+            "value": "h2",
+            "label": "Heading 2"
+          },
+          {
+            "value": "h3",
+            "label": "Heading 3"
+          },
+          {
+            "value": "h4",
+            "label": "Heading 4"
+          },
+          {
+            "value": "h5",
+            "label": "Heading 5"
+          }
+        ],
+        "default": "h2",
+        "label": "Heading Type Mobile"
+      },
+      {
+        "type": "select",
+        "id": "container_type",
+        "label": "Container type",
+        "default": "w-full",
+        "options": [
+          {
+            "value": "container",
+            "label": "Use container width"
+          },
+          {
+            "value": "w-full",
+            "label": "Use full width"
+          }
+        ]
+      },
+      {
+        "type": "color_scheme",
+        "id": "color_schema",
+        "label": "Color scheme"
+      },
+      {
+        "type": "header",
+        "content": "Padding & Position settings"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Top Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Bottom Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_left_right_desktop",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Left & Right Desktop",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Top Mobile",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Bottom Mobile",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_left_right_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "Padding Left & Right Mobile",
+        "default": 0
+      },
+      {
+        "type": "select",
+        "id": "content_vertical_position_desktop",
+        "options": [
+          {
+            "value": "start",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Centre"
+          },
+          {
+            "value": "end",
+            "label": "Bottom"
+          }
+        ],
+        "default": "center",
+        "label": "Content Vertical Position Desktop"
+      },
+      {
+        "type": "select",
+        "id": "content_vertical_position_mobile",
+        "options": [
+          {
+            "value": "start",
+            "label": "Top"
+          },
+          {
+            "value": "center",
+            "label": "Centre"
+          },
+          {
+            "value": "end",
+            "label": "Bottom"
+          }
+        ],
+        "default": "center",
+        "label": "Content Vertical Position Mobile"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Search Header"
+      }
+    ],
+    "enabled_on": {
+      "templates": ["search"]
+    }
+  }
+{% endschema %}

@@ -1,0 +1,11 @@
+.spinner-container {
+  .spinner-overlay {
+    background-color: rgba(50, 61, 62, 0.2);
+    .spinner {
+      border-top: 4px solid #323D3E;
+      border-bottom: 4px solid #323D3E;
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+}

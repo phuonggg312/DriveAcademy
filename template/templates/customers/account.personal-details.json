@@ -1,0 +1,50 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "section_breadcrumbs_8UCxcc": {
+      "type": "section-breadcrumbs",
+      "settings": {
+        "layout": "default",
+        "container_type": "container",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
+        "spacing": 8,
+        "icon": "icon-caret-right-thin",
+        "icon_size": 18,
+        "text_style": "b2",
+        "text_style_mobile": "b3",
+        "content_alignment": "left",
+        "padding_top_desktop": 16,
+        "padding_bottom_desktop": 16,
+        "padding_left_right_desktop": 40,
+        "padding_top_mobile": 8,
+        "padding_bottom_mobile": 8,
+        "padding_left_right_mobile": 16
+      }
+    },
+    "main": {
+      "type": "main-account-personaldetails",
+      "settings": {
+        "layout_type": "default",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    }
+  },
+  "order": [
+    "section_breadcrumbs_8UCxcc",
+    "main"
+  ]
+}

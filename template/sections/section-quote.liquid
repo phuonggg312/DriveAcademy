@@ -1,0 +1,197 @@
+<div
+  class="{{ section.settings.custom_column_class }}
+  color-{{ section.settings.color_schema }}"
+>
+  <div class="section-quote-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+   :class="classes"
+   x-data="section({{ section.settings | json | escape }}), searchproductlist"
+>
+    <div class="{{ section.settings.container_type }}">
+       <div class="quote__content--container flex justify-center overflow-hidden">
+            <div class="w-screen">
+               <h2 class="{{ section.settings.quote_font_class }}">{{ section.settings.quote }} </h2>
+               <div class="{{ section.settings.quote_author_font_class }}">{{ section.settings.author }} </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Quote",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Titles & Content"
+    },
+    {
+      "type": "richtext",
+      "id": "quote",
+      "label": "Quote Text"
+    },
+    {
+      "type": "text",
+      "id": "quote_font_class",
+      "label": "Quote Font Class",
+      "default": "h3"
+    },
+    {
+      "type": "text",
+      "id": "author",
+      "label": "Author Text"
+    },
+    {
+      "type": "text",
+      "id": "quote_author_font_class",
+      "label": "Author Font Class",
+      "default": "b3",
+      "info": "Configurations from Typography classes in Global Settings"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote"
+    }
+  ]
+}
+
+{% endschema %}

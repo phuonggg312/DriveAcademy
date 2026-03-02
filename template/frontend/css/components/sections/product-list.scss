@@ -1,0 +1,13 @@
+
+// TABBED LIST
+.tabbed-list {
+  .tabbedlist__tabs {
+    @apply flex flex-row gap-8 bg-gray-100 px-3 py-4 rounded-3xl justify-center items-center shadow-md;
+    .selected {
+      @apply bg-black text-white p-2 px-4 rounded-3xl;
+    }
+  }
+  .tabbedlist__container {
+    @apply flex pt-2 pb-4 justify-center;
+  }
+}

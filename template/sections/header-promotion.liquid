@@ -1,0 +1,159 @@
+{% capture content %}
+  <div
+    id="site-promo-bar-wrapper"
+    class="color-{{ section.settings.color_schema }}"
+    x-data="section({{ section.settings | json | escape }})"
+    :class="classes"
+  >
+    <div class="{{ section.settings.container_type }} px-0">
+      <div class="react-node">
+        {% include 'react-props' %}
+        <div
+          id="react-data"
+          data-injected-props='{{ data }}'
+        ></div>
+        {% render 'react-block', name: "theme__navigation-promobar", props: data %}
+      </div>
+    </div>
+  </div>
+{% endcapture %}
+
+{% if section.settings.show_promo_bar_on_homepage_only %}
+  {% if template.name == "index" %}
+    {{ content }}
+  {% endif %}
+{% else %}
+  {{ content }}
+{% endif %}
+
+{% schema %}
+{
+  "name": "Promotion",
+  "class": "site-promotion relative z-20",
+  "tag": "div",
+  "blocks": [
+    {
+      "type": "promotion",
+      "name": "Promotion",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Promo Bar Icon"
+        },
+        {
+          "type": "richtext",
+          "id": "promo_bar_content",
+          "label": "Promo Bar Content"
+        }
+      ]
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "link_list",
+          "label": "Links"
+        }
+      ],
+      "limit": 1
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Promo Bar"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "desktop-only",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container Type",
+      "default": "container",
+      "info": "Contained: Maximum width(Theme settings > Layout > Container Width) ",
+      "options": [
+        {
+          "label": "Contained",
+          "value": "container"
+        },
+        {
+          "label": "Full Width",
+          "value": ""
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout type",
+      "default": "usp",
+      "options": [
+        {
+          "label": "Selling Propositions",
+          "value": "usp"
+        },
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        }
+      ],
+      "info": "Selling Propositions: Promotion blocks will be in left and Menu block will be in right within a single banner on Desktop and Promotion blocks will be disabled on Mobile. Carousel: Menu will be disabled."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_promo_bar_on_homepage_only",
+      "label": "Show Promo Bar Only on Homepage",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Background, Text colour"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay ?",
+      "default": true,
+      "info": "Applicable when Layout type is Carousel"
+    },
+    {
+      "type": "number",
+      "id": "animation_speed",
+      "label": "Autoplay speed",
+      "default": 10,
+      "info": "Number will be in seconds"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show arrows",
+      "default": false,
+      "info": "Display arrows that can be used to navigate through promotions"
+    }
+  ]
+}
+{% endschema %}

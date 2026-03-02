@@ -1,0 +1,288 @@
+{% assign render_type = section.settings.render_type %}
+
+<div class="{{ section.settings.custom_column_class }}">
+    <div class="section-faq section-faq-{{ section.id }} color-{{ section.settings.color_schema }} relative {{ settings.reveal_animation_class }}"
+         x-data="section({{ section.settings | json | escape }})"
+         :class="classes"
+    >
+        <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }} relative">
+            <div class="w-full">
+              <div class="timeline relative flex flex-col w-full">
+                  {% for block in section.blocks %}
+                  <div class="timeline-item flex px-6" {% if block.settings.background_image %} style="background-image: url({{ block.settings.background_image | image_url: width:block.settings.background_image.width }}); background-repeat: no-repeat;"  {% endif %}>
+                      <div class="flex justify-between flex-auto lg:basis-[30%]">
+                          <div class="flex lg:ml-[24px] text-left h3 hidden lg:block" style="margin-top:15px;">{{ block.settings.timeline_title }}</div>
+                          <div class="flex justify-end indicator-line {% if forloop.first %}first-line{% elsif forloop.last %}last-line{% endif %} flex h-full w-[2px] lg:mr-[80px] relative">
+                            <div class="absolute rounded-full w-[20px] h-[20px] bg-black" style="left:-10px; top:30px;"></div>
+                          </div>
+                      </div>
+
+                      <div class="flex flex-col overflow-hidden lg:basis-[70%] p-[20px]">
+                          <div class="mb-8 flex flex-col relative">
+                              <div class="w-full px-[16px] block lg:hidden">
+                                  <div class="flex lg:ml-[24px] text-left h3">{{ block.settings.timeline_title }}</div>
+                              </div>
+                              <div class="w-full p-4">
+                                  {% if block.settings.image %}
+                                  <img src="{{ block.settings.image | image_url: 'large' }}" alt="{{ block.settings.title }}" class="w-full h-auto">
+                                  {% endif %}
+                              </div>
+                              <div class="w-full p-4">
+                                  <h5 class="mb-4">{{ block.settings.title }}</h5>
+                                  <p class="b2 mb-4">{{ block.settings.text }}</p>
+                                  {% if block.settings.cta_link and block.settings.cta_text %}
+                                  <a href="{{ block.settings.cta_link }}" class="button button-primary">{{ block.settings.cta_text }}</a>
+                                  {% endif %}
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  {% endfor %}
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+  .timeline .indicator-line {
+    transition: height 0.3s ease;
+    background: black;
+    width: 2px;
+    height: 100%;
+  }
+  .timeline .indicator-line.first-line {
+    background: linear-gradient(to bottom, transparent, black, black, black);
+  }
+  .timeline .indicator-line.last-line {
+    background: linear-gradient(to bottom, black, black, black, transparent);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Timeline",
+  "settings": [
+    {
+        "type": "select",
+        "id": "render_type",
+        "options": [
+        {
+            "value": "all",
+            "label": "All"
+        },
+        {
+            "value": "mobile-only",
+            "label": "Mobile Only"
+        },
+        {
+            "value": "desktop-only",
+            "label": "Desktop Only"
+        }
+        ],
+        "default": "all",
+        "label": "Render Type",
+        "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+        "type": "select",
+        "id": "container_type",
+        "label": "Container type",
+        "default": "container",
+        "options": [
+        {
+            "value": "container",
+            "label": "Use container width"
+        },
+        {
+            "value": "w-full",
+            "label": "Use full width"
+        }
+        ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+        "type": "text",
+        "id": "custom_column_class",
+        "label": "Custom Class"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_item",
+      "name": "Timeline Item",
+      "settings": [
+      {
+        "type": "image_picker",
+        "id": "background_image",
+        "label": "Background Image"
+      },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "timeline_title",
+          "label": "Timeline Title"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "url",
+          "id": "cta_link",
+          "label": "CTA Link"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timeline",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

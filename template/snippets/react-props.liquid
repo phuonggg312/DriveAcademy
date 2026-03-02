@@ -1,0 +1,262 @@
+{% include 'react-props-section-links' %}
+{% include 'react-props-megamenu' %}
+
+{% capture data %}
+{
+    {{ links }},
+    {%- if is_megamenu -%}
+        {{ megamenu }},
+    {%- endif -%}
+    {%- if article -%}
+    "article": {
+        "title": "{{ article.title | escape }}",
+        "handle": "{{ article.handle | escape }}",
+        "url": "{{ article.url | escape }}",
+        "excerpt": "{{ article.excerpt | escape }}",
+        "image": "{{ article.image | image_url: '800x' | escape }}"
+    },
+    {%- endif -%}
+    "blog": {
+        "title": "{{ blog.title | escape }}",
+        "url": "{{ blog.url | escape }}",
+    },
+    "blocks": [
+    {% for block in section.blocks %}
+        {
+            "id": "{{ block.id }}",
+            "type": "{{ block.type | escape }}",
+            "settings": {{ block.settings | json }},
+            "links_title": {% if block.settings.link_list %} "{{ linklists[block.settings.link_list].title | escape }}" {% else %}null{% endif %},
+            "color_schema": {% if block.settings.color_schema %} "{{ block.settings.color_schema.id | escape }}" {% else %}null{% endif %},
+            "color_schema_mobile": {% if block.settings.color_schema_mobile %} "{{ block.settings.color_schema_mobile.id | escape }}" {% else %}null{% endif %},
+            "video_url": {% if block.settings.video %} "{{ block.settings.video | file_url }}" {% else %}null{% endif %},
+            "image_url": {% if block.settings.image %} "{{ block.settings.image | image_url: 'master' }}" {% else %}null{% endif %},
+            "image_height": {% if block.settings.image %} {{ block.settings.image.height }} {% else %}"auto"{% endif %},
+            "image_width": {% if block.settings.image %} {{ block.settings.image.width }} {% else %}"auto"{% endif %},
+            "image_alt": {% if block.settings.image %} "{{ block.settings.image.alt }}" {% else %}null{% endif %},
+            "mobile_image_url": {% if block.settings.mobile_image %} "{{ block.settings.mobile_image | image_url: 'master' }}" {% else %}null{% endif %},
+            "mobile_image_height": {% if block.settings.mobile_image %} {{ block.settings.mobile_image.height }} {% else %}"auto"{% endif %},
+            "mobile_image_width": {% if block.settings.mobile_image %} {{ block.settings.mobile_image.width }} {% else %}"auto"{% endif %},
+            "mobile_image_alt": {% if block.settings.mobile_image %} "{{ block.settings.mobile_image.alt }}" {% else %}null{% endif %},
+            "links": {% if block.settings.link_list %} [
+            {% for link in linklists[block.settings.link_list].links %}
+                {
+                "title": "{{ link.title }}",
+                "handle": "{{ link.handle | escape }}",
+                "url": "{{ link.url | escape }}",
+                "links":  [
+                {% if link.links.size > 0 %}
+                    {% for sublink in link.links %}
+                        {
+                        "level": 2,
+                        "title": "{{ sublink.title }}",
+                        "handle": "{{ sublink.handle | escape }}",
+                        "url": "{{ sublink.url | escape }}",
+                        "links":  [
+                        {% if sublink.links.size > 0 %}
+                            {% for tertiarylink in sublink.links %}
+                                {
+                                "level": 2,
+                                "title": "{{ tertiarylink.title }}",
+                                "handle": "{{ tertiarylink.handle | escape }}",
+                                "url": "{{ tertiarylink.url | escape }}",
+                                } {% unless forloop.last %},{% endunless %}
+                            {% endfor %}
+                        {% endif %}
+                        ]
+                        } {% unless forloop.last %},{% endunless %}
+                    {% endfor %}
+                {% endif %}
+                ]
+                }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        ]{% else %}null{% endif %},
+        "product": {% if block.settings.product %}{
+            "id": "{{ block.settings.product.id | escape }}",
+            "title": "{{ block.settings.product.title | escape }}",
+            "handle": "{{ block.settings.product.handle | escape }}",
+            "featured_image": "{{ block.settings.product.featured_image | image_url: '300x' | escape }}",
+            "image_height": {% if block.settings.product.featured_image %} {{ block.settings.product.featured_image.height }} {% else %}"auto"{% endif %},
+            "image_width": {% if block.settings.product.featured_image %} {{ block.settings.product.featured_image.width }} {% else %}"auto"{% endif %},
+            "images":
+        [
+        {% if block.settings.product.images %}
+            {% for image in block.settings.product.images %}
+                "{{ image.src | image_url: '300x' | escape }}"
+                {% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        {% endif %}
+        ]
+        ,
+        "price": "{{ block.settings.product.price }}",
+            "compare_at_price":  "{{ block.settings.product.compare_at_price }}",
+            "compare_at_price_max":  "{{ block.settings.product.compare_at_price_max }}",
+            "compare_at_price_min":  "{{ block.settings.product.compare_at_price_min }}",
+            "selected_or_first_available_variant": {% if block.settings.product.selected_or_first_available_variant %} {{ block.settings.product.selected_or_first_available_variant | json }}, {% endif %}
+            "tags":
+        [
+        {% if block.settings.product.tags %}
+            {% for tag in block.settings.product.tags %}
+                "{{ tag | escape }}"{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        {% endif %}
+        ]
+        ,
+        "url": "{{ block.settings.product.url | escape }}"
+
+        }{% else %}null{% endif %},
+        "collection": {% if block.settings.collection %}{
+            "id": "{{ block.settings.collection.id | escape }}",
+            "title": "{{ block.settings.collection.title | escape }}",
+            "handle": "{{ block.settings.collection.handle | escape }}",
+            "image": "{{ block.settings.collection.featured_image | image_url: '300x' | escape }}"
+        {% if block.settings.collection.products %} ,"products":  [
+            {% for product in block.settings.collection.products %}
+                {
+                    "title": "{{ product.title | escape }}",
+                    "image": "{{ product.featured_image | image_url: '500x' }}",
+                    "handle": "{{ product.handle | escape }}",
+                    "price": "{{ product.price | money_with_currency }}",
+                    "url": "{{ product.url | escape }}",
+                    "selected_or_first_available_variant": {{ product.selected_or_first_available_variant | json }}
+                }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+            ]{% else %}{% endif %}
+        }{% else %}null{% endif %},
+        "article": {% if block.settings.article %}{
+                "id": "{{ block.settings.article.id | escape }}",
+                "title": "{{ block.settings.article.title | escape }}",
+                "handle": "{{ block.settings.article.handle | escape }}",
+                "tags": {{ block.settings.article.tags | json }},
+                "excerpt": "{{ block.settings.article.excerpt | escape }}",
+                "image": "{{ block.settings.article.image | image_url: '400x' | escape }}",
+            }{% else %}null{% endif %}
+        }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ],
+    {% if additional %}  "additional": {{ additional | json }}, {% endif %}
+    {% if metaobjectEntries %} {{ metaobjectEntries }}, {% endif %}
+    {% if additional_extra %}  "additional_extra": {{ additional_extra | json }}, {% endif %}
+    {% if translations %}  "translations": {{ translations }}, {% endif %}
+    {% if locales != blank %}  "locales": {{ locales }}, {% endif %}
+    "section_id": "{{ section.id }}",
+    "section": {{ section.settings | json }},
+    "section_color_schema": {% if section.settings.color_schema %} "{{ section.settings.color_schema.id | escape }}" {% else %}null{% endif %},
+    "color_schemas": {
+    {%- for setting in section.settings -%}
+        {%- if setting contains 'color_schema' -%}
+            "{{ setting }}": "{{ section.settings[setting].id }}",
+        {%- endif -%}
+    {%- endfor -%}
+    },
+    "cart": {{ cart | json }},
+    "product": {{ product | json }},
+    "collection": {% if collection %}{
+    "id": "{{ collection.id | escape }}",
+    "url": "{{ collection.url | escape }}",
+    "title": "{{ collection.title | escape }}",
+    "handle": "{{ collection.handle | escape }}",
+    "image": "{{ collection.featured_image | image_url: '300x' | escape }}"
+    {% if section.settings.collection.products %} ,"products":  [
+        {% for product in section.settings.collection.products %}
+            {
+            "title": "{{ product.title | escape }}",
+            "image": "{{ product.featured_image | image_url: '500x' }}",
+            "featured_image": "{{ product.featured_image | image_url: '300x' | escape }}",
+            "images":
+            [
+            {% if product.images %}
+                {% for image in product.images %}
+                    "{{ image.src | image_url: '300x' | escape }}"
+                    {% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            {% endif %}
+            ]
+            ,
+            "handle": "{{ product.handle | escape }}",
+            "price": "{{ product.price }}",
+            "url": "{{ product.url | escape }}",
+            "selected_or_first_available_variant": {{ product.selected_or_first_available_variant | json }},
+            "tags":
+            [
+            {% if product.tags %}
+                {% for tag in product.tags %}
+                    "{{ tag | escape }}"{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+            {% endif %}
+            ]
+            ,
+            "compare_at_price":  "{{ product.compare_at_price }}",
+            "compare_at_price_max":  "{{ product.compare_at_price_max }}",
+            "compare_at_price_min":  "{{ product.compare_at_price_min }}"
+            }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+        ]{% else %}{% endif %}
+    }{% else %}null{% endif %},
+    "request": {
+        "path": "{{ page.path }}",
+    },
+    "page": {
+        {% assign page_title = page_title | remove: '&quot;' %}
+        "title": "{% if page.title %}{{ page.title | replace: '"', '' }}{% else %}{{ page_title }}{% endif %}",
+        "url": "{{ page.url }}"
+    },
+    "shop": {
+        "name": "{{ shop.name }}",
+        "url": "{{ shop.url }}",
+        "social_links": {{ shop.brand.metafields.social_links | json }}
+    },
+    "routes": {
+        "root_url": "{{ routes.root_url }}",
+        "add_to_cart_url": "{{ routes.cart_add_url }}",
+        "all_products_url": "{{ routes.all_products_collection_url }}",
+        "cart_change_url": "{{ routes.cart_change_url }}"
+    },
+    "template": {
+        "name": "{{ template.name }}"
+    },
+    "localization" : {
+    {% if localization.available_countries %}  "available_countries":
+        [
+        {% for country in localization.available_countries %}
+            {
+            "iso_code": "{{ country.iso_code | escape }}",
+            "name": "{{ country.name | escape }}",
+            "currency": {
+            "iso_code":  "{{ country.currency.iso_code | escape }}",
+            "symbol":  "{{ country.currency.symbol | escape }}"
+            }
+            }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+        ]
+    {% endif %},
+    {% if localization.country %}  "country" :
+        {
+            "iso_code": "{{ localization.country.iso_code | escape }}",
+            "currency_iso_code": "{{ localization.country.currency.iso_code | escape }}",
+            "currency_symbol": "{{ localization.country.currency.symbol | escape }}"
+        }
+    {% endif %}
+    },
+    "mobile_breakpoint": "1024px",
+    "globals": {
+        "mobile_breakpoint": "1024px",
+        "enable_wishlist": "{{ settings.enable_wishlist }}",
+        "is_customer_logged_in": "{% if customer %}true{% endif %}",
+        "customer_name": "{% if customer %}{{ customer.name | default: customer.email }}{% endif %}",
+        "customer_impact": "{% if customer %}{{ customer.metafields.customer.personal_impact }}{% endif %}",
+        "currency": "{{ shop.currency }}",
+        "currency_symbol": "{{ shop.currency_symbol }}",
+        "video_quality": "{{ settings.video_quality }}",
+        "klaviyo_public_api_key": "{{ settings.klaviyo_public_api_key }}",
+        "klaviyo_api_url": "{{ settings.klaviyo_api_url }}",
+        "klaviyo_subscriber_list_id": "{{ settings.klaviyo_subscriber_list_id }}",
+        "carousel_icons": {
+            "carousel_navigation_arrow_right": "{% if settings.right_arrow_icon %}{{ settings.right_arrow_icon }}{% else %} {{ settings.right_arrow_icon_image | asset_url }} {% endif %}",
+            "carousel_navigation_arrow_left": "{% if settings.left_arrow_icon %}{{ settings.left_arrow_icon }}{% else %} {{ settings.left_arrow_icon_image | asset_url }} {% endif %}",
+            "carousel_navigation_arrow_size": "{{ settings.carousel_navigation_arrow_size }}",
+        }
+    }
+}
+{% endcapture %}
+{% assign data = data | escape | replace: "'", "&#39;" %}

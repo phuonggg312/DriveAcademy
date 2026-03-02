@@ -1,0 +1,180 @@
+{% assign font_lines = settings.custom_body_font | newline_to_br | split: '<br />' %}
+{% assign font_breakpoint = '1024px' %}
+
+{% for line in font_lines %}
+    {% if line != blank %}
+        {% assign parts = line | split: '@' %}
+        {% assign font_details = parts[1] | split: '-' %}
+        {% assign file_name = parts[0] | split: '.' %}
+        {% assign font_name = file_name[0] %}
+        {% assign font_name_parts = font_name | split: '-' %}
+        {% assign font_name_without_type = font_name_parts[0] %}
+        {% assign file_name_with_query = parts[0] | split: '/' | last %}
+        {% assign file_name = file_name_with_query | split: '?' | first %}
+        {% assign font_name_parts = file_name | split: '-' %}
+        {% assign font_extension = file_name |  split: '.' %}
+
+        {% if font_extension[1] == 'woff' %} {% assign font_format = 'woff' %} {% endif %}
+        {% if font_extension[1] == 'woff2' %} {% assign font_format = 'woff2' %} {% endif %}
+        {% if font_extension[1] == 'otf' %} {% assign font_format = 'opentype' %} {% endif %}
+        {% if font_extension[1] == 'ttf' %} {% assign font_format = 'truetype' %} {% endif %}
+
+        <link rel="preload" href="{{ parts[0] | strip_newlines }}" as="font" type="font/{{ font_format }}" crossorigin="anonymous">
+
+    {% endif %}
+{% endfor %}
+
+{% style %}
+    @font-face {
+        font-family: 'icomoon';
+        src: url({{ settings.custom_icon_font_woff2 }}) format('woff2'),
+        url({{ settings.custom_icon_font_woff }}) format('woff');
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+    }
+
+    {% comment %} BODY FONT SETUP {% endcomment %}
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: '-' %}
+            {% assign file_name = parts[0] | split: '.' %}
+            {% assign font_name = file_name[0] %}
+            {% assign font_name_parts = font_name | split: '-' %}
+            {% assign font_name_without_type = font_name_parts[0] %}
+            {% assign file_name_with_query = parts[0] | split: '/' | last %}
+            {% assign file_name = file_name_with_query | split: '?' | first %}
+            {% assign font_name_parts = file_name | split: '-' %}
+            {% assign font_extension = file_name |  split: '.' %}
+
+            {% if font_extension[1] == 'woff' %} {% assign font_format = 'woff' %} {% endif %}
+            {% if font_extension[1] == 'woff2' %} {% assign font_format = 'woff2' %} {% endif %}
+            {% if font_extension[1] == 'otf' %} {% assign font_format = 'opentype' %} {% endif %}
+            {% if font_extension[1] == 'ttf' %} {% assign font_format = 'truetype' %} {% endif %}
+
+            @font-face {
+            font-family: '{{ font_name_parts[0] | replace: '-', ' ' | strip_newlines | downcase }}';
+            src: local('{{ font_name_parts[0] | replace: '-', ' ' |  strip_newlines | downcase }}'), url("{{ parts[0] | strip_newlines }}") format("{{ font_format }}");
+            font-style: normal;
+            font-weight: {{ font_details[0] }};
+            font-display: swap;
+            }
+        {% endif %}
+    {% endfor %}
+
+    {% assign font_lines = settings.custom_body_classes_desktop | newline_to_br | split: '<br />' %}
+    {% assign has_applied_first_body =  false %}
+    {% comment %} BODY FONT CLASSES (DESKTOP) {% endcomment %}
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: ',' %}
+
+            {% if has_applied_first_body == false %}
+            body {
+            font-family: {{ parts[0] }},sans-serif;
+            }
+            {% assign has_applied_first_body =  true %}
+            {% endif %}
+
+            .{{ font_details[3] | downcase | strip_newlines }} {
+            font-family: {{ parts[0] }},sans-serif;
+            font-size: {{ font_details[0] }}px !important;
+            line-height: {{ font_details[1] }};
+            letter-spacing: {{ font_details[2] }};
+            }
+        {% endif %}
+    {% endfor %}
+
+
+    {% comment %} BODY CLASSES SETUP (MOBILE) {% endcomment %}
+    {% assign font_lines = settings.custom_body_classes_mobile | newline_to_br | split: '<br />' %}
+
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: ',' %}
+
+            @media(max-width: {{ font_breakpoint }}) {
+            .{{ font_details[3] | downcase | strip_newlines }} {
+            font-family: {{ parts[0] }},sans-serif;
+            font-size: {{ font_details[0] }}px !important;
+            line-height: {{ font_details[1] }};
+            letter-spacing: {{ font_details[2] }};
+            }
+            }
+        {% endif %}
+    {% endfor %}
+
+
+    {% comment %} HEADING FONT SETUP {% endcomment %}
+    {% assign font_lines = settings.custom_heading_font | newline_to_br | split: '<br />' %}
+
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: '-' %}
+            {% assign file_name = parts[0] | split: '.' %}
+            {% assign font_name = file_name[0] %}
+            {% assign font_name_parts = font_name | split: '-' %}
+            {% assign font_name_without_type = font_name_parts[0] %}
+            {% assign file_name_with_query = parts[0] | split: '/' | last %}
+            {% assign file_name = file_name_with_query | split: '?' | first %}
+            {% assign font_name_parts = file_name | split: '-' %}
+            {% assign font_extension = file_name |  split: '.' %}
+
+            {% if font_extension[1] == 'woff' %} {% assign font_format = 'woff' %} {% endif %}
+            {% if font_extension[1] == 'woff2' %} {% assign font_format = 'woff2' %} {% endif %}
+            {% if font_extension[1] == 'otf' %} {% assign font_format = 'opentype' %} {% endif %}
+            {% if font_extension[1] == 'ttf' %} {% assign font_format = 'truetype' %} {% endif %}
+
+            @font-face {
+            font-family: '{{ font_name_parts[0] | replace: '-', ' ' | strip_newlines | downcase }}';
+            src: local('{{ font_name_parts[0] | replace: '-', ' ' |  strip_newlines | downcase }}'), url("{{ parts[0] | strip_newlines }}") format("{{ font_format }}");
+            font-style: normal;
+            font-weight: {{ font_details[0] }};
+            font-display: swap;
+            }
+
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} CLASSES SETUP (DESKTOP) {% endcomment %}
+    {% assign font_lines = settings.custom_heading_classes_desktop | newline_to_br | split: '<br />' %}
+
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: ',' %}
+
+            {{ font_details[3] | downcase | strip_newlines }},
+            .{{ font_details[3] | downcase | strip_newlines }},
+            {{ font_details[3] | downcase | strip_newlines }}.{{ font_details[3] | downcase | strip_newlines }} {
+                font-family: {{ parts[0] }}, sans-serif;
+                font-size: {{ font_details[0] }}px !important;
+                line-height: {{ font_details[1] }};
+                letter-spacing: {{ font_details[2] }};
+            }
+        {% endif %}
+    {% endfor %}
+
+    {% comment %} CLASSES SETUP (MOBILE) {% endcomment %}
+    {% assign font_lines = settings.custom_heading_classes_mobile | newline_to_br | split: '<br />' %}
+
+    {% for line in font_lines %}
+        {% if line != blank %}
+            {% assign parts = line | split: '@' %}
+            {% assign font_details = parts[1] | split: ',' %}
+
+            @media(max-width: {{ font_breakpoint }}) {
+            {{ font_details[3] | downcase | strip_newlines }}, .{{ font_details[3] | downcase | strip_newlines }} {
+            font-family: {{ parts[0] }},sans-serif;
+            font-size: {{ font_details[0] }}px !important;
+            line-height: {{ font_details[1] }};
+            letter-spacing: {{ font_details[2] }};
+            }
+            }
+        {% endif %}
+    {% endfor %}
+{% endstyle %}

@@ -1,0 +1,4 @@
+{% assign installment_price = product.price | divided_by: 4 %}
+{% assign formatted_price = installment_price | money %}
+
+<p class="text-right">or four payments of {{ formatted_price }} with Afterpay or Klarna</p>

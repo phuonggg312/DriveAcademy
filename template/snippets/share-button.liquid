@@ -1,0 +1,11 @@
+<div>
+  {% capture data %}
+    {
+      "article_tags": {{ article.tags | json }},
+      "settings": {{ block.settings | json }}
+    }
+  {% endcapture %}
+  {% assign data = data %}
+
+<div id="react-data" data-injected-props='{{ data }}'></div>
+{% render 'react-block', name: "theme__socialshare", props: data  %}

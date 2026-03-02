@@ -1,0 +1,12 @@
+query {
+    metaobject(id: "gid://shopify/Metaobject/33694711961") {
+    id
+    handle
+    onlineStoreUrl
+    updatedAt
+    fields {
+        key
+        value
+    }
+  }
+}

@@ -1,0 +1,33 @@
+<div class="account-header">
+    <div class="account-header-container max-w-[calc(1440px-320px)]">
+        <div class="flex justify-between">
+            <div class="account-header__info lg:space-y-[32px] space-y-[24px]">
+                <div>
+                    {%- if subtext %}
+                        <p class="text-sm font-normal hidden lg:flex mb-3">{{ subtext }}</p>
+                    {%- endif -%}
+
+                    <h2 class="account-header__title hidden lg:block">{{ title }}</h2>
+                    <h6 class="account-header__title sh5 block lg:hidden">{{ title }}</h6>
+                </div>
+
+                {%- if description != blank -%}
+                    <p class="sh3 hidden lg:block">{{ description }}</p>
+                    <p class="sh6 lg:hidden">{{ description }}</p>
+                {%- endif -%}
+            </div>
+
+            {%- if button_url != blank -%}
+                <div class="account-actions items-end gap-x-[8px] lg:flex">
+                    <a href="{{button_url}}" class="no-underline hover:no-underline flex gap-2 items-center">
+                        <span class="hidden lg:block hover:underline">
+                            {{button_name}}
+                        </span>
+
+                        <i class="icon-ur-arrow lg:text-xl"></i>
+                    </a>
+                </div>
+            {%- endif -%}
+        </div>
+    </div>
+</div>

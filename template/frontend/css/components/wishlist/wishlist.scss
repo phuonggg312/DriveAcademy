@@ -1,0 +1,15 @@
+.wishlist-item {
+    @apply flex flex-col items-center space-y-2 relative mx-2 p-4 transition-all hover:scale-105 hover:-translate-y-1
+}
+
+.wishlist-icon, add-to-wishlist {
+    @apply cursor-pointer h-10 w-10 absolute rounded-full fill-red-500 p-2 right-0 top-0 transition-all hover:scale-110
+}
+
+.full-page-pdp .wishlist-icon {
+    @apply m-10
+}
+
+.wishlist-icon {
+    @apply z-10
+}

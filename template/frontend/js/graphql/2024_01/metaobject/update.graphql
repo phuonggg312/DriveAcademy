@@ -1,0 +1,15 @@
+mutation UpdateMetaobject($id: ID!, $metaobject: MetaobjectUpdateInput!) {
+    metaobjectUpdate(id: $id, metaobject: $metaobject) {
+        metaobject {
+            handle
+            season: field(key: "product") {
+                value
+            }
+        }
+        userErrors {
+            field
+            message
+            code
+        }
+    }
+}

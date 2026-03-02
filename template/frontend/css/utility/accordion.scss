@@ -1,0 +1,39 @@
+/* ACCORDION */
+.accordion {
+  .accordion-item {
+    @apply rounded-md mb-2.5 overflow-hidden;
+  }
+
+  .accordion-title {
+    @apply py-2.5 cursor-pointer flex justify-between items-center;
+  }
+
+  .accordion-content {
+    @apply overflow-hidden transition-all ease-out duration-200;
+    max-height: 0;
+
+    &.active {
+      max-height: 1000px;
+    }
+
+    p {
+      @apply m-0 py-[0px];
+    }
+  }
+
+  .accordion__header {
+    @apply justify-between font-light flex flex-grow flex-auto;
+
+    .accordion__image-container {
+      @apply text-left;
+
+      .accordion__image {
+        @apply inline-flex h-5;
+      }
+
+      .accordion__title {
+        @apply inline;
+      }
+    }
+  }
+}

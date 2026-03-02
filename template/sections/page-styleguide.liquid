@@ -1,0 +1,54 @@
+<div class="w-full {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+  <div class="{{ section.settings.container_type }}">
+    <div class="react-node">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__styleguide", props: data %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Styleguide Components",
+  "class": "storelocator-main",
+  "templates": ["page"],
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Styleguide Components"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_page_header_JUEttG": {
+      "type": "main-page-header",
+      "blocks": {
+        "image_rjVqax": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/shipping-image.webp"
+          }
+        },
+        "title_XUCc3K": {
+          "type": "title",
+          "settings": {
+            "title": "{{ page.title }}",
+            "heading_type": "h3",
+            "heading_type_mobile": "h2",
+            "padding_top_desktop": 0,
+            "padding_bottom_desktop": 0,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "image_rjVqax",
+        "title_XUCc3K"
+      ],
+      "settings": {
+        "container_type": "container",
+        "color_schema": "",
+        "title": "{{ page.title }}",
+        "content": "",
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 16,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "section_accordions_4zA9JF": {
+      "type": "section-accordions",
+      "blocks": {
+        "accordion_4W8hrK": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Domestic Shipping",
+            "accordion_content": "<p>All Shipping costs are in AUD. </p><p><strong>STANDARD DELIVERY NATIONWIDE </strong></p><p>Enjoy free standard delivery for all purchases over $100. </p><p>Online purchases under $100 will incur a $12.50 shipping fee. </p><p>MJB Gold Members receive complimentary standard shipping. </p><p>Estimated Delivery within 2 to 6 business days (from dispatch) </p><p> <strong>EXPRESS DELIVERY NATIONWIDE</strong> </p><p>We offer express shipping for $14.95.  </p><p>MJB Platinum Members receive complimentary express shipping. </p><p>Estimated Delivery within 1 to 3 business days (from dispatch) </p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_GFtYtA": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "International Shipping",
+            "accordion_content": "<p>All Shipping costs are in AUD. </p><p><strong>NEW ZEALAND </strong></p><p>Orders being shipped to New Zealand are sent via DHL. We charge a flat rate of $40. </p><p>Estimated Delivery within 8 to 10 business days (from dispatch).</p><p></p><p><strong>INTERNATIONAL SHIPPING </strong></p><p>We ship our international orders via DHL. </p><p>Orders being shipped outside of Australia and New Zealand will incur the following shipping charges. </p><ul><li>Asia $60 </li><li>USA $60 </li><li>ROW & Europe $70 </li></ul><p>Please note all applicable customs, import duties and fees are <span style=\"text-decoration:underline\"><strong>not</strong></span> accounted for in the shipping fee. </p><p>The customer is fully responsible for any customs duties or foreign taxes that may be imposed.   </p><p>Estimated Delivery within 10 business days (from dispatch) </p><p>Customs agents have the right to release or deny release of your order where outstanding fees are not paid and in some rare cases delivery may be delayed. </p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_beAWKQ": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Ensure a safe delivery",
+            "accordion_content": "<p>If you are requesting a delivery to a business address, please include the company's name. </p><p>Please ensure you are delivering to a safe address where your parcel cannot be intercepted.  MJ Bale will not be held responsible for orders marked as delivered by the carrier which subsequently go missing. </p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_bfrDpy": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Delivery Times",
+            "accordion_content": "<p>MJ Bale uses third party couriers such as Australia Post, Startrack or DHL.  </p><p>Delivery times post-dispatch are subject to those third-party services. These are unfortunately, outside of our control. All delivery time frames are estimates only and we will not be liable for any loss, expense, or other damage caused by any delay in delivery. </p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_RecjP6": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Order Confirmation",
+            "accordion_content": "<p>Once an order has been placed you will receive an order confirmation email to the email provided. Once your order has been dispatched you will receive a tax invoice followed by an email containing your tracking information.  </p><p>Once an order has been confirmed unfortunately, we cannot make any amendments to this.  </p><p>Any changes must be completed upon delivery by following our <a href=\"https://www.mjbale.com/pages/returns\" target=\"_self\"><strong>Return Policy</strong></a></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_Ngwzkj": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Track your order",
+            "accordion_content": "<p>A confirmation email will be sent once the order has been shipped, including a tracking number and courier provider. Please note that you may not see any tracking updates until 24 hours after receiving your shipping confirmation email.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_aLrCbi": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Click & Collect",
+            "accordion_content": "<p>Click and collect allows you to collect your online purchase at your local M.J Bale store, free of charge. </p><p>If you require your order within a short time frame. We suggest using our Click and Collect service.  </p><p>Stock availability in-store is available on our website. </p><p>We will work to pick and pack your Click & Collect order as soon as we can, however, we advise it may take between 1-3 business days before your order is ready to be collected in store.  </p><p>Once your order has been packed you will be notified via email that it is ready to be collected. </p><p>Please ensure you bring photo identification when collecting your order in store. </p><p> M.J Bale staff have the right to refuse pick-up if the name on the order does not match the ID provided. </p><p>If you require your order to be collected by someone else on your behalf, please provide their name when checking out or by emailing <a href=\"mailto:service@mjbale.com\">service@mjbale.com</a></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_94qhbn": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Pre-Order",
+            "accordion_content": "<p>In order to help you secure garments not yet available in stores or online, M.J. Bale offers you a special pre-order service. Your garments will be held for you and released as soon as they hit our warehouse.</p><ul><li><strong>Delivery</strong></li></ul><p>Please read the product description carefully to ensure you’re happy to wait for the estimated shipping date. Please be aware that this date may vary due to elements out of M.J. Bale’s control.</p><p>Click & Collect is not available on pre-order items.</p><p>If your order includes both a pre-order product and other products, this order will be split and delivered separately under different tracking numbers. No additional shipping charges will be applied to split orders.</p><p>All pre-order products will be shipped as a priority once stock has arrived into our warehouse.</p><ul><li><strong>Payment & change of mind</strong></li></ul><p>You will be charged at time of placing a pre-order. Pre-orders cannot be exchanged before delivery.</p><p>If you wish to return for change of mind, you must wait until receiving the product and return the item in-store or online.</p><p>You will receive an order confirmation email once the order is placed, and a follow up confirmation email when your items are shipped.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_fqRbdA": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Split Orders",
+            "accordion_content": "<p>If you have an order with multiple items, these items may only be available for dispatch from different locations. As a result you may receive your shipment at different times, each time your order is split you will receive an email advising which items have been dispatched including tracking information. Please note that you will not be charged more than once for shipping.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_QYeVVA": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Delivery Address",
+            "accordion_content": "<p>M.J. Bale delivers to residential and business addresses (please include business name) and P.O. Boxes. </p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_iCaMcc": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Authority to leave",
+            "accordion_content": "<p>Please ensure someone will be present to sign for your delivery within business hours as parcels will not be left unattended without a signature. If there is no-one present to sign for the delivery on arrival, a card will be left by the courier with instructions to follow for collection and/or re-delivery. </p><p>For further delivery support please call 13 76 78 (AusPost) for Australian orders or 13 26 10 (FedEx) for international orders. For all other delivery inquiries, please email <a href=\"mailto:service@mjbale.com\"><strong>service@mjbale.com</strong></a></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_KdUaDa": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Returned to sender issue",
+            "accordion_content": "<p>If you find that your parcel has been Returned To Sender please contact our support team on 02 9137 4927 or<a href=\"mailto:service@mjbale.com\">email</a> and provide your order number, tracking number and indicate if you prefer to have this redelivered to the same address or an alternative address.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_4W8hrK",
+        "accordion_GFtYtA",
+        "accordion_beAWKQ",
+        "accordion_bfrDpy",
+        "accordion_RecjP6",
+        "accordion_Ngwzkj",
+        "accordion_aLrCbi",
+        "accordion_94qhbn",
+        "accordion_fqRbdA",
+        "accordion_QYeVVA",
+        "accordion_iCaMcc",
+        "accordion_KdUaDa"
+      ],
+      "settings": {
+        "render_type": "all",
+        "container_type": "container",
+        "color_schema": "",
+        "heading": "",
+        "heading_type": "h3",
+        "subheading": "",
+        "subheading_type": "b2",
+        "contact_us_url": "",
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32,
+        "padding_left_right_desktop": 24,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "content_alignment_desktop": "center",
+        "content_alignment_mobile": "center",
+        "content_position_desktop": "center"
+      }
+    }
+  },
+  "order": [
+    "main_page_header_JUEttG",
+    "main",
+    "section_accordions_4zA9JF"
+  ]
+}

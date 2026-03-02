@@ -1,0 +1,20 @@
+{% capture data %}
+    {
+        "id": "{{ block.id }}",
+        "product": {
+            "description": {{ product.description | json }},
+            "metafields": {
+                "ingredients": "{{ product.metafields.product[block.settings.metafield_1].value | strip_newlines | rstrip | html }}",
+                "sustainability": "{{ product.metafields.product[block.settings.metafield_2].value  | rstrip | html }}",
+                "additional_description": {{ product.metafields[metafield_description] | json }}
+            }
+        },
+        "block": {{ block.settings | json }},
+    }
+{% endcapture %}
+<div class="pdp__description">
+    <div class="react-node">
+        <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+        {% render 'react-block', name: "theme__ecommerce-product-description", props: data %}
+    </div>
+</div>

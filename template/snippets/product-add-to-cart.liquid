@@ -1,0 +1,41 @@
+<ajax-cart-product-form>
+    <form
+            action="{{ routes.cart_add_url }}"
+            id="product_form_id"
+            class="product-form"
+            novalidate="novalidate"
+            data-prodify-product-form>
+        <input
+                type="hidden"
+                name="id"
+                value="{{ product.selected_or_first_available_variant.id }}">
+        <input
+                type="hidden"
+                name="quantity"
+                value="1">
+        <div class="flex flex-row w-full" x-data="{loading:false}">
+            <button type="submit" name="add" x-on:click="loading = true" class="button {{ block.settings.button_style }} cursor-pointer flex-auto"
+            {% if product.selected_or_first_available_variant.available == false %}
+                disabled
+                    {% endif %}>
+              <span class="[[processing]_&]:hidden flex flex-row items-center justify-center">
+
+                {%- if product.selected_or_first_available_variant.available -%}
+                {{ block.settings.button_text }} | {{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}
+                {%- else -%}
+                    {{ block.settings.disabled_text }}
+                {%- endif -%}
+
+              </span>
+                <span class="hidden [[processing]_&]:flex flex-row items-center justify-center">
+                   <div class="mr-1 mt-1" x-show="loading">{% render 'loader' %}</div>
+                    <div>{{ block.settings.adding_message }}</div>
+              </span>
+            </button>
+        </div>
+    </form>
+    <div
+        class="errors b4"
+        data-ajax-cart-errors="form"
+    ></div>
+</ajax-cart-product-form>

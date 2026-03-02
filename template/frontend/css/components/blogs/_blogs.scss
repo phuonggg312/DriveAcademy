@@ -1,0 +1,29 @@
+@import "./articleslist.scss";
+@import "./blogtile.scss";
+
+.social-share {
+  .social-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 64px;
+    background: #f4f4f4;
+    cursor: pointer;
+    svg {
+      padding: 2px;
+    }
+  }
+}
+
+.section-blog-content {
+  ul {
+    list-style: disc;
+    margin: initial;
+    padding: revert;
+  }
+
+  ol {
+    list-style: decimal;
+    margin: initial;
+    padding: revert;
+  }
+}

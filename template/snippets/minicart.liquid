@@ -1,0 +1,96 @@
+<div class="minicart" data-ajax-cart-section x-cloak>
+  <div class="title-row">
+    <h2 id="minicart-label" class="text-cloud-burst-500">Cart</h2>
+    <button @click="$store.global.toggleMinicart()">
+      {% render 'icons-static', icon:'close-x' %}
+    </button>
+  </div>
+
+  <div class="item-count-message">
+    You have
+    <span class="count" style="font-weight: 600" x-data>{{ cart.item_count }}</span>
+    <span x-data></span>
+    in your cart!
+  </div>
+
+  <hr/>
+
+  <ul class="items-list" data-ajax-cart-section-scroll>
+    {% for line_item in cart.items %}
+      <li class="item">
+        <div class="product-thumb-wrapper">
+          <img 
+            src="{{ line_item.image | image_url: width: 100, height: 120, crop: 'center' }}" 
+            alt="{{ line_item.title }}" 
+            srcset="{{ line_item.image | image_url: width: 100, height: 120, crop: 'center' }} 1x, {{ line_item.image | image_url: width: 200, height: 240, crop: 'center' }} 2x"
+            width="{{ line_item.image.width }}"
+            height="{{ line_item.image.height }}"
+            loading="lazy">
+        </div>
+
+        <div class="item-details">
+          <h4 class="title">
+            {{ line_item.title | truncatewords: 5 }}
+          </h4>
+
+          {% if section.settings.show_vendor %}
+            <small class="item-vendor">{{ line_item.vendor | truncatewords: 5 }}</small>
+          {% endif %}
+
+          <div class="options">
+            {% for option in line_item.options_with_values %}
+              <p class="option" data-option-name="{{ option.name }}">
+                <span style="font-weight: 600">{{ option.name }} :
+                </span>
+                <span>{{ option.value }}
+                </span>
+              </p>
+            {% endfor %}
+          </div>
+          <div class="quantity-row">
+            <span style="font-weight: bold;">Quantity:
+            </span>
+            <span>{{ line_item.quantity }}
+            </span>
+          </div>
+          <p class="price">{{ line_item.price | money }}
+          </p>
+          <p class="remove">
+            <a href="{{ line_item.url_to_remove }}" data-ajax-cart-request-button>
+              <i class="fa fa-trash-o"></i>
+              Remove from cart
+            </a>
+          </p>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <hr/>
+
+  <div class="subtotal">
+    <p class="title">Subtotal
+    </p>
+      <p class="amount">{{ cart.items_subtotal_price | money }}
+    </p>
+  </div>
+
+  {% if section.settings.show_cart_note %}
+    <hr/>
+    <div class="cart_notes mt-2">
+      <span class="mt-2">Cart Notes</span>
+      <input class="bg-white text-black w-full py-2 indent-2 border border-gray-100" type="text" name="cart_note" placeholder="Enter notes for cart"/>
+    </div>
+  {% endif %}
+
+  <form id="checkout" action="{{ routes.cart_url }}" method="post" class=""></form>
+
+  <a class="view-cart-details-link" href="{{ routes.cart_url }}" type="submit" name="checkout" form="cart">
+    View Cart Details
+  </a>
+
+  <button class="bg-black text-white w-full px-5 h-12 mt-2" href="{{ routes.cart_url }}" type="submit" name="checkout" form="checkout">
+    Checkout
+  </button>
+</div>
+

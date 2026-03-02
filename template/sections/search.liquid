@@ -1,0 +1,320 @@
+{% if section.settings.search_system == 'boost' %}
+  {% render 'search-boost' %}
+{% endif %}
+
+{% if section.settings.search_system == 'shopify' %}
+  {% render 'search-shopify' %}
+{% endif %}
+
+{% if section.settings.search_system == 'searchspring' %}
+  {% render 'search-searchspring' %}
+{% endif %}
+
+{% assign search_type = section.settings.search_system %}
+{% for block in section.blocks %}
+  {% if block.type == search_type %}
+    {% assign search_settings = block.settings | json %}
+  {% endif %}
+{% endfor %}
+
+<div
+  x-show="$store.global.isPredictiveSearchVisible"
+  class="predicitve-search-wrapper"
+  x-data="searchheader()"
+  x-on:click.outside="$store.global.toggleSearch()">
+  <div class="hidden lg:block fixed w-full h-screen top-0 bg-[#030303] opacity-40 z-10"></div>
+
+
+
+    <predictive-search
+      x-data="{{ search_type }}"
+      x-init='init({{ search_settings }}, {{ settings.products_per_page }})'
+      x-cloak
+      aria-modal="true"
+      @keyup.escape="$store.global.toggleSearch()"
+      class="predictive-search__container"
+    >
+      <div id="predictive-search-form-wrapper" class="h5 flex justify-center self-center lg:min-h-[56px] w-full bg-white items-center">
+        {% if section.settings.prompt_text %}
+          <h3 class="hidden">
+            {{ section.settings.prompt_text }}
+          </h3>
+        {% endif %}
+        <form
+          action="{{ routes.search_url }}"
+          method="get" role="search"
+          class="flex w-full"
+        >
+          <div class="default-input search-input w-full relative">
+            <div class="text-field-wrap has-icon">
+            <input
+                id="predictive-search-input"
+                class="w-full text-black form-field"
+                type="search"
+                name="q"
+                placeholder="{{ section.settings.search_placeholder_text }}"
+                x-model="queryInput"
+                @input="debouncedQuery($event.target.value)"
+                value="{{ search.terms | escape }}"
+                role="combobox"
+                aria-expanded="false"
+                aria-owns="predictive-search-results"
+                aria-controls="predictive-search-results"
+                aria-haspopup="listbox"
+                aria-autocomplete="list"
+              >
+              <label for="predictive-search-input" class="sr-only">Search</label>
+
+              <div for="predictive-search-input" class="text-field-icon hidden lg:flex">
+                {% render 'icon', name: section.settings.search_icon, class: 'text-[22px] p-[5px]' %}
+              </div>
+
+              <div
+                x-show="queryInput.length > 0"
+                @click="clearInput"
+                for="predictive-search-input"
+                class="hidden lg:flex gap-2 items-center cursor-pointer px-0 text-black"
+              >
+                {% render 'icon', name: 'icon-x-thin', class: 'text-[22px] p-[5px]' %}
+              </div>
+            </div>
+          </div>
+          <input name="options[prefix]" type="hidden" value="last">
+          <div id="predictive-search-target" tabindex="-1"></div>
+        </form>
+
+        <span
+          class="flex h-full border-none pl-[24px]"
+          @click="$store.global.toggleSearch()"
+        >
+          <span class="sr-only">Close</span>
+          {% render 'icon', name: section.settings.close_icon, class: 'text-[24px] p-[5px]' %}
+        </span>
+      </div>
+    </predictive-search>
+
+    <div class="h-full">
+      {% render 'search-header-results', search_settings: search_settings %}
+    </div>
+</div>
+
+
+
+{% schema %}
+{
+  "name": "Search",
+  "class": "site-search megamenu-sticky",
+  "blocks": [
+    {
+      "type": "algolia",
+      "name": "Algolia",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "app_id",
+          "label": "API ID"
+        },
+        {
+          "type": "text",
+          "id": "api_key",
+          "label": "API Key"
+        },
+        {
+          "type": "textarea",
+          "id": "facets",
+          "label": "Facets"
+        },
+        {
+          "type": "checkbox",
+          "id": "filters_hide_out_of_stock",
+          "label": "Filter unavailable products",
+          "default": true,
+          "info": "Hide products that are out of stock when filtering"
+        },
+        {
+          "type": "textarea",
+          "id": "attributes",
+          "label": "Attributes to Retrieve"
+        },
+        {
+          "type": "textarea",
+          "id": "search_indexes",
+          "label": "Search Indexes"
+        },
+        {
+          "type": "textarea",
+          "id": "sort_indicies",
+          "label": "Sort Indices Key & Display Name",
+          "info": "e.g price_asc:Price - Low to High"
+        },
+        {
+          "type": "text",
+          "id": "default_sort",
+          "label": "Default Sort Index Name"
+        },
+        {
+          "type": "number",
+          "id": "results_returned_header",
+          "label": "Results Returned Header",
+          "default": 12
+        }
+      ]
+    },
+    {
+      "type": "searchspring",
+      "name": "Searchspring",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "site_id",
+          "label": "Site ID",
+          "info": "Add the Site ID for Searchspring. This can be different for Prod, UAT and Dev stores. ProdAU: mrc8wj; ProdUS:8zmd2j; ProdUK:rmhmyl; Dev: f4sjfr"
+        },
+        {
+          "type": "textarea",
+          "id": "facets",
+          "label": "Facets"
+        },
+        {
+          "type": "checkbox",
+          "id": "filters_hide_out_of_stock",
+          "label": "Filter unavailable products",
+          "default": true,
+          "info": "Hide products that are out of stock when filtering"
+        },
+        {
+          "type": "textarea",
+          "id": "attributes",
+          "label": "Attributes to Retrieve"
+        },
+        {
+          "type": "textarea",
+          "id": "search_indexes",
+          "label": "Search Indexes"
+        },
+        {
+          "type": "textarea",
+          "id": "sort_indicies",
+          "label": "Sort Indices Key & Display Name",
+          "info": "e.g price_asc:Price - Low to High"
+        },
+        {
+          "type": "text",
+          "id": "default_sort",
+          "label": "Default Sort Index Name"
+        },
+        {
+          "type": "number",
+          "id": "results_returned_header",
+          "label": "Results Returned Header",
+          "default": 12
+        }
+      ]
+    },
+    {
+      "type": "shopify",
+      "name": "Shopify Search",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "api_key",
+          "label": "API Key"
+        },
+        {
+          "type": "textarea",
+          "id": "keywords",
+          "label": "Keywords",
+          "info": "Keywords to search for"
+        },
+        {
+          "type": "number",
+          "id": "results_returned_header",
+          "label": "Results Returned Header",
+          "default": 4
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "search_icon",
+      "label": "Search Icon",
+      "default": "icon-magnifying-glass-thin"
+    },
+    {
+      "type": "text",
+      "id": "close_icon",
+      "label": "Close Icon",
+      "default": "icon-x-thin"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder_text",
+      "label": "Search Placeholder Text",
+      "default": "search for a product or article here"
+    },
+    {
+      "type": "header",
+      "content": "Predictive Search"
+    },
+    {
+      "type": "radio",
+      "id": "search_system",
+      "label": "Search System",
+      "options": [
+        {
+          "value": "shopify",
+          "label": "Shopify"
+        },
+        {
+          "value": "boost",
+          "label": "Boost"
+        },
+        {
+          "value": "algolia",
+          "label": "Algolia"
+        },
+        {
+          "value": "searchspring",
+          "label": "Searchspring"
+        }
+      ],
+      "default": "shopify"
+    },
+    {
+      "type": "text",
+      "id": "prompt_text",
+      "label": "Prompt Text",
+      "default": "What can we help you find?"
+    },
+    {
+      "type": "checkbox",
+      "id": "predictive_search_show_vendor",
+      "default": false,
+      "label": "t:settings_schema.search_input.settings.predictive_search_show_vendor.label",
+      "info": "t:settings_schema.search_input.settings.predictive_search_show_vendor.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "predictive_search_show_price",
+      "default": false,
+      "label": "t:settings_schema.search_input.settings.predictive_search_show_price.label",
+      "info": "t:settings_schema.search_input.settings.predictive_search_show_price.info"
+    },
+    {
+      "type": "header",
+      "content": "Header Search - Empty State"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Recommended Products",
+      "limit": 3
+    }
+  ]
+}
+{% endschema %}

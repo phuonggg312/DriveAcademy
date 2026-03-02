@@ -1,0 +1,198 @@
+@import "../mixins/forms-mixins";
+
+/* INPUT */
+.form-field {
+  @include form-field-styles();
+}
+
+.input_inputfield {
+  @apply flex flex-auto p-2 items-center gap-2 h-[50px];
+}
+
+input[type="radio"]:checked:hover,
+input[type="radio"]:checked:focus {
+  border-color: transparent;
+  background-color: inherit;
+}
+
+/* TEXT AREA*/
+.input__textarea {
+  display: flex;
+  width: 600px;
+  height: 180px;
+  padding: 12px;
+  align-items: flex-start;
+  background: var(--white, #fff);
+}
+
+select[name="currency"] {
+  background: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-field__select {
+  &.form-field {
+    @include form-field-styles();
+
+    @apply py-[5px] px-1;
+
+    &:hover {
+      @apply border border-black;
+    }
+
+    [class*="indicatorSeparator"] {
+      @apply hidden;
+    }
+
+    .form-field__select-icon {
+      @apply text-2xl py-0 px-2 text-black;
+
+      font-family: "icomoon" !important;
+      speak: never;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      line-height: 1;
+
+      /* Better Font Rendering =========== */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+
+      svg {
+        @apply hidden;
+      }
+
+      &:before {
+        content: "\e9cd";
+      }
+    }
+  }
+
+  &-container {
+    .form-field__select-option {
+      @apply cursor-pointer bg-white;
+
+      &:hover {
+        @apply bg-gray-100;
+      }
+
+      &.selected {
+        @apply bg-black text-white;
+      }
+    }
+
+    .form-field__select-menu {
+      @apply m-0 border border-black border-t-white rounded-t-none shadow-none;
+    }
+
+    .form-field__select-menu-takover {
+      @apply hidden;
+    }
+
+    &.is-open {
+      .form-field__select-icon:before {
+        content: "\e9d6";
+      }
+
+      .form-field__select {
+        @apply rounded-b-none border-b-white;
+      }
+    }
+  }
+}
+
+/* RADIO */
+.radio {
+  align-items: center;
+  display: inline-flex;
+  gap: 12px;
+  position: relative;
+  input {
+    @apply mx-1;
+  }
+  label {
+    @apply mx-2;
+  }
+}
+
+/* DATE PICKER */
+.datepicker {
+  @apply w-64;
+
+  &__input {
+    @apply cursor-pointer w-full pl-4 pr-10 py-3 leading-none rounded-lg shadow-sm text-gray-600 font-medium;
+  }
+
+  &__container {
+    @apply relative z-10 items-center overflow-visible;
+  }
+
+  &__icon {
+    @apply cursor-pointer absolute top-0 right-0 px-3 py-2;
+
+    svg {
+      @apply h-6 w-6 text-gray-400;
+    }
+  }
+
+  &__selector {
+    @apply bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0;
+
+    &-container {
+      @apply flex justify-between items-center mb-2;
+    }
+
+    &-month,
+    &-year {
+      @apply flex-grow p-1 text-lg font-bold text-gray-800 cursor-pointer hover:bg-gray-200 rounded-lg;
+    }
+
+    &-button {
+      @apply transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 rounded-full;
+
+      svg {
+        @apply h-6 w-6 text-gray-500 inline-flex;
+      }
+    }
+  }
+
+  &__dateselector {
+    &-monthtext {
+      @apply text-gray-800 font-medium text-center text-xs;
+    }
+
+    &-blanks {
+      @apply text-center border p-1 border-transparent text-sm;
+    }
+
+    &-container {
+      @apply flex flex-wrap mb-3 -mx-1;
+    }
+  }
+}
+
+
+/* QUANTITY */
+.quantity-control-input {
+  @apply px-[4px] py-[8px] bg-[#F5F5F5];
+}
+.quantity-control-input {
+  appearance: none;
+  -webkit-appearance: none;
+  border: none;
+  pointer-events: none;
+  text-align: center;
+  background: var(--default-bg-color);
+}
+
+.search-input {
+  .text-field-wrap {
+    @apply px-4 lg:pl-9 lg:pr-7;
+
+    input {
+      @apply max-lg:pl-0;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Node 18",
+    "compilerOptions": {
+        "lib": [
+            "es2022",
+            "DOM",
+            "dom"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "module": "commonjs",
+        "target": "es2022",
+        "strict": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "strictNullChecks": true,
+        "noImplicitAny": false,
+        "outDir": "lib",
+        "declaration": true,
+        "noEmit": false,
+        "noEmitOnError": false,
+        "baseUrl": ".",
+        "paths": {
+            "@src/*": ["frontend/src/*"],
+            "@lib/*": ["frontend/src/lib/*"],
+            "@components/*": ["frontend/src/components/*"],
+            "@project-stories/*": ["frontend/src/stories/*"],
+            "@arctheme-components/*": ["node_modules/@mindarc/arctheme-components/frontend/src/stories/components/*"],
+            "@arctheme-hooks/*": ["node_modules/@mindarc/arctheme-components/frontend/src/hooks/*"]
+        },
+      "jsx": "react"
+    },
+    "include": [
+        "frontend/src/**/*",
+        "frontend/src/stories/*",
+        "frontend/src/components/*",
+        "arctheme/frontend/src/components/*",
+        "@mindarc/arctheme-components/frontend/src/components/*",
+        "custom-elements.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "public_html",
+        "public",
+        "test"
+    ]
+}

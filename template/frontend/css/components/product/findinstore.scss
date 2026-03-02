@@ -1,0 +1,32 @@
+.findinstore {
+  .findinstore__inputs {
+    @apply flex flex-row w-full mt-2;
+  }
+  .findinstore__details {
+    @apply slide-fade-in-element my-4;
+  }
+
+  .findinstore__delivery-list,
+  .findinstore-store-list {
+    @apply flex flex-col;
+  }
+
+  .findinstore__delivery-list__item,
+  .findinstore-store-list__item {
+    @apply flex flex-row my-2;
+  }
+
+  .findinstore__delivery-list__item .item__details {
+    @apply flex flex-col flex-auto;
+  }
+
+  .findinstore-store-list__item .instock {
+    @apply text-green-600;
+  }
+  .findinstore-store-list__item .limitedstock {
+    @apply text-gray-400;
+  }
+  .findinstore-store-list__item .outofstock {
+    @apply text-red-600;
+  }
+}

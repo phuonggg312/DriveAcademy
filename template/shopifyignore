@@ -1,0 +1,44 @@
+# https://shopify.dev/themes/tools/cli#excluding-files-from-shopify-cli
+
+### Astro files
+# Looks like CLI auto ignores most of the files below, but it's not documented
+# so can change at anytime. Included here just in case.
+node_modules
+src
+README.md
+webpack.*.js
+yarn.lock
+
+# package.json is not ignored as simple file name - https://github.com/Shopify/shopify-cli/issues/1518
+package.json*
+package-lock.json
+
+### Shopify files
+assets/algolia_config.js.liquid
+
+### Cypress test files
+cypress/
+cypress.env.json
+cypress.config.js
+
+frontend/
+test-results/
+.storybook/
+.yalc/
+.github/
+assets/.vite/
+tests/
+modules/
+static/
+public/
+dump/
+package.json
+package-lock.json
+vite.config.ts
+vite.config.mts
+README.md
+jsconfig.json
+tsconfig.json
+postcss.config.cjs
+.chromatic.config.json
+chromatic.config.json

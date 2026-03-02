@@ -1,0 +1,13 @@
+<div class="cta block text-center items-center max-h-[200px]">
+    <a href="{{ block.url }}" class="">
+        <img
+                width="{{ block.image.width }}"
+                height="{{ block.image.height }}"
+                src="{{ block.image | image_url: width: 505 }}"
+                srcset="{{ block.image | image_url: width: 505 }} 1x, {{ block.image | image_url: width: 410 }} 2x"
+                alt="{{ block.image.alt }}"
+                class="h-full"
+                loading="lazy">
+        <div class="cta__title">{{ block.title }}</div>
+    </a>
+</div>

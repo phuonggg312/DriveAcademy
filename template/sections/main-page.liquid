@@ -1,0 +1,27 @@
+{%- if page.content != blank -%}
+  <div class="px-4 py-6 lg:py-10 unreset color-{{ section.settings.color_schema }}">
+    <div class="container w-full h-full">
+      <div>{{ page.content }}</div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Default Page Section",
+  "class": "section-main-page",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "featured_image_esc",
+      "label": "Featured Image"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    }
+  ]
+}
+{% endschema %}

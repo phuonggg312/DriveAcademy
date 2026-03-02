@@ -1,0 +1,9 @@
+{% unless classes %}
+     {% assign classes = '' %}
+{% endunless %}
+
+<div id="{{ name }}"
+     data-theme-id="{{ name }}"
+     data-block-props='{{ props | json }}'
+     class="w-full {{ classes }}">
+</div>

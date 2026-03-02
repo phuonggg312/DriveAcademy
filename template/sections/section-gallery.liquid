@@ -1,0 +1,342 @@
+<div class="{{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }}">
+    <div class="section-gallery section-gallery-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+         :class="classes"
+         x-data="section({{ section.settings | json | escape }})"
+    >
+        <div class="react-node w-full">
+          {% include 'react-props' %}
+          <div id="react-data" data-injected-props='{{ data }}'></div>
+          {% render 'react-block', name: "theme__section-gallery", props: data %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Gallery Section",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Gallery settings"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "See the mission at work"
+    },
+    {
+      "type": "text",
+      "id": "title_style",
+      "label": "Title style",
+      "default": "h2"
+    },
+    {
+      "type": "text",
+      "id": "title_style_mobile",
+      "label": "Title style (Mobile)",
+      "default": "h4"
+    },
+    {
+      "type": "text",
+      "id": "subtext",
+      "label": "Section Subtext",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+    },
+    {
+      "type": "text",
+      "id": "subtitle_style",
+      "label": "Subtext style",
+      "default": "b3"
+    },
+    {
+      "type": "text",
+      "id": "subtitle_style_mobile",
+      "label": "Subtext style (Mobile)",
+      "default": "b4"
+    },
+    {
+        "type": "select",
+        "id": "gallery_direction",
+        "label": "Gallery Direction",
+        "options": [
+          {
+            "value": "horizontal",
+            "label": "Horizontal"
+          },
+          {
+            "value": "vertical",
+            "label": "Vertical"
+          }
+        ],
+        "default": "horizontal",
+        "info": "This will display the gallery in a horizontal or vertical direction."
+    },
+    {
+      "type": "select",
+      "id": "grid_columns",
+      "label": "Number of Grid Columns",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "grid_columns_mobile",
+      "label": "Number of Grid Columns (Mobile)",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "range",
+      "id": "desktop_gap",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop Gap",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile Gap",
+      "default": 8
+    },
+    {
+      "type": "number",
+      "id": "colspan_1",
+      "label": "Column 1 Span",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "colspan_2",
+      "label": "Column 2 Span",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "colspan_3",
+      "label": "Column 3 Span",
+      "default": 1
+    },
+    {
+      "type": "number",
+      "id": "colspan_4",
+      "label": "Column 4 Span",
+      "default": 1
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Gallery Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text for Image"
+        },
+        {
+          "type": "number",
+          "id": "column",
+          "label": "Column/Row",
+          "info": "(if you want it to render in a specific column/row on desktop)"
+        },
+        {
+          "type": "number",
+          "id": "column_mobile",
+          "label": "Column/Row (Mobile)",
+          "info": "(if you want it to render in a specific column/row on mobile)"
+        },
+        {
+          "type": "select",
+          "id": "col_span",
+          "label": "Column Span",
+          "options": [
+            { "value": "1", "label": "1 Column" },
+            { "value": "2", "label": "2 Columns" },
+            { "value": "3", "label": "3 Columns" }
+          ],
+          "default": "1"
+        },
+        {
+          "type": "select",
+          "id": "col_span_mobile",
+          "label": "Column Span (Mobile)",
+          "options": [
+            { "value": "1", "label": "1 Column" },
+            { "value": "2", "label": "2 Columns" },
+            { "value": "3", "label": "3 Columns" }
+          ],
+          "default": "1"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Gallery Section"
+    }
+  ]
+}
+{% endschema %}

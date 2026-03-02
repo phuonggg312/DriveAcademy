@@ -1,0 +1,44 @@
+{% capture links %}
+    "links": [
+    {% assign firstLevelLinks = section.settings.menu.links %}
+    {
+    "level": 1,
+    "links": [
+    {% for firstLevelLink in firstLevelLinks %}
+        {
+        "title": "{{ firstLevelLink.title }}",
+        "handle": "{{ firstLevelLink.handle | escape }}",
+        "url": "{{ firstLevelLink.url | escape }}",
+        "level": 2,
+        "links": [
+        {% if firstLevelLink.links.size > 0 %}
+            {% for secondLevelLink in firstLevelLink.links %}
+                {
+                "level": 3,
+                "title": "{{ secondLevelLink.title }}",
+                "handle": "{{ secondLevelLink.handle | escape }}",
+                "url": "{{ secondLevelLink.url | escape }}",
+                "links": [
+                {% if secondLevelLink.links.size > 0 %}
+                    {% for thirdLevelLink in secondLevelLink.links %}
+                        {
+                        "title": "{{ thirdLevelLink.title  }}",
+                        "handle": "{{ thirdLevelLink.handle | escape }}",
+                        "url": "{{ thirdLevelLink.url | escape }}"
+                        }
+                        {% unless forloop.last %},{% endunless %}
+                    {% endfor %}
+                {% endif %}
+                ]
+                }
+                {% unless forloop.last %},{% endunless %}
+            {% endfor %}
+        {% endif %}
+        ]
+        }
+        {% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ]
+    }
+    ]
+{% endcapture %}

@@ -1,0 +1,1102 @@
+<div
+  class="color-{{ section.settings.color_schema }}"
+  x-data="section({{ section.settings | json | escape }})"
+>
+  <div class="{{ section.settings.custom_column_class }} {{ border }}">
+    <div
+      class="section-multicolumn-{{ section.id }}
+      relative
+      {{ settings.reveal_animation_class }}"
+      :class="classes"
+    >
+      <div class="{{ section.settings.container_type }}">
+        <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] relative">
+          <div class="react-node w-full">
+
+            {% assign metaobject_name = section.settings.linked_metaobject %}
+            {% assign metaobject_parts = metaobject_name | split: '.' %}
+            {% assign namespace = metaobject_parts[0] %}
+            {% assign key = metaobject_parts[1] %}
+
+            {% assign multicolumn_entries = product.metafields[namespace][key].value %}
+
+            {% capture entriesData %}
+                "metaobject_entries": {% if multicolumn_entries %} [
+                {% for entry in multicolumn_centries %}
+
+                    {% unless forloop.last %},{% endunless %}
+                {% endfor %}
+                ]{% else %}null{% endif %}
+            {% endcapture %}
+
+              {% include 'react-props', metaobjectEntries: entriesData %}
+              <div id="react-data" data-injected-props='{{ data }}'></div>
+              {% render 'react-block', name: "theme__multicolumn", props: data %}
+            </div>
+        </div>
+
+        {% if section.settings.background_image %}
+          <img src="{{ section.settings.background_image | image_url: width:section.settings.background_image.width }}"
+               class="absolute top-0 left-0 object-cover h-full w-full -z-10"
+               alt="{{ section.settings.background_image.alt }}"
+               height="{{ section.settings.background_image.height }}"
+               width="{{ section.settings.background_image.width }}"
+              loading="lazy"
+          />
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Multicolumn",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "column_block",
+      "name": "Column Block",
+      "settings": [
+        {
+          "type": "select",
+          "label": "Layout",
+          "id": "layout",
+          "options": [
+            {
+              "label": "Text underneath",
+              "value": "stacked"
+            },
+            {
+              "label": "Text overlayed",
+              "value": "default"
+            }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color scheme"
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema_mobile",
+          "label": "Color scheme (Mobile)"
+        },
+        {
+          "type": "header",
+          "content": "Details"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge Text"
+        },
+        {
+          "type": "color",
+          "id": "badge_color",
+          "label": "Badge Color",
+          "default": "#FFC9D3"
+        },
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_font_type",
+          "default": "h2",
+          "label": "Title Font Class",
+          "info": "This is the font type for the title that is beneath the image"
+        },
+        {
+          "type": "select",
+          "id": "title_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Title Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "title_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Title Alignment Mobile"
+        },
+        {
+            "type": "checkbox",
+            "id": "use_counter",
+            "label": "Use Counter",
+            "default": false
+        },
+        {
+          "type": "text",
+          "id": "title_font_type_mobile",
+          "default": "h2",
+          "label": "Title Font Class (Mobile)",
+          "info": "This is the font type for the title on Mobile"
+        },
+        {
+          "type": "text",
+          "id": "tagline",
+          "label": "Tagline"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "text",
+          "id": "content_font_type",
+          "default": "b3",
+          "label": "Content Font Class",
+          "info": "This is the font type for the content that is beneath the title"
+        },
+
+        {
+          "type": "select",
+          "id": "text_content_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Text Content Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "text_content_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Text Content Alignment Mobile"
+        },
+        {
+          "type": "text",
+          "id": "content_font_type_mobile",
+          "default": "b3",
+          "label": "Content Font Class (Mobile)",
+          "info": "This is the font type for mobile for content that is beneath the title"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Image (Mobile)"
+        },
+        {
+          "type": "number",
+          "id": "media_rounding",
+          "label": "Media Rounding",
+          "default": 0
+        },
+        {
+          "type": "checkbox",
+          "id": "darken_image",
+          "label": "Image overlay darken",
+          "default": true
+        },
+
+        {
+          "type": "checkbox",
+          "id": "main_aspect_ratio",
+          "label": "Maintain Aspect Ratio",
+          "default": false,
+            "info": "This will maintain the aspect ratio of the tile"
+        },
+        {
+          "type": "select",
+          "id": "aspect_ratio_type",
+          "label": "Aspect Ratio Type",
+          "default": "aspect-auto",
+          "options": [
+            {
+              "value": "aspect-auto",
+              "label": "Auto"
+            },
+            {
+              "value": "aspect-square",
+              "label": "1:1"
+            }
+          ],
+          "info": "Type of aspect ratio (Auto or Square)"
+        },
+        {
+          "type": "number",
+          "id": "text_block_max_width",
+          "label": "Text Block Max Width",
+          "default": 0,
+          "info": "Max width will not be applied if the value is 0."
+        },
+        {
+          "type": "number",
+          "id": "text_block_max_width_mobile",
+          "label": "Text Block Max Width (Mobile)",
+          "default": 0,
+          "info": "Max width will not be applied if the value is 0."
+        },
+        {
+          "type": "number",
+          "id": "block_height",
+          "label": "Block Height",
+          "default": 500
+        },
+        {
+          "type": "number",
+          "id": "mobile_block_height",
+          "label": "Block Height (Mobile)",
+          "default": 350
+        },
+        {
+          "type": "number",
+          "id": "content_gap",
+          "label": "Content Gap",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "content_padding_top",
+          "label": "Content Padding Top",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "content_padding_top_mobile",
+          "label": "Content Padding Top (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
+        },
+        {
+          "type": "text",
+          "id": "button_class",
+          "label": "Button Class",
+          "default": "btn-outline"
+        },
+        {
+          "type": "checkbox",
+          "id": "make_tile_clickable",
+          "label": "Make tile clickable",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_button",
+          "label": "Show Button",
+          "default": true,
+          "info": "This will toggle display for the button on the tile"
+        },
+        {
+          "type": "text",
+          "id": "button_style",
+          "label": "Button Style",
+          "default": "button-primary",
+          "info": "This is the style of the button"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Read More",
+          "info": "This is the text that will be displayed on the button"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon"
+        },
+
+        {
+          "type": "number",
+          "id": "button_width",
+          "label": "Button Width",
+          "default": 0,
+          "info": "The width of the button (0 is full)"
+        },
+        {
+          "type": "number",
+          "id": "button_width_mobile",
+          "label": "Button Width (Mobile)",
+          "default": 0,
+          "info": "The width of the button on mobile (0 is full)"
+        },
+        {
+          "type": "range",
+          "id": "button_padding_top_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Padding Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Padding Bottom Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Padding Left & Right Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Padding Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "button_padding_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Button Padding Left & Right Mobile",
+          "default": 0
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "Button URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_reverse_icon",
+          "label": "Button Reverse Icon",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "button_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Button Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "button_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Button Alignment Mobile"
+        },
+        {
+          "type": "header",
+          "content": "Width Settings"
+        },
+        {
+          "type": "number",
+          "id": "width",
+          "label": "Block Width",
+          "default": 0,
+          "info": "In percentage how much space you want this block to take"
+        },
+        {
+          "type": "number",
+          "id": "width_mobile",
+          "label": "Block Width (Mobile)",
+          "default": 100,
+          "info": "In percentage how much space you want this block to take"
+        },
+        {
+          "type": "header",
+          "content": "Padding & Alignment settings"
+        },
+        {
+          "type": "select",
+          "id": "padding_area",
+          "options": [
+            {
+              "value": "content_only",
+              "label": "Content Only"
+            },
+            {
+              "value": "outside",
+              "label": "Content & Image"
+            }
+          ],
+          "default": "outside",
+          "label": "Padding Area"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Desktop",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Desktop",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_desktop",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Desktop",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Mobile",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Bottom Mobile",
+          "default": 12
+        },
+        {
+          "type": "range",
+          "id": "padding_left_right_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Left & Right Mobile",
+          "default": 12
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Overlay Alignment Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "label": "Overlay Alignment Mobile"
+        },
+        {
+          "type": "select",
+          "id": "content_position_desktop",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center",
+          "label": "Overlay Position Desktop"
+        },
+        {
+          "type": "select",
+          "id": "content_position_mobile",
+          "options": [
+            {
+              "value": "start",
+              "label": "Top"
+            },
+            {
+              "value": "center",
+              "label": "Centre"
+            },
+            {
+              "value": "end",
+              "label": "Bottom"
+            }
+          ],
+          "default": "center",
+          "label": "Overlay Position Mobile"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "label": "Layout",
+      "id": "layout",
+      "options": [
+        {
+          "label": "Flex Grid",
+          "value": "flex_grid"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        },
+        {
+          "label": "Scrollable",
+          "value": "scrollable"
+        },
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "select",
+      "label": "Layout (Mobile)",
+      "id": "layout_mobile",
+      "options": [
+        {
+          "label": "Flex Grid",
+          "value": "flex_grid"
+        },
+        {
+          "label": "Grid",
+          "value": "grid"
+        },
+        {
+          "label": "Scrollable",
+          "value": "scrollable"
+        },
+        {
+          "label": "Carousel",
+          "value": "carousel"
+        }
+      ],
+      "default": "grid"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+
+    {
+      "type": "text",
+      "id": "custom_id",
+      "label": "Custom ID",
+        "info": "This is the ID that will be used for this section, can be used for creating #links to sections"
+    },
+    {
+      "type": "text",
+      "id": "custom_column_class",
+      "label": "Custom Class",
+        "info": "This is the class that will be used for this section for styling"
+    },
+    {
+      "type": "text",
+      "id": "linked_metaobject",
+      "label": "Linked Metaobject"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_carousel",
+      "label": "Use Carousel",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "columns_count",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "label": "Columns per row"
+    },
+    {
+      "type": "range",
+      "id": "columns_count_mobile",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 1,
+      "label": "Columns per row (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap Left & Right",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap Left & Right (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_y",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap Top & Bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_y_mobile",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Gap Top & Bottom (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "classes",
+      "options": [
+        {
+          "value": "",
+          "label": "None"
+        },
+        {
+          "value": "multicolumn-wide",
+          "label": "Multicolumn Wide"
+        },
+        {
+          "value": "multicolumn-gap",
+          "label": "With Gap"
+        }
+      ],
+      "default": "",
+      "label": "Section Class",
+      "info": "Adds class to section for styling"
+
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header text"
+    },
+    {
+      "type": "text",
+      "id": "header_style",
+      "label": "Header style",
+      "default": "h3"
+    },
+    {
+      "type": "text",
+      "id": "header_style_mobile",
+      "label": "Header style (Mobile)",
+      "default": "h3"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "text",
+      "id": "tagline_style",
+      "label": "Tagline style",
+      "default": "b3"
+    },
+    {
+      "type": "text",
+      "id": "tagline_style_mobile",
+      "label": "Tagline style (Mobile)",
+      "default": "b3"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Under Header text"
+    },
+    {
+      "type": "text",
+      "id": "subtext_style",
+      "label": "Subtext style",
+      "default": "b2"
+    },
+    {
+      "type": "text",
+      "id": "subtext_style_mobile",
+      "label": "Subtext style (Mobile)",
+      "default": "b3"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Top"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Bottom"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Mobile"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Multicolumn"
+    }
+  ]
+}
+
+{% endschema %}

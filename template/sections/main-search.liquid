@@ -1,0 +1,372 @@
+{% assign plp_filters = shop.metaobjects['plp_filters'].values %}
+
+{% capture data %}
+  {
+    "section": {{ section.settings | json }},
+    "products_per_page": {{ settings.products_per_page }},
+    "pagination_type": {{ settings.pagination_type }},
+    "collection_products": {{ search.results | json }},
+    "search_size": {{ search.results_count }},
+    "collection_filters": [
+      {%- for filter in search.filters -%}
+      {
+        "sort_order": "{{ filter.sort_order.value }}",
+        "key": "{{ filter.label }}",
+        "label": "{{ filter.label }}",
+        "display_name": "{{ filter.label }}",
+        "display_limit": "{{ 5 }}",
+        "values": [
+          {%- for option in filter.values -%}
+            {
+              "key": "{{ option.label }}",
+              "label": "{{ option.label }}",
+              "name": "{{ option.name }}",
+              "url_to_add": "{{ option.url_to_add }}",
+              "url_to_remove": "{{ option.url_to_remove }}",
+              "count": "{{ 0 }}",
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {% endfor %}
+    ],
+    "filters": [
+      {%- for filter in plp_filters -%}
+      {
+        "sort_order": "{{ filter.sort_order.value }}",
+        "filter_name": "{{ filter.filter_name.value }}",
+        "display_name": "{{ filter.display_name.value }}",
+        "display_limit": "{{ filter.display_limit.value }}",
+        "filter_buttons": [
+          {%- assign buttons = filter.filter_buttons.value -%}
+          {%- for button in buttons -%}
+            {
+              "button_name": "{{ button.button_name.value }}",
+              "display_name": "{{ button.display_name.value }}",
+              "colour": "{{ button.colour.value }}",
+              "image": "{{ button.image.value | image_url: width: button.image.width }}"
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {% endfor %}
+    ],
+    "template": {
+      "name": "{{ template.name }}"
+    },
+    "shop": {
+      "name": "{{ shop.name }}",
+      "url": "{{ shop.url }}"
+    },
+    "page": {
+      "url": "{{ page.url }}"
+    },
+    "request": {
+      "path": "{{ request.path }}"
+    }
+  }
+{% endcapture %}
+{% assign data = data | escape %}
+
+<div
+  class="collection color-{{ section.settings.color_schema }}"
+  :class="classes"
+  x-data="section({{ section.settings | json | escape }}), searchproductlist"
+>
+  <div class="search-inner container {{ settings.reveal_animation_class }}">
+    <div class="flex flex-row auto-cols-max {{ settings.reveal_animation_class }}">
+        <div x-data="pagination" x-init="$watch('totalResults', (value) => init(value, {{ settings.products_per_page }}, true)); init(totalResults, {{ settings.products_per_page }}, true)" id="ProductGridContainer" class="product-grid-container collection-products w-full">
+          <div class="react-node w-full">
+            <div id="react-data" data-injected-props='{{ data }}'></div>
+            {% render 'react-block', name: "theme__search-main", props: data %}
+          </div>
+          <div x-ref="paginationContainer" class="flex justify-center items-center space-x-4 pt-[64px] lg:pt-[87px]"></div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Search Section",
+  "class": "section-main-search",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "filter",
+      "name": "Filter",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "filter_tags",
+          "label": "Filter tags",
+          "info": "Add a comma-separated list of product tags. Only the tags found in the collection will be displayed as filters ([?](https://help.outofthesandbox.com/hc/en-us/articles/115008642047))"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_filter_swatches",
+          "label": "Display colour swatches"
+        }
+      ]
+    },
+    {
+      "type": "swatches",
+      "name": "Product Swatches",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Standard"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_variants",
+          "label": "Use Variants",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "METAFIELDS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_metafields",
+          "label": "Use Metafields",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "metafield_name",
+          "label": "Metafield Name"
+        },
+        {
+          "type": "paragraph",
+          "content": "TAGS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_tags",
+          "label": "Use Tags",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag_name",
+          "label": "Tag Name"
+        }
+      ]
+    },
+    {
+      "type": "product_tile",
+      "name": "Product Tile",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Tile Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_swatches",
+          "label": "Show Swatches",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+        "type": "color_scheme",
+        "id": "color_schema",
+        "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "General Settings"
+    },
+    {
+      "type": "select",
+      "id": "heading_type",
+      "options": [
+        {
+          "value": "d1",
+          "label": "Display"
+        },
+        {
+          "value": "h1",
+          "label": "Heading 1"
+        },
+        {
+          "value": "h2",
+          "label": "Heading 2"
+        },
+        {
+          "value": "h3",
+          "label": "Heading 3"
+        },
+        {
+          "value": "h4",
+          "label": "Heading 4"
+        },
+        {
+          "value": "h5",
+          "label": "Heading 5"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading Type"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "header",
+      "content": "Filters"
+    },
+    {
+      "type": "checkbox",
+      "id": "disable_filtering",
+      "label": "Disable Filtering",
+      "default": false
+    },
+    {
+      "type": "paragraph",
+      "content": "Specify the filters to show in the sidebar."
+    },
+    {
+      "type": "header",
+      "content": "List Column Settings"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Columns Desktop",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "label": "Columns Mobile",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Column Gap Desktop",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "column_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Column Gap Mobile",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_gap_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Row Gap Desktop",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "row_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Row Gap Mobile",
+      "default": 2
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,199 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.footer.name",
+  "type": "footer",
+  "sections": {
+    "footer_promotional_bar_zedkqM": {
+      "type": "footer-promotional-bar",
+      "blocks": {
+        "promotional_item_BntVn4": {
+          "type": "promotional_item",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-Delivery-Black.png",
+            "title": "FREE SHIPPING",
+            "description": "For Orders Over $100"
+          }
+        },
+        "promotional_item_QAPfb8": {
+          "type": "promotional_item",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-Returns-Black_800x800_818afaec-c1a9-4004-84d7-d2d0717dcba6.svg",
+            "title": "EASY 14-DAY RETURNS",
+            "description": "Lorem Ipsum"
+          }
+        },
+        "promotional_item_CPzgpB": {
+          "type": "promotional_item",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-Rewards-Black.png",
+            "title": "ACADEMY REWARDS",
+            "description": "Lorem Ipsum"
+          }
+        },
+        "promotional_item_qEBqUz": {
+          "type": "promotional_item",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-click_and_collect.png",
+            "title": "CLICK AND COLLECT",
+            "description": "Lorem Ipsum"
+          }
+        }
+      },
+      "block_order": [
+        "promotional_item_BntVn4",
+        "promotional_item_QAPfb8",
+        "promotional_item_CPzgpB",
+        "promotional_item_qEBqUz"
+      ],
+      "name": "Footer Promotional Bar",
+      "settings": {
+        "container_type": "container",
+        "color_schema": "scheme-a6785905-1459-4f93-be48-f8f8f984a21b",
+        "padding_top_desktop": 20,
+        "padding_bottom_desktop": 19,
+        "padding_left_right_desktop": 120,
+        "padding_top_mobile": 24,
+        "padding_bottom_mobile": 24,
+        "padding_left_right_mobile": 16
+      }
+    },
+    "footer_links_LX3AMd": {
+      "type": "footer-links",
+      "blocks": {
+        "list_mKhDFF": {
+          "type": "list",
+          "settings": {
+            "link_list": "discover",
+            "text_column_width": "",
+            "margin_left_right_desktop": 0,
+            "margin_left_right_mobile": 0
+          }
+        },
+        "list_hLWJEC": {
+          "type": "list",
+          "settings": {
+            "link_list": "help",
+            "text_column_width": "",
+            "margin_left_right_desktop": 0,
+            "margin_left_right_mobile": 0
+          }
+        },
+        "list_KqBXrW": {
+          "type": "list",
+          "settings": {
+            "link_list": "about",
+            "text_column_width": "",
+            "margin_left_right_desktop": 0,
+            "margin_left_right_mobile": 0
+          }
+        },
+        "email_subscribe_xxtQK9": {
+          "type": "email_subscribe",
+          "settings": {
+            "show_social_icons": true,
+            "title": "",
+            "header_style": "h2",
+            "top_text": "Join our newsletter to stay up to date on features and releases.",
+            "contact_info": "",
+            "sign_up_message": "By signing up, you agree to our <a href=\"/policies/privacy-policy\" target=\"_blank\" title=\"Privacy Policy\">Privacy Policy</a> and provide consent to receive updates from our company.",
+            "content": "",
+            "text_column_width": "",
+            "render_type": "all",
+            "margin_left_right_desktop": 0,
+            "margin_left_right_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "list_mKhDFF",
+        "list_hLWJEC",
+        "list_KqBXrW",
+        "email_subscribe_xxtQK9"
+      ],
+      "settings": {
+        "layout": "multicolumns",
+        "container_type": "container",
+        "links_container_width": "1440",
+        "column_width": "",
+        "color_schema": "scheme-52ad3282-b122-41a9-bb6b-82e43fa0c5b3",
+        "content_alignment": "center",
+        "padding_top_desktop": 47,
+        "padding_bottom_desktop": 50,
+        "padding_left_right_desktop": 30,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_left_right_mobile": 16,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "currency_selector_footer": {
+          "type": "currency",
+          "settings": {
+            "sort_order_mobile": 0
+          }
+        },
+        "payment_icons_footer": {
+          "type": "payment_icons",
+          "settings": {
+            "sort_order_mobile": 6,
+            "render_type": "all",
+            "payments_render_type": "Image",
+            "payment_icons": "shopify://shop_images/Mastercard.png"
+          }
+        },
+        "copyright_footer": {
+          "type": "copyright",
+          "settings": {
+            "sort_order_mobile": 2,
+            "text_style": "h5",
+            "copyright": "Arctheme."
+          }
+        },
+        "footer_links_bottom": {
+          "type": "links",
+          "settings": {
+            "sort_order_mobile": 3,
+            "links": "footer-legal-links"
+          }
+        }
+      },
+      "block_order": [
+        "currency_selector_footer",
+        "payment_icons_footer",
+        "copyright_footer",
+        "footer_links_bottom"
+      ],
+      "settings": {
+        "container_type": "container",
+        "content_style": "between",
+        "color_schema": "scheme-52ad3282-b122-41a9-bb6b-82e43fa0c5b3",
+        "show_payment_icons": true,
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    }
+  },
+  "order": [
+    "footer_promotional_bar_zedkqM",
+    "footer_links_LX3AMd",
+    "footer"
+  ]
+}

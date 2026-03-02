@@ -1,0 +1,490 @@
+<div
+    class="color-{{ section.settings.color_schema }}"
+    x-data="section({{ section.settings | json | escape }})"
+>
+  <div
+    class="section-textwithmedia-{{ section.id }}
+    {{ settings.reveal_animation_class }}"
+    {% if section.settings.padding_area == 'outside'  %}
+      :class="classes"
+    {% endif %}
+  >
+    <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}]
+    {{ section.settings.container_type }}">
+      <div class="w-full react-node">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__textwithmedia", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Text with Media",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "button_cta",
+      "name": "Button CTA",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "CTA Text"
+        },
+        {
+          "type": "text",
+          "id": "button_icon",
+          "label": "Button Icon"
+        },
+        {
+          "type": "url",
+          "id": "button_url",
+          "label": "CTA URL"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "label": "Outline",
+              "value": "outline"
+            },
+            {
+              "label": "Primary",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "label": "Outline Light",
+              "value": "outline-light"
+            },
+            {
+              "label": "Dark",
+              "value": "dark"
+            }
+          ],
+          "default": "primary"
+        },
+        {
+          "type": "range",
+          "id": "padding_top_desktop",
+          "min": 0,
+          "max": 150,
+          "step": 2,
+          "unit": "px",
+          "label": "Padding Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "label": "Padding Top Desktop",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "media",
+      "name": "Media",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title"
+    },
+
+    {
+      "type": "select",
+      "id": "layout_type",
+      "options": [
+        {
+          "value": "overlayed",
+          "label": "Overlayed"
+        },
+        {
+          "value": "2column",
+          "label": "2 Column"
+        },
+        {
+          "value": "twocolumn-grid",
+          "label": "2 Column Grid"
+        }
+      ],
+      "default": "2column",
+      "label": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout_type_mobile",
+      "options": [
+        {
+          "value": "overlayed",
+          "label": "Overlayed"
+        },
+        {
+          "value": "2column",
+          "label": "2 Column"
+        },
+        {
+          "value": "twocolumn-grid",
+          "label": "2 Column Grid"
+        }
+      ],
+      "default": "2column",
+      "label": "Layout (Mobile)"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Reverse"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_layout_mobile",
+      "label": "Reverse (Mobile)"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "info": "Text above title"
+    },
+    {
+      "type": "text",
+      "id": "tagline_style",
+      "default": "b3",
+      "label": "Tagline Style"
+    },
+    {
+      "type": "text",
+      "id": "heading_type",
+      "default": "h2",
+      "label": "Heading Type",
+      "info": "Title Heading Type"
+    },
+    {
+      "type": "text",
+      "id": "heading_type_mobile",
+      "default": "h3",
+      "label": "Heading Type (Mobile)",
+      "info": "Title Heading Type for Mobile"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "subheading_style",
+      "default": "sh4",
+      "label": "Subheading Style"
+    },
+    {
+      "type": "text",
+      "id": "subheading_style_mobile",
+      "default": "sh5",
+      "label": "Subheading Style (Mobile)"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "text",
+      "id": "content_style",
+      "default": "b2",
+      "label": "Content Style"
+    },
+    {
+      "type": "text",
+      "id": "content_style_mobile",
+      "default": "b3",
+      "label": "Content Style (Mobile)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Video (Mobile)"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Width & Height Settings"
+    },
+    {
+      "type": "number",
+      "id": "container_height",
+      "label": "Container Max Height",
+      "default": 0,
+      "info": "Size of entire container"
+    },
+    {
+      "type": "number",
+      "id": "width",
+      "label": "Block Width",
+      "default": 50,
+      "info": "In percentage how much space you want this block to take"
+    },
+    {
+      "type": "number",
+      "id": "width_mobile",
+      "label": "Block Width (Mobile)",
+      "default": 100,
+      "info": "In percentage how much space you want this block to take"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "padding_area",
+      "options": [
+        {
+          "value": "inside",
+          "label": "Inner"
+        },
+        {
+          "value": "outside",
+          "label": "Outer"
+        }
+      ],
+      "default": "outside",
+      "label": "Padding Area"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 150,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position"
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Text With Media"
+    }
+  ]
+}
+
+{% endschema %}

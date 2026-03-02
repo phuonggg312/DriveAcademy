@@ -1,0 +1,69 @@
+<div class="page__section-container container {{ settings.reveal_animation_class }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+    <div class="react-node full">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__storelocator", props: data %}
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Store Locator",
+  "class": "storelocator-main",
+  "templates": ["page"],
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "store",
+      "name": "Store",
+      "settings": [
+        {
+          "id": "name",
+          "type": "text",
+          "label": "Name of Store"
+        },
+        {
+          "id": "address",
+          "type": "text",
+          "label": "Store Address"
+        },
+        {
+          "id": "hours",
+          "type": "richtext",
+          "label": "Trading Hours"
+        },
+        {
+          "id": "telephone",
+          "type": "text",
+          "label": "Phone Number"
+        },
+        {
+          "id": "lat",
+          "type": "text",
+          "label": "Latitude"
+        },
+        {
+          "id": "lng",
+          "type": "text",
+          "label": "Longtitude"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "maps_api_key",
+      "label": "Google Maps API Key"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Store Locator"
+    }
+  ]
+}
+{% endschema %}

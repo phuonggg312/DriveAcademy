@@ -1,0 +1,245 @@
+{% assign metafield_notations = section.settings.metafield_name | split: "." %}
+{% assign category_blocks_metafield = "" %}
+{% assign count = 0 %}
+{% for notation in metafield_notations %}
+    {% if count == 0 %}
+        {% assign category_blocks_metafield = collection.metafields[notation] %}
+    {% else %}
+        {% assign category_blocks_metafield = category_blocks_metafield[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+{% endfor %}
+
+{% assign category_blocks = category_blocks_metafield.value %}
+
+{% if category_blocks != blank %}
+  <section class="color-{{ section.settings.color_schema }}"
+           x-data="section({{ section.settings | json | escape }})"
+           :class="classes"
+  >
+    <div class="react-node">
+      {% capture data %}
+        {
+          "category_blocks": [
+            {% for block in category_blocks %}
+            {
+              "title": "{{ block.title }}",
+              "image": "{{ block.image | file_url }}",
+              "url": "{{ block.url }}"
+
+            }{%- unless forloop.last -%},{%- endunless -%}
+            {% endfor %}
+          ],
+          "section_settings": {{ section.settings | json }},
+          "routes": {
+            "root_url": "{{ routes.root_url }}"
+          }
+        }
+      {% endcapture %}
+      {% assign data = data | escape %}
+
+      <div id="react-data" data-injected-props='{{ data }}'></div>
+      {% render 'react-block', name: "theme__category-banner", props: data %}
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Related Banner",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "metafield_name",
+      "label": "Metafield Name",
+      "info": "Reference to list of metaobject entries"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_type",
+      "options": [
+        {
+          "value": "b1",
+          "label": "Body 1"
+        },
+        {
+          "value": "b2",
+          "label": "Body 2"
+        },
+        {
+          "value": "b3",
+          "label": "Body 3"
+        },
+        {
+          "value": "bc",
+          "label": "Body Characteristics"
+        }
+      ],
+      "default": "bc",
+      "label": "Text Type",
+      "info": "Text Type"
+    },
+    {
+      "type": "range",
+      "id": "text_padding_top_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Text Padding Top & Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "text_padding_top_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Text Padding Top & Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "range",
+      "id": "image_max_width",
+      "min": 100,
+      "max": 300,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Max Width",
+      "default": 300
+    },
+    {
+      "type": "range",
+      "id": "image_min_width",
+      "min": 100,
+      "max": 300,
+      "step": 2,
+      "unit": "px",
+      "label": "Image Min Width",
+      "default": 144
+    },
+    {
+      "type": "range",
+      "id": "gap_desktop",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "gap_mobile",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "label": "Gap Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collection Related Banner"
+    }
+  ],
+  "enabled_on": {
+    "templates": ["collection"]
+  }
+}
+
+{% endschema %}

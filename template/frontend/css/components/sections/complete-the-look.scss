@@ -1,0 +1,18 @@
+.complete-the-look {
+  @apply container lg:px-[106px];
+  &__header-content {
+    @apply mb-4;
+  }
+
+  &__title {
+    @apply mr-8 text-left;
+  }
+
+  &__divider {
+    @apply flex-1 border-b border-gray-300 lg:flex my-[14px];
+  }
+
+  &__carousel-controls {
+    @apply gap-x-[18.5px] text-[24px];
+  }
+}

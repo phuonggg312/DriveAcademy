@@ -1,0 +1,179 @@
+{% style %}
+
+    {% comment %} DARK BUTTON {% endcomment %}
+
+    {% comment %} PRIMARY BUTTON {% endcomment %}
+    {% assign button_scheme = settings.buttons_dark_color_scheme_primary %}
+
+    .button-dark-primary {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.background }}{% endif %};
+    color: {{ button_scheme.settings.button_text_color }};
+    border-color: {{ button_scheme.settings.button_border_color }};
+
+    {%- if button_scheme.settings.button_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-primary:hover {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.hover_background_color }}{% endif %};
+    color: {{ button_scheme.settings.hover_text_color }};
+    border-color: {{ button_scheme.settings.hover_border_color }};
+
+    {%- if button_scheme.settings.hover_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-primary:active {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.active_background_color }}{% endif %};
+    color: {{ button_scheme.settings.active_text_color }};
+    border-color: {{ button_scheme.settings.active_border_color }};
+
+    {%- if button_scheme.settings.active_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-primary:disabled {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.disabled_background_color }}{% endif %};
+    color: {{ button_scheme.settings.disabled_text_color }};
+    border-color: {{ button_scheme.settings.disabled_border_color }};
+
+    {%- if button_scheme.settings.disabled_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+
+    {% comment %} SECONDARY BUTTON {% endcomment %}
+    {% assign button_scheme = settings.buttons_dark_color_scheme_secondary %}
+
+    .button-dark-secondary {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.background }}{% endif %};
+    color: {{ button_scheme.settings.button_text_color }};
+    border-color: {{ button_scheme.settings.button_border_color }};
+
+    {%- if button_scheme.settings.button_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-secondary:hover {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.hover_background_color }}{% endif %};
+    color: {{ button_scheme.settings.hover_text_color }};
+    border-color: {{ button_scheme.settings.hover_border_color }};
+
+    {%- if button_scheme.settings.hover_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-secondary:active {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.active_background_color }}{% endif %};
+    color: {{ button_scheme.settings.active_text_color }};
+    border-color: {{ button_scheme.settings.active_border_color }};
+
+    {%- if button_scheme.settings.active_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-secondary:disabled {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.disabled_background_color }}{% endif %};
+    color: {{ button_scheme.settings.disabled_text_color }};
+    border-color: {{ button_scheme.settings.disabled_border_color }};
+
+    {%- if button_scheme.settings.disabled_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+
+    {% comment %} TERTIARY BUTTON {% endcomment %}
+    {% assign button_scheme = settings.buttons_dark_color_scheme_tertiary %}
+
+    .button-dark-tertiary {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.background }}{% endif %};
+    color: {{ button_scheme.settings.button_text_color }};
+    border-color: {{ button_scheme.settings.button_border_color }};
+
+    {%- if button_scheme.settings.button_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-tertiary:hover {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.hover_background_color }}{% endif %};
+    color: {{ button_scheme.settings.hover_text_color }};
+    border-color: {{ button_scheme.settings.hover_border_color }};
+
+    {%- if button_scheme.settings.hover_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-tertiary:active {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.active_background_color }}{% endif %};
+    color: {{ button_scheme.settings.active_text_color }};
+    border-color: {{ button_scheme.settings.active_border_color }};
+
+    {%- if button_scheme.settings.active_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-tertiary:disabled {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.disabled_background_color }}{% endif %};
+    color: {{ button_scheme.settings.disabled_text_color }};
+    border-color: {{ button_scheme.settings.disabled_border_color }};
+
+    {%- if button_scheme.settings.disabled_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+
+    {% comment %} TEXT BUTTON {% endcomment %}
+    {% assign button_scheme = settings.buttons_dark_color_scheme_text %}
+
+    .button-dark-text {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.background }}{% endif %};
+    color: {{ button_scheme.settings.button_text_color }};
+    border-color: {{ button_scheme.settings.button_border_color }};
+
+    {%- if button_scheme.settings.button_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-text:hover {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.hover_background_color }}{% endif %};
+    color: {{ button_scheme.settings.hover_text_color }};
+    border-color: {{ button_scheme.settings.hover_border_color }};
+
+    {%- if button_scheme.settings.hover_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-text:active {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.active_background_color }}{% endif %};
+    color: {{ button_scheme.settings.active_text_color }};
+    border-color: {{ button_scheme.settings.active_border_color }};
+
+    {%- if button_scheme.settings.active_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+
+    .button-dark-text:disabled {
+    background: {% if button_scheme.settings.background_gradient != empty %}{{ button_scheme.settings.background_gradient }}{% else %}{{ button_scheme.settings.disabled_background_color }}{% endif %};
+    color: {{ button_scheme.settings.disabled_text_color }};
+    border-color: {{ button_scheme.settings.disabled_border_color }};
+
+    {%- if button_scheme.settings.disabled_border_color == 'rgba(0,0,0,0)' -%}
+        border-width: 0px;
+    {%- endif -%}
+    }
+{% endstyle %}

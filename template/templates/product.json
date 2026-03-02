@@ -1,0 +1,216 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "product_labels_aeXdFx": {
+          "type": "product_labels",
+          "settings": {
+            "use_tags": false,
+            "tag_name": "",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "product_vendor_7CbFC8": {
+          "type": "product_vendor",
+          "settings": {
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "product_title_RQB9LE": {
+          "type": "product_title",
+          "settings": {
+            "render_type": "all",
+            "title": "{{ product.title }}",
+            "heading_type": "h3",
+            "mobile_class": "h5",
+            "margin_top_desktop": 0,
+            "margin_top_mobile": 0,
+            "margin_bottom_desktop": 0,
+            "margin_bottom_mobile": 0,
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "text_rT6mXP": {
+          "type": "text",
+          "settings": {
+            "show_indicator": true,
+            "indicator_display_type": "inline",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "description_ViaNLf": {
+          "type": "description",
+          "settings": {
+            "show_more_reveal": false,
+            "use_product_description": false,
+            "metafield_description": "",
+            "metafield_1": "",
+            "metafield_2": "",
+            "text_style": "b2",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "price_kRC9Vp": {
+          "type": "price",
+          "settings": {
+            "show_discount_percentage": false,
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "select_rYk78t": {
+          "type": "select",
+          "settings": {
+            "show_option_1": true,
+            "show_option_2": true,
+            "show_color_as_swatches": false,
+            "set_first_option_default": false,
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "inventory_BqGG8t": {
+          "type": "inventory",
+          "settings": {
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "swatches_Pxa8hh": {
+          "type": "swatches",
+          "disabled": true,
+          "settings": {
+            "swatch_name": "Colour",
+            "swatch_name_style": "bfb",
+            "show_name": true,
+            "use_variants": false,
+            "use_metafields": false,
+            "metafield_name": "",
+            "use_tags": true,
+            "tag_name": "group",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "add_gURiqQ": {
+          "type": "add",
+          "settings": {
+            "button_text": "Add to Cart",
+            "disabled_text": "Not Available",
+            "adding_message": "Adding to cart...",
+            "button_style": "btn-outline",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "payment_icons_raXYe6": {
+          "type": "payment_icons",
+          "settings": {
+            "payment_image": "shopify://shop_images/image_2024-03-18_180354954.png",
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "find_in_store_Ea68EK": {
+          "type": "find_in_store",
+          "settings": {
+            "sort_order_mobile": 0,
+            "group": "",
+            "group_width": "full"
+          }
+        },
+        "accordion_rf3ezm": {
+          "type": "accordion",
+          "settings": {
+            "icon_sizes": 24,
+            "additional_info_1": "Materials",
+            "additional_content_1": "<p>Product materials information will be displayed here.</p>",
+            "additional_icon_1": "shopify://shop_images/t-shirt-thin-svgrepo-com.svg",
+            "additional_info_2": "Shipping & Returns",
+            "additional_content_2": "<p>Shipping & Returns information will be displayed here.</p>",
+            "additional_icon_2": "shopify://shop_images/truck-thin-svgrepo-com.svg",
+            "additional_info_3": "Care",
+            "additional_content_3": "<p>Use a soft damp cloth and a drop of mild soap to remove any haze. Air dry.</p>",
+            "additional_icon_3": "shopify://shop_images/hand-grabbing-thin-svgrepo-com.svg",
+            "additional_info_4": "",
+            "additional_content_4": "",
+            "additional_info_5": "",
+            "additional_content_5": "",
+            "additional_info_6": "",
+            "additional_content_6": "",
+            "additional_info_7": "",
+            "additional_content_7": "",
+            "sort_order_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "product_labels_aeXdFx",
+        "product_vendor_7CbFC8",
+        "product_title_RQB9LE",
+        "text_rT6mXP",
+        "description_ViaNLf",
+        "price_kRC9Vp",
+        "select_rYk78t",
+        "inventory_BqGG8t",
+        "swatches_Pxa8hh",
+        "add_gURiqQ",
+        "payment_icons_raXYe6",
+        "find_in_store_Ea68EK",
+        "accordion_rf3ezm"
+      ],
+      "settings": {
+        "color_schema": "default",
+        "picker_type": "select",
+        "is_lazy_load": true,
+        "show_navigation_arrows": true,
+        "show_navigation_arrows_mobile": true,
+        "show_thumbnails": true,
+        "show_thumbnails_mobile": false,
+        "show_indicators": true,
+        "show_indicators_mobile": false,
+        "gallery_type": "tiled",
+        "gallery_type_mobile": "carousel",
+        "layout": "default-pdp",
+        "content_alignment": "left",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

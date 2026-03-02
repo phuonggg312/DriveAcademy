@@ -1,0 +1,12 @@
+.linklist {
+    @apply mx-auto max-w-6xl;
+    .linklist__container {
+        @apply bg-white py-8;
+    }
+    .linklist__heading {
+        @apply py-4
+    }
+    .linklist__links {
+        @apply grid grid-cols-1 gap-2
+    }
+}

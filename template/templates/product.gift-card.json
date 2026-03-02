@@ -1,0 +1,91 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "product_vendor_7CbFC8": {
+          "type": "product_vendor",
+          "settings": {
+          }
+        },
+        "product_title_RQB9LE": {
+          "type": "product_title",
+          "settings": {
+          }
+        },
+        "price_kRC9Vp": {
+          "type": "price",
+          "settings": {
+            "show_discount_percentage": false
+          }
+        },
+        "text_rT6mXP": {
+          "type": "text",
+          "settings": {
+            "show_indicator": true,
+            "indicator_display_type": "inline"
+          }
+        },
+        "description_ViaNLf": {
+          "type": "description",
+          "settings": {
+            "show_more_reveal": true
+          }
+        },
+        "select_rYk78t": {
+          "type": "select",
+          "settings": {
+          }
+        },
+        "inventory_BqGG8t": {
+          "type": "inventory",
+          "settings": {
+          }
+        },
+        "swatches_Pxa8hh": {
+          "type": "swatches",
+          "settings": {
+            "use_variants": false,
+            "use_metafields": false,
+            "metafield_name": "",
+            "use_tags": true,
+            "tag_name": "group"
+          }
+        },
+        "add_gURiqQ": {
+          "type": "add",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "product_vendor_7CbFC8",
+        "product_title_RQB9LE",
+        "price_kRC9Vp",
+        "text_rT6mXP",
+        "description_ViaNLf",
+        "select_rYk78t",
+        "inventory_BqGG8t",
+        "swatches_Pxa8hh",
+        "add_gURiqQ"
+      ],
+      "settings": {
+        "picker_type": "select",
+        "gallery_type": "carousel",
+        "layout": "default-pdp"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

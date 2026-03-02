@@ -1,0 +1,483 @@
+{% assign metaobject_values = null %}
+
+{% if section.settings.faq_metaobject_type == 'product' %}
+
+  {% assign metafield_notations = section.settings.metaobject_entries | split: "." %}
+  {% assign count = 0 %}
+
+  {% for notation in metafield_notations %}
+    {% if count == 0 %}
+      {% assign metaobject_values = product.metafields[notation] %}
+    {% else %}
+      {% assign metaobject_values = metaobject_values[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+  {% endfor %}
+
+  {% assign metaobject_values = metaobject_values.value %}
+  {% comment %}{% assign metaobject_values = product.metafields[section.settings.metaobject_entries].value %}{% endcomment %}
+{% else %}
+  {% assign metaobject_values = shop.metaobjects[section.settings.metaobject_entries].values %}
+{% endif %}
+
+{% if section.settings.metaobject_entries != blank %}
+  {% assign faqs = metaobject_values %}
+  {% capture faqData %}
+    "faqs": {% if faqs %} [
+    {% for faq in faqs %}
+      {
+      "title": "{{ faq.question | escape }}",
+      {% if faq.image  %}"image": "{{ faq.image | image_url: faq.image.width }}",{% endif %}
+      "content": "{{ faq.answer | escape }}",
+      "filter_tag": "{{ faq.dropdown_label | escape }}"
+      }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+    ]{% else %}null{% endif %}
+  {% endcapture %}
+{% endif %}
+
+<div class="{{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }}">
+<div class="section-faq section-faq-{{ section.id }} color-{{ section.settings.color_schema }} relative {{ settings.reveal_animation_class }}"
+     :class="classes"
+     x-data="section({{ section.settings | json | escape }})"
+>
+    <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }} relative">
+      <div class="react-node w-full">
+        {% include 'react-props', metaobjectEntries: faqData %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__faq", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "column_block",
+      "name": "FAQ Block",
+      "settings": [
+        {
+          "type": "number",
+          "id": "column",
+          "label": "Column",
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "filter_tag",
+          "label": "Filter Tag"
+        },
+        {
+          "type": "header",
+          "content": "Details"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "If video setting is blank, then image will display as media"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    },
+    {
+      "type": "column_CTA",
+      "name": "Column CTA",
+      "settings": [
+        {
+          "type": "number",
+          "id": "column",
+          "label": "Column",
+          "default": 1
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "label": "CTA Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "text",
+          "id": "cta_style",
+          "label": "CTA Style",
+          "default": "button-primary"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA URL"
+        },
+
+      ]
+    },
+    {
+      "type": "column_image",
+      "name": "FAQ Image",
+      "settings": [
+        {
+          "type": "number",
+          "id": "column",
+          "label": "Column",
+          "default": 2
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "If video setting is blank, then image will display as media"
+        },
+        {
+          "type": "video",
+          "id": "video",
+          "label": "Video"
+        }
+      ]
+    }
+  ],
+  "settings": [
+  {
+    "type": "select",
+    "id": "render_type",
+    "options": [
+      {
+        "value": "all",
+        "label": "All"
+      },
+      {
+        "value": "mobile-only",
+        "label": "Mobile Only"
+      },
+      {
+        "value": "desktop-only",
+        "label": "Desktop Only"
+      }
+    ],
+    "default": "all",
+    "label": "Render Type",
+    "info": "This will display this block based on Desktop, Mobile or both."
+  },
+  {
+    "type": "select",
+    "id": "container_type",
+    "label": "Container type",
+    "default": "container",
+    "options": [
+      {
+        "value": "container",
+        "label": "Use container width"
+      },
+      {
+        "value": "w-full",
+        "label": "Use full width"
+      }
+    ]
+  },
+  {
+    "type": "checkbox",
+    "id": "show_section_borders",
+    "label": "Show Section Borders"
+  },
+  {
+    "type": "text",
+    "id": "custom_column_class",
+    "label": "Custom Class"
+  },
+  {
+    "type": "select",
+    "id": "layout_type",
+    "label": "Layout",
+    "default": "stacked",
+    "options": [
+      {
+        "value": "stacked",
+        "label": "Stacked"
+      },
+      {
+        "value": "2column",
+        "label": "2 Column"
+      }
+    ]
+  },
+  {
+    "type": "select",
+    "id": "layout_type_mobile",
+    "label": "Layout (Mobile)",
+    "default": "stacked",
+    "options": [
+      {
+        "value": "stacked",
+        "label": "Stacked"
+      },
+      {
+        "value": "2column",
+        "label": "2 Column"
+      }
+    ]
+  },
+    {
+      "type": "select",
+      "id": "faq_metaobject_type",
+      "label": "FAQ Metaobject Type",
+      "default": "global",
+      "options": [
+        {
+          "value": "global",
+          "label": "Global"
+        },
+        {
+          "value": "product",
+          "label": "Product"
+        }
+      ],
+      "info": "Use this if you want to have the FAQ data based on metaobject type for where the FAQ data is stored."
+    },
+    {
+      "type": "text",
+      "id": "metaobject_entries",
+      "label": "FAQ Metaobject",
+      "info": "Use this if you want to have the FAQ data based on metaobject entries"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_filter_bar",
+      "label": "Show Filter Bar",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_search_bar",
+      "label": "Show Search Bar",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "faq_to_left",
+      "label": "FAQ To Left",
+      "default": false,
+      "info": "Only for 2 column"
+    },
+    {
+        "type": "checkbox",
+        "id": "use_load_more",
+        "label": "Use Load More",
+        "default": false
+    },
+    {
+      "type": "number",
+      "id": "load_more_limit",
+      "label": "Load More Limit",
+      "default": 5
+    },
+    {
+      "type": "number",
+      "id": "width",
+      "label": "Width",
+      "default": 768
+    },
+    {
+      "type": "number",
+      "id": "width_mobile",
+      "label": "Width (Mobile)",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Header text"
+    },
+    {
+      "type": "text",
+      "id": "heading_type",
+      "label": "Heading Type",
+      "default": "sh3"
+    },
+    {
+      "type": "text",
+      "id": "heading_type_mobile",
+      "label": "Heading Type",
+      "default": "sh5"
+    },
+    {
+      "type": "richtext",
+      "id": "subtext",
+      "label": "Subcopy text"
+    },
+    {
+      "type": "text",
+      "id": "subheading_type",
+      "label": "Subheading Type",
+      "default": "b2"
+    },
+    {
+      "type": "text",
+      "id": "subheading_type_mobile",
+      "label": "Subheading Type (Mobile)",
+      "default": "b3"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "CTA Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "CTA Button URL"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ"
+    }
+  ]
+}
+
+{% endschema %}

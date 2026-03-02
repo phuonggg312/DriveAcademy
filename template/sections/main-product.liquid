@@ -1,0 +1,1757 @@
+<div
+    class="pdp-page {{ section.settings.layout }}
+    shopify-section-main-product-inner
+    color-{{ section.settings.color_schema }}
+    w-full"
+    :class="classes"
+    x-data="section({{ section.settings | json | escape }}), latchscrolling"
+    data-handle="{{ product.handle }}"
+    data-id="{{ product.id }}"
+    data-url="{{ product.url }}"
+    data-section="{{ section.id }}"
+    data-prodify="{{ section.settings.picker_type }}">
+  <div class="{{ section.settings.layout }} flex flex-col lg:flex-row px-0">
+    <div x-data="recentlyviewed" x-init="store({{ product.id }})"></div>
+
+    <script type="application/json" data-prodify-variants-json>
+      {{ product.variants | json }}
+    </script>
+
+    <a class="skip-to-content-link" href="#product-info-{{ section.id }}">
+      Skip to product info
+    </a>
+
+    {% if section.settings.layout == 'default-pdp' %}
+      <div class="flex pdp-main lg:gap-4 relative lg:p-[19px]" style="position: relative;">
+    {% endif %}
+      <div class="w-full lg:w-1/2 {{ settings.reveal_animation_class }}" data-prodify-media-container>
+        <span class="hidden" style="position: absolute; top: 0; left: 0; z-index: 1; font-size: 10px;">
+          {{ product.selected_or_first_available_variant.id }}
+        </span>
+
+        <div data-prodify-media-container class="pdp-gallery min-h-[375px] lg:min-h-[700px]">
+          {% render 'product-image-gallery', product: product %}
+        </div>
+      </div>
+    {% if section.settings.layout == 'default-pdp' %}
+      </div>
+    {% endif %}
+
+      <div class="pdp-trigger h-[1px] w-full lg:w-auto"></div>
+      <div class="pdp-details lg:px-28 lg:w-1/2 flex flex-col" id="product-info-{{ section.id }}">
+
+        {% assign current_group = "" %}
+        {% assign grouped_blocks = "" %}
+
+        {% for block in section.blocks %}
+          {% assign group_name = block.settings.group %}
+
+          {% if group_name != current_group %}
+            {% if grouped_blocks != "" %}
+              <!-- Render the previous group -->
+              <div class="grouped-blocks {{ current_group }}-group flex flex-row space-x-4 items-center order-[{{ block.settings.sort_order_mobile }}] lg:-order-none items-baseline" data-animation-delay="0.2s">
+                {{ grouped_blocks }}
+              </div>
+              {% assign grouped_blocks = "" %}
+            {% endif %}
+            {% assign current_group = group_name %}
+          {% endif %}
+
+          {% capture block_markup %}
+            <div class="{{ settings.reveal_animation_class }}
+            {% if block.settings.group_width == 'half' %} w-auto {% else %} w-full {% endif %}
+            order-[{{ block.settings.sort_order_mobile }}]
+            lg:-order-none" data-animation-delay="0.2s"
+            >
+              {% case block.type %}
+                {% when 'description' %}
+                  {% render 'product-description', block: block %}
+                {% when 'price' %}
+                  {% render 'product-price', block: block %}
+                {% when 'product_title' %}
+                  {% render 'product-title', block: block %}
+                {% when 'payment_icons' %}
+                  {% render 'product-payments', block: block %}
+                {% when 'product_labels' %}
+                  {% render 'product-labels', product: product, block: block %}
+                {% when 'product_reviews' %}
+                  {% render 'product-reviews', product: product, block: block %}
+              {% when 'selling_propositions' %}
+                  {% render 'product-selling-props', product: product, block: block %}
+              {% when 'split_payments' %}
+                  {% render 'product-split-payments', product: product, block: block %}
+                {% when 'swatches' %}
+                  {% render 'product-swatches', product: product, block: block, swatchName: block.settings.swatch_name %}
+                {% when 'product_text' %}
+                  {% render 'product-text', block: block %}
+                {% when 'product_vendor' %}
+                  {% render 'product-vendor', block: block %}
+                {% when 'selling_plan' %}
+                  {% render 'product-sellingplans', block: block %}
+                {% when 'quick_add' %}
+                  {% render 'product-quick-add', block: block %}
+                {% when 'find_in_store' %}
+                  {% render 'product-find-in-store', block: block %}
+                {% when 'product_tag' %}
+                  <div class="hidden lg:block">
+                    {% render 'product-tag', block: block %}
+                  </div>
+                {% when 'size_guide' %}
+                  {% render 'product-size-guide', block: block %}
+                {% when 'product_breadcrumbs' %}
+                  {% render 'product-breadcrumbs', block: block %}
+                {% when 'divider' %}
+                  <hr class="{% if block.settings.render_type == 'mobile-only' %} lg:hidden {% endif %} {% if block.settings.render_type == 'desktop-only' %} hidden lg:block {% endif %} border-b my-[{{ block.settings.margin_y_mobile }}px] lg:my-[{{ block.settings.margin_y_desktop }}px]"/>
+                {% when 'inventory' %}
+                  {% render 'product-quantity-selector', block: block, show_details: true %}
+                {% when 'select' %}
+                  <div
+                    id="variant-selector"
+                    class="mt-8"
+                  >
+                    {% render 'product-variant-picker', product: product, form_name: 'pdp-main', picker_type: section.settings.picker_type, block: block %}
+                  </div>
+                {% when 'add' %}
+                  <div class="mt-8">
+                    {% render 'product-add-to-cart', block: block %}
+                  </div>
+                {% when 'accordion' %}
+                  {% render 'product-accordion', block: block %}
+                {% else %}
+                  {% render block %}
+              {% endcase %}
+            </div>
+          {% endcapture %}
+
+          {% if group_name != blank %}
+            {% assign grouped_blocks = grouped_blocks | append: block_markup %}
+          {% else %}
+            {{ block_markup }}
+          {% endif %}
+        {% endfor %}
+
+        {% if grouped_blocks != "" %}
+          <!-- Render any remaining grouped blocks -->
+          <div class="grouped-blocks flex flex-row space-x-4">
+            {{ grouped_blocks }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Section",
+  "class": "section-main-product",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "description",
+      "name": "Product Description",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_more_reveal",
+          "label": "Use Show More",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "use_product_description",
+          "label": "Use Product Description",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "max_characters",
+          "label": "Max Characters",
+          "info": "Max characters to show before show more is used"
+        },
+        {
+          "type": "text",
+          "id": "metafield_description",
+          "label": "Metafield Field",
+          "info": "To use a different field for the description"
+        },
+        {
+          "type": "text",
+          "id": "metafield_1",
+          "label": "Metafield Field Tab (1)",
+          "info": "Leave blank if not needed"
+        },
+        {
+          "type": "text",
+          "id": "metafield_2",
+          "label": "Metafield Field Tab (2)",
+          "info": "Leave blank if not needed"
+        },
+        {
+          "type": "text",
+          "id": "text_style",
+          "label": "Text Style",
+          "default": "b2"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "product_text",
+      "name": "Product Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "text_class",
+          "label": "Text Type"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "quick_add",
+      "name": "Quick Add",
+      "settings": [
+      {
+        "type": "text",
+        "id": "metafield_name",
+        "label": "Metafield Name"
+      },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "title_style",
+          "label": "Title Style",
+          "default": "h2"
+        },
+        {
+          "type": "richtext",
+          "id": "subtext",
+          "label": "Subtext"
+        },
+        {
+          "type": "text",
+          "id": "subtext_style",
+          "label": "Subtext Style",
+          "default": "b2"
+        },
+        {
+          "type": "text",
+          "id": "button_style",
+          "label": "Button Style",
+          "default": "button-tertiary"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "product_reviews",
+      "name": "Product Reviews",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_count",
+          "label": "Show Count"
+        },
+        {
+          "type": "select",
+          "id": "reviews_system",
+          "label": "Reviews System",
+            "options": [
+                {
+                    "value": "reviews_io",
+                    "label": "Reviews.io"
+                }
+            ]
+        },
+        {
+          "type": "text",
+          "id": "anchor_id",
+          "label": "Anchor ID",
+          "info": "This is the ID of the element you want to scroll to"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "payment_icons",
+      "name": "Product Payments",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "payment_image",
+          "label": "Payment Image"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Product Price",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Discounts"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_discount_percentage",
+          "label": "Show Percentage",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "selling_propositions",
+      "name": "Selling Propositions",
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+          "type": "select",
+          "id": "group_width",
+          "label": "Group Width",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "half",
+              "label": "Half"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "split_payments",
+      "name": "Split Payments",
+      "settings": [
+        {
+          "type": "text",
+          "id": "selector_id",
+          "label": "Selector ID"
+        },
+        {
+          "type": "text",
+          "id": "payments_text",
+          "label": "Payments Text",
+          "default": "or four payments of {price} with Afterpay or Klarna"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+          "type": "select",
+          "id": "group_width",
+          "label": "Group Width",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "half",
+              "label": "Half"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "size_guide",
+      "name": "Size Guide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "selector_id",
+          "label": "Selector ID"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_kiwi_size_app",
+          "label": "Use Kiwi Size App",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Size Guide"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "selling_plan",
+      "name": "Selling Plan",
+      "settings": [
+        {
+          "type": "text",
+          "id": "selector_id",
+          "label": "Selector ID"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Size Guide"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": [
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+          "type": "range",
+          "id": "margin_y_desktop",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Top/Bottom Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_y_mobile",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Top/Bottom Mobile",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "product_tag",
+      "name": "Product Tag",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Tag Details"
+        },
+        {
+          "type": "text",
+          "id": "tag_name",
+          "label": "Tag Name"
+        },
+        {
+          "type": "text",
+          "id": "tag_delimiter",
+          "label": "Tag Delimiter",
+          "info": "What is used to split the tag"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "product_breadcrumbs",
+      "name": "Product Breadcrumbs",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Breadcrumb Details"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "swatches",
+      "name": "Product Swatches",
+      "settings": [
+      {
+        "type": "text",
+        "id": "swatch_name",
+        "label": "Swatch Name",
+        "default": "Colour"
+      },
+      {
+        "type": "text",
+        "id": "swatch_name_style",
+        "label": "Swatch Name Style",
+        "default": "bfb"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_name",
+        "label": "Show Current Swatch Name",
+        "default": true,
+        "info": "Show the current swatch name next to swatch title"
+      },
+        {
+          "type": "paragraph",
+          "content": "Data Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_variants",
+          "label": "Use Variants",
+          "default": true
+        },
+        {
+          "type": "paragraph",
+          "content": "METAFIELDS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_metafields",
+          "label": "Use Metafields",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "metafield_name",
+          "label": "Metafield Name"
+        },
+        {
+          "type": "paragraph",
+          "content": "TAGS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_tags",
+          "label": "Use Tags",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag_name",
+          "label": "Tag Name"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Product Additional Info",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "General Settings"
+        },
+        {
+          "type": "number",
+          "id": "icon_sizes",
+          "label": "Icon Sizes",
+          "default": 24
+        },
+        {
+          "type": "paragraph",
+          "content": "1st Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_1",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_1",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_1",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "2nd Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_2",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_2",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_2",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "3rd Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_3",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_3",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_3",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "4th Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_4",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_4",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_4",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "5th Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_5",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_5",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_5",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "6th Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_6",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_6",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_6",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "paragraph",
+          "content": "7th Info Tab"
+        },
+        {
+          "type": "text",
+          "id": "additional_info_7",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_content_7",
+          "label": "Additional Info Content"
+        },
+        {
+          "type": "image_picker",
+          "id": "additional_icon_7",
+          "label": "Additional Info Title"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "product_title",
+      "name": "Product Title",
+      "settings": [
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "select",
+          "id": "heading_type",
+          "options": [
+            {
+              "value": "h1",
+              "label": "Heading 1"
+            },
+            {
+              "value": "h2",
+              "label": "Heading 2"
+            },
+            {
+              "value": "h3",
+              "label": "Heading 3"
+            },
+            {
+              "value": "h4",
+              "label": "Heading 4"
+            },
+            {
+              "value": "h5",
+              "label": "Heading 5"
+            }
+          ],
+          "default": "h2",
+          "label": "Heading Type",
+          "info": "Title Heading Type"
+        },
+        {
+          "type": "text",
+          "id": "mobile_class",
+          "label": "Mobile Heading Classes"
+        },
+        {
+          "type": "range",
+          "id": "margin_top_desktop",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Top Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_top_mobile",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Top Mobile",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_desktop",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Bottom Desktop",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "margin_bottom_mobile",
+          "min": 0,
+          "max": 50,
+          "step": 2,
+          "unit": "px",
+          "label": "Margin Bottom Mobile",
+          "default": 0
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "product_labels",
+      "name": "Product Labels",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "TAGS"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_tags",
+          "label": "Use Tags",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "tag_name",
+          "label": "Tag Name"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "find_in_store",
+      "name": "Find in Store",
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "product_vendor",
+      "name": "Vendor",
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Stock Status",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_indicator",
+          "label": "Toggle Indicator",
+          "default": false
+        },
+        {
+          "type": "select",
+          "label": "Indicator Display",
+          "id": "indicator_display_type",
+          "options": [
+            {
+              "label": "Next to text",
+              "value": "inline"
+            },
+            {
+              "label": "Above text",
+              "value": "block"
+            }
+          ],
+          "default": "inline"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "Variant Selector",
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Render Settings"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_option_1",
+          "label": "Show option 1",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_option_2",
+          "label": "Show option 2",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_color_as_swatches",
+          "label": "Show colors as swatches",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "set_first_option_default",
+          "label": "Set First Options Default",
+          "default": false
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "inventory",
+      "name": "Quantity",
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "add",
+      "name": "Add to Cart",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Add to Cart"
+        },
+        {
+          "type": "text",
+          "id": "disabled_text",
+          "label": "Disabled Button Text",
+          "default": "Not Available"
+        },
+        {
+          "type": "text",
+          "id": "adding_message",
+          "label": "Adding to Cart Button Text",
+          "default": "Adding to cart..."
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "label": "Button Style",
+          "options": [
+            {
+              "label": "Outline",
+              "value": "button-outline"
+            },
+            {
+              "label": "Primary",
+              "value": "button-primary"
+            },
+            {
+              "label": "Secondary",
+              "value": "button-secondary"
+            },
+            {
+              "label": "Outline Light",
+              "value": "button-outline-light"
+            }
+          ],
+          "default": "button-primary"
+        },
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+        {
+            "type": "select",
+            "id": "group_width",
+            "label": "Group Width",
+            "options": [
+                {
+                    "value": "full",
+                    "label": "Full"
+                },
+                {
+                    "value": "half",
+                    "label": "Half"
+                }
+            ]
+        }
+      ]
+    },
+    {
+      "type": "error",
+      "name": "Add to Cart Errors",
+      "settings": [
+        {
+          "type": "text",
+          "id": "group",
+          "label": "Group",
+          "info": "Use this to group blocks together"
+        },
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product detail settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "radio",
+      "id": "picker_type",
+      "label": "Variant Picker Type",
+      "options": [
+      {
+        "value": "swatches",
+        "label": "Swatches"
+      },
+        {
+          "value": "radio",
+          "label": "Radio Buttons"
+        }, {
+          "value": "select",
+          "label": "Select Dropdowns"
+        }
+      ],
+      "default": "radio"
+    },
+    {
+      "type": "header",
+      "content": "Gallery settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_lazy_load",
+      "label": "Enable Lazy Load",
+      "default": true,
+      "info": "Lazy load images as they enter the viewport, if your images are above the fold, then recommend to turn this off"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_arrows",
+      "label": "Show Navigation Arrows (Desktop)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation_arrows_mobile",
+      "label": "Show Navigation Arrows (Mobile)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails",
+      "label": "Show Thumbnails (Desktop)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_thumbnails_mobile",
+      "label": "Show Thumbnails (Mobile)",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators",
+      "label": "Show Indicators",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_indicators_mobile",
+      "label": "Show Indicators (Mobile)",
+      "default": false
+    },
+    {
+      "type": "radio",
+      "id": "gallery_type",
+      "label": "Gallery Type",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        },
+        {
+          "value": "tiled",
+          "label": "Tiled"
+        },
+        {
+          "value": "thumbnail",
+          "label": "Thumbnail"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "radio",
+      "id": "gallery_type_mobile",
+      "label": "Gallery Type (Mobile)",
+      "options": [
+        {
+          "value": "stacked",
+          "label": "Stacked"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        },
+        {
+          "value": "tiled",
+          "label": "Tiled"
+        },
+        {
+          "value": "thumbnail",
+          "label": "Thumbnail"
+        }
+      ],
+      "default": "carousel"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Product Layout",
+      "options": [
+        {
+          "value": "default-pdp container",
+          "label": "Default"
+        },
+        {
+          "value": "full-page-pdp",
+          "label": "Full Page PDP"
+        }
+      ],
+      "default": "default-pdp container"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ]
+}
+{% endschema %}

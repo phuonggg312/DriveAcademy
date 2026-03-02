@@ -1,0 +1,147 @@
+/* Grid Layout */
+.orders__grid {
+  @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3;
+
+  /* Order Card */
+  .orders__card {
+    @apply bg-white border border-gray-200 rounded-lg shadow-sm p-6 flex flex-col justify-between;
+  }
+
+  /* Order Header */
+  .orders__header {
+    @apply flex justify-between items-center mb-4 bg-[#F5F5F5] rounded-[8px] p-[8px] lg:p-[16px];
+  }
+
+  .orders__date {
+    @apply text-gray-500 text-sm;
+  }
+
+  /* Products Grid */
+  .orders__products {
+    @apply grid grid-cols-2 gap-2 mb-4;
+  }
+
+  .orders__product-image {
+    @apply w-full h-auto object-cover rounded-md;
+  }
+
+  .orders__more {
+    @apply flex items-center justify-center bg-gray-100 text-gray-600 rounded-md;
+  }
+
+  /* Order Details */
+  .orders__details {
+    @apply flex flex-col  space-y-[16px];
+  }
+
+  .orders__items {
+    @apply font-semibold;
+  }
+
+  .orders__number,
+  .orders__address,
+  .orders__total {
+    @apply mb-1;
+  }
+
+  .orders__total {
+    @apply font-semibold text-lg mt-2;
+  }
+
+  /* Action Buttons */
+  .orders__actions {
+    @apply flex space-x-4;
+  }
+}
+
+/* Order Details Grid Layout */
+.order-details__grid {
+  @apply grid grid-cols-1 gap-4 lg:grid-cols-4;
+}
+
+/* Section Styling */
+.order-details__section {
+  @apply bg-white p-4 rounded-lg;
+}
+
+/* Header Styling */
+.order-details__header {
+  @apply mb-2;
+}
+
+/* Date, Tracking, and Payment Information */
+.order-details__date,
+.order-details__tracking,
+.order-details__payment-method {
+  @apply text-sm mb-2;
+}
+
+/* Links Styling */
+.order-details__tracking-link,
+.order-details__contact-link {
+  @apply hover:underline;
+}
+
+/* Info Blocks */
+.order-details__info-block {
+  @apply mb-4;
+}
+
+.order-details__info-label {
+}
+
+.order-details__info-value {
+}
+
+/* Product Styling */
+.order-details__product {
+  @apply flex mb-4;
+}
+
+.order-details__product-image {
+  @apply w-16 h-16 object-cover rounded-md;
+}
+
+.order-details__product-info {
+  @apply ml-4;
+}
+
+.order-details__product-title {
+}
+
+.order-details__product-variant,
+.order-details__product-quantity {
+  @apply text-sm;
+}
+
+.order-details__product-price {
+  @apply flex items-baseline space-x-2;
+}
+
+.order-details__product-price--original {
+  @apply line-through;
+}
+
+.order-details__product-price--final {
+}
+
+/* Subtotals */
+.order-details__subtotals {
+  @apply flex flex-col;
+}
+
+.order-details__subtotal,
+.order-details__total-savings,
+.order-details__shipping,
+.order-details__taxes,
+.order-details__total {
+  @apply text-sm;
+}
+
+.order-details__total-savings {
+  @apply text-pink-600; /* Adjusted color for Total Savings */
+}
+
+.order-details__total {
+  @apply font-semibold;
+}

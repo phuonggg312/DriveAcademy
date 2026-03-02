@@ -1,0 +1,79 @@
+{
+      id
+      title
+      handle
+      tags
+      productType
+      createdAt
+      totalInventory
+      vendor
+      metafields: metafields(identifiers: [
+        { namespace: "information", key: "sub_title" },
+        { namespace: "information", key: "material" },
+        { namespace: "information", key: "age_group" },
+        { namespace: "information", key: "experience_level" },
+        { namespace: "information", key: "ride_type" },
+        { namespace: "information", key: "category" },
+        { namespace: "information", key: "sub_category" },
+        { namespace: "information", key: "year" },
+        { namespace: "information", key: "range" },
+        { namespace: "information", key: "model" },
+        { namespace: "information", key: "product_spec_sheet" },
+        { namespace: "information", key: "custom_badges" },
+        { namespace: "information", key: "14_day_return" },
+        { namespace: "information", key: "free_pro_build" },
+        { namespace: "information", key: "warranty_type" },
+        { namespace: "components", key: "wheel_size" },
+        { namespace: "components", key: "geometry" },
+        { namespace: "components", key: "specifications" }
+        { namespace: "stamped", key: "badge" }
+      ]) {
+        key
+        namespace
+        value
+      }
+      options {
+        name,
+        values
+      }
+      featuredImage {
+        altText
+        url
+      }
+      isGiftCard
+      images(first: 2) {
+        edges {
+          node {
+            altText
+            url
+          }
+        }
+      }
+      priceRange {
+        maxVariantPrice {
+          amount
+        }
+        minVariantPrice {
+          amount
+        }
+      }
+      variants(first: 100) {
+        edges {
+          node {
+            id
+            availableForSale
+            sku
+            selectedOptions {
+              value
+            }
+            compareAtPrice {
+              amount
+            }
+            image {
+              altText
+              url
+            }
+          }
+        }
+      }
+}

@@ -1,0 +1,19 @@
+.view-more {
+    @apply flex flex-col items-center justify-center mt-[64px] md:mt-[48px];
+
+    &__text {
+        @apply mb-2 text-[#54565A];
+    }
+
+    &__progress-bar {
+        @apply md:max-w-[406px] w-full h-0.5 bg-[#ECEBEB] mb-6;
+
+        &-marker {
+            @apply h-0.5 bg-[#BBBBBD];
+        }
+    }
+
+    &__button {
+        @apply button w-full lg:w-auto;
+    }
+}

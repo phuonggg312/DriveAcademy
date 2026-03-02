@@ -1,0 +1,104 @@
+.collection {
+    .active-facets {
+        @apply hidden;
+    }
+
+    &-breadcrumbs {
+        @apply hidden lg:flex items-center;
+    }
+}
+
+
+.collection-header-without-image {
+    &__title {
+        @apply overflow-hidden;
+
+        &:before, &:after {
+            @apply lg:content-[''] bg-[#CCC] inline-block h-[1px] relative align-baseline w-1/2;
+        }
+
+        &:before {
+            @apply -ml-[50%] right-4;
+        }
+
+        &:after {
+            @apply -mr-[50%] left-4;
+        }
+    }
+}
+
+.collection-header__with-image {
+    &__title {
+
+    }
+}
+
+
+.featured-product-grid .pagination-nav {
+    margin-top: 40px;
+}
+
+.featured-product-grid .pagination-nav .pagination {
+    display: flex;
+    gap: 10px;
+    margin: auto;
+    max-width: max-content;
+}
+
+.list-collections h1 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.list-collections {
+    padding: 20px;
+}
+
+.list-collections .pagination-nav {
+    margin-top: 40px;
+}
+
+.list-collections .pagination-nav .pagination {
+    display: flex;
+    gap: 10px;
+    margin: auto;
+    max-width: max-content;
+}
+
+.collection-category-banner {
+    @apply overflow-x-auto relative w-full flex text-center lg:items-center lg:justify-center;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    & {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+
+    &__blocks {
+        @apply flex flex-row lg:px-0;
+
+        .category-block {
+            @apply w-full hover:no-underline lg:border-b border-b-transparent hover:border-[#54565A];
+
+            &__image-wrapper {
+                @apply relative w-full;
+
+                .category-image__overlay {
+                    @apply absolute inset-0 w-[calc(100%-32px)] h-[calc(100%-32px)] hidden border border-white m-4;
+                }
+            }
+
+            &:hover {
+                .category-image__overlay {
+                    @apply lg:block;
+                }
+            }
+
+            &__content {
+                @apply font-medium;
+            }
+        }
+    }
+}

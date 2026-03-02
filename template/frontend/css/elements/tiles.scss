@@ -1,0 +1,27 @@
+.tileitem {
+  @apply items-end relative grid;
+  height: inherit;
+  max-height: inherit;
+
+  .tile__info {
+    @apply flex flex-col space-y-2;
+    .button.text-only {
+      @apply border-0;
+
+      .button__label {
+        @apply no-underline;
+      }
+
+      .button__icon {
+        @apply text-xl;
+      }
+
+      &:hover {
+        .button__label {
+          @apply underline;
+        }
+      }
+    }
+  }
+
+}

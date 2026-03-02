@@ -1,0 +1,58 @@
+.quick-add {
+  &__container {
+    @apply flex flex-col space-y-[8px] px-[21px] py-[24px] border border-[#FCF9F3] bg-white rounded-[24px];
+  }
+
+  &__header {
+    // Additional styles can be added here if needed
+  }
+
+  &__product-list {
+    // Additional styles can be added here if needed
+  }
+
+  &__product-item {
+    @apply flex flex-col space-y-[16px] bg-[#FCF9F3] py-[12px] px-[12px];
+
+    &-image {
+      @apply w-[114px] h-[136px] object-cover rounded-lg;
+    }
+
+    &-details {
+      @apply px-[19px] flex-1;
+
+      &-tag {
+        @apply flex items-center justify-between;
+
+        span {
+          @apply b3 bg-[#2C4E5E] px-[7.5px] py-[2.5px] rounded-[20px] text-white;
+        }
+      }
+
+      &-title {
+        @apply b2;
+      }
+
+      &-prices {
+        @apply flex items-center;
+
+        .line-through {
+          @apply b3;
+        }
+
+        span {
+          @apply b3;
+        }
+      }
+    }
+    &__form {
+      @apply w-full;
+
+      .button {
+        @apply w-full;
+
+        // Additional styles can be added here based on `block.button_style`
+      }
+    }
+  }
+}

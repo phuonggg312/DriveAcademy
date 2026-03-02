@@ -1,0 +1,221 @@
+{% assign show_table = false %}
+
+<div class="account-content-area">
+    {% if show_table %}
+
+        {% paginate customer.orders by 20 %}
+            {%- if customer.orders.size > 0 -%}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full mt-[24px]">
+                        <caption class="sr-only">{{ 'customer.orders.title' | t }}</caption>
+                        <thead class="bg-white border-b-2 border-b-black hidden lg:table-caption">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left b3 font-normal">Order ID</th>
+                            <th scope="col" class="px-6 py-3 text-left b3 font-normal">Payment Date</th>
+                            <th scope="col" class="px-6 py-3 text-left b3 font-normal">Payment Method</th>
+                            <th scope="col" class="px-6 py-3 text-left b3 font-normal">Amount</th>
+                            <th scope="col" class="px-6 py-3 text-left b3 font-normal">Status</th>
+                            <th scope="col" class="px-6 py-3"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-black">
+                        {%- for order in customer.orders -%}
+                            <tr class="lg:table-row flex flex-col lg:flex-row border-none lg:border-b-2 lg:border-b-[#ECEBEB]">
+                                <td class="px-6 py-4 whitespace-nowrap b3 border-b-2 border-b-gray-100 lg:border-none flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3">Order ID</span>
+                                    <a href="{{ order.customer_url }}" class="b3" aria-label="{{ 'customer.orders.order_number_link' | t: number: order.name }}">
+                                        {{ order.name }}
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap b3 border-b-2 border-b-gray-100 lg:border-none flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3">Payment Date</span>
+                                    {{ order.created_at | time_tag: format: 'date' }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap b3 border-b-2 border-b-gray-100 lg:border-none flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3">Payment Method</span>
+                                    {{ order.transactions[0].gateway_display_name }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap b3 border-b-2 border-b-gray-100 lg:border-none flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3">Amount</span>
+                                    {{ order.total_price | money_with_currency }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap b3 border-b-2 border-b-gray-100 lg:border-none flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3">Status</span>
+                                    {%- if order.fulfillment_status == 'complete' -%}
+                                        <div class="text-[#36573B]">Delivered</div>
+                                    {%- elsif order.fulfillment_status == 'partial' -%}
+                                        <div class="text-[#FA700C]">Partially Delivered</div>
+                                    {%- elsif order.financial_status == 'refunded' or order.financial_status == 'voided' or order.financial_status == 'expired' -%}
+                                        <div class="text-[#D12727]">Cancelled</div>
+                                    {%- elsif order.fulfillment_status == 'fulfilled' or order.fulfillment_status == 'unfulfilled' -%}
+                                        <div class="text-[#FA700C]">In Process</div>
+                                    {%- else -%}
+                                        {{ order.fulfillment_status_label }}
+                                    {%- endif -%}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right b3 border-b-2 border-b-gray-100 lg:border-none  flex justify-between lg:table-cell">
+                                    <span class="lg:hidden b3"></span>
+                                    <a href="{{ order.customer_url }}" class="text-[#00263E] underline">View details</a>
+                                </td>
+                            </tr>
+                        {%- endfor -%}
+                        </tbody>
+                    </table>
+                </div>
+            {%- else -%}
+            {% render 'account-orders-empty' %}
+            {%- endif -%}
+
+            {%- if paginate.pages > 1 -%}
+                {%- if paginate.parts.size > 0 -%}
+                    <nav class="mt-4 flex justify-center" role="navigation" aria-label="{{ 'general.pagination.label' | t }}">
+                        <ul class="inline-flex items-center -space-x-px">
+                            {%- if paginate.previous -%}
+                                <li>
+                                    <a href="{{ paginate.previous.url }}" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700" aria-label="{{ 'general.pagination.previous' | t }}">
+                                        <svg class="w-5 h-5" aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                            {%- endif -%}
+
+                            {%- for part in paginate.parts -%}
+                                <li>
+                                    {%- if part.is_link -%}
+                                        <a href="{{ part.url }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</a>
+                                    {%- else -%}
+                                        {%- if part.title == paginate.current_page -%}
+                                            <span class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300" aria-current="page" aria-label="{{ 'general.pagination.page' | t: number: part.title }}">{{ part.title }}</span>
+                                        {%- else -%}
+                                            <span class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300">{{ part.title }}</span>
+                                        {%- endif -%}
+                                    {%- endif -%}
+                                </li>
+                            {%- endfor -%}
+
+                            {%- if paginate.next -%}
+                                <li>
+                                    <a href="{{ paginate.next.url }}" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700" aria-label="{{ 'general.pagination.next' | t }}">
+                                        <svg class="w-5 h-5" aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"></path>
+                                        </svg>
+                                    </a>
+                                </li>
+                            {%- endif -%}
+                        </ul>
+                    </nav>
+                {%- endif -%}
+            {%- endif -%}
+        {% endpaginate %}
+    {% else %}
+        <div class="orders orders__grid">
+
+        {% paginate customer.orders by 20 %}
+            {%- if customer.orders.size > 0 -%}
+                {% for order in customer.orders %}
+                    <div class="orders__card space-y-[24px]">
+                        <div>
+                            <!-- Order Status and Date -->
+                            <div class="orders__header mb-2">
+                                <div class="orders__status b3">{{ order.fulfillment_status_label }}</div>
+                                <div class="orders__date">Updated {{ order.created_at | date: "%b %d" }}</div>
+                            </div>
+
+                            {%- assign grid_class = 'has-one' -%}
+                            {%- if order.item_count > 1 -%}
+                                {%- assign grid_class = '' -%}
+                            {%- endif -%}
+
+                            <!-- Product Grid -->
+                            <div class="orders__products {{ grid_class }}">
+                                {% for product in order.line_items limit: 3 %}
+                                    <div class="orders__product">
+                                        <img src="{{ product.image | img_url:'400x' }}" alt="{{ product.title }}" class="orders__product-image">
+                                    </div>
+                                {% endfor %}
+
+                                {% if order.item_count > 3 %}
+                                    <div class="orders__more">
+                                        <span class="sh1">
+                                            +{{ order.item_count | minus: 3 }}
+                                        </span>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Order Details -->
+                        <div class="orders__details">
+                            <div class="orders__info">
+                                <div class="orders__items">{{ order.item_count }} Items</div>
+                                <div class="orders__number text-black-50">Order {{ order.name }}</div>
+                            </div>
+
+                            <div class="orders__address">{{ order.customer.name }}<br>{{ order.shipping_address.address1 }}, {{ order.shipping_address.city }}</div>
+                            <div class="orders__total">{{ order.total_price | money }}</div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div x-data="rebuy" class="orders__actions">
+                            {% assign order_products = "" %}
+
+                            {% if customer %}
+                                {% assign order_products = order.line_items %}
+                            {% endif %}
+                            {% capture order_products_json %}
+                                [
+                                {% for line_item in order.line_items %}
+                                    {
+                                    "quantity": {{ line_item.quantity }},
+                                    {% if line_item.variant_id %}"id": {{ line_item.variant_id }}{% endif %}
+                                    }{% unless forloop.last %},{% endunless %}
+                                {% endfor %}
+                                ]
+                            {% endcapture %}
+
+                            {% assign order_products_available = true %}
+
+                            {% for line_item in order.line_items %}
+
+                                {% if line_item.variant_id == blank %}
+                                    {% assign order_products_available = false %}
+                                {% endif %}
+
+                                {% assign product = all_products[line_item.product.handle] %}
+
+                                {% if product %}
+                                    {% if product.available %}
+                                    {% else %}
+                                        {% assign order_products_available = false %}
+                                    {% endif %}
+                                {% else %}
+                                    {% assign order_products_available = false %}
+                                {% endif %}
+                            {% endfor %}
+
+
+                            {% comment %} <button id="reorder-button"
+                                    {% if order_products_available %}
+                                        class="orders__action orders__action--buy-again button button-tertiary flex-1"
+                                        x-on:click=" const products = {{ order_products_json |   escape  | replace: "'", "&#39;" }};
+                                        rebuyOrder(products);"
+                                    {% else %}
+                                        class="orders__action orders__action--buy-again button button-tertiary flex-1 "
+                                        disabled
+                                    {% endif %}
+                             >
+                                Buy Again
+                            </button> {% endcomment %}
+                            <a href="{{ order.customer_url }}" class="orders__action orders__action--manage-order button button-primary flex-1">Manage Order</a>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            {%- else -%}
+                {% render 'account-orders-empty' %}
+            {%- endif -%}
+        {% endpaginate %}
+    {% endif %}
+</div>
+

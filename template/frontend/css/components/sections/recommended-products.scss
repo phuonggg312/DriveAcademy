@@ -1,0 +1,10 @@
+.recommendedproducts {
+  @apply py-8;
+  .recommendedproducts__header {
+    @apply text-center font-light;
+  }
+}
+.recommendedproducts__container {
+  @apply flex overflow-x-auto gap-4;
+}
+

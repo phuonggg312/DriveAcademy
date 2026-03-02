@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-account-login",
+      "settings": {
+        "layout_type": "default",
+        "color_schema": "scheme-a4c0d479-abef-44ac-9e6e-5b9c50c1d49d",
+        "title": "LOG IN",
+        "heading_font_class": "h3",
+        "image_width": 108,
+        "description": "",
+        "description_font_class": "b3",
+        "description_font_class_mobile": "b3",
+        "content_width": "400",
+        "incorrect_details_message": "<p>Oops those details don't seem right! <br/></p>",
+        "success_message": "Login successful!",
+        "password_reset_success_message": "A request to reset your password has been sent to your email. Please follow instructions on the email to reset your password.",
+        "padding_top_desktop": 164,
+        "padding_bottom_desktop": 164,
+        "padding_left_right_desktop": 32,
+        "padding_top_mobile": 32,
+        "padding_bottom_mobile": 32,
+        "padding_left_right_mobile": 16
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

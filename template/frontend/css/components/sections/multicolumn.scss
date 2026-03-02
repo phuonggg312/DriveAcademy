@@ -1,0 +1,33 @@
+.multicolumn {
+  .carousel {
+    @apply flex w-full;
+  }
+
+  .multicolumn-content-top {
+    @apply w-full lg:w-[700px] my-[16px];
+  }
+}
+
+/* MULTICOLUMN - WIDE IMAGE */
+.multicolumn-wide {
+  img {
+    @apply w-full rounded-none;
+  }
+}
+
+.tile-info {
+  @apply z-10;
+}
+
+.grid-item {
+  .grid-item-tile,
+  .tile-item {
+    height: inherit;
+    max-height: inherit;
+  }
+}
+
+.image-container {
+  @apply flex justify-center items-center w-full;
+  height: inherit; /* Custom height */
+}

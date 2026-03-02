@@ -1,0 +1,23 @@
+.search {
+  .active-facets {
+    @apply hidden;
+  }
+
+  &-breadcrumbs {
+    @apply hidden lg:flex items-center;
+  }
+
+  &-header {
+    &__title {
+      @apply overflow-hidden;
+
+      &:before {
+        @apply -ml-[50%] right-4;
+      }
+
+      &:after {
+        @apply -mr-[50%] left-4;
+      }
+    }
+  }
+}

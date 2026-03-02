@@ -1,0 +1,57 @@
+/* TAILWIND BASE AND GENERAL */
+@import "tailwindcss/base";
+@import "../css/general/_variables.scss";
+@import "../css/general/base.scss";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "../css/general/global.scss";
+@import "../css/general/styleguide.scss";
+@import "../css/utility/typography.scss";
+
+/* UTILITY */
+@import "../css/utility/_utilities.scss";
+
+/* ELEMENTS */
+@import "../css/elements/_elements.scss";
+
+/* NAVIGATION */
+@import "../css/components/navigation/_navigation.scss";
+
+/* ACCOUNT */
+@import "../css/components/account/_account.scss";
+
+/* COMPONENTS */
+@import "../css/components/carousels/_carousels.scss";
+
+/* PRODUCT */
+@import "../css/components/product/_product.scss";
+
+/* COLLECTION & SEARCH */
+@import "../css/components/collections/_collections.scss";
+@import "../css/components/search/search.scss";
+
+/* CART & LISTS */
+@import "../css/components/wishlist/wishlist.scss";
+@import "../css/components/cart/cart.scss";
+@import "../css/components/minicart/minicart.scss";
+
+/* REVIEWS */
+@import "../css/components/reviews/reviews.scss";
+
+/* SECTIONS */
+@import "../css/components/sections/_sections.scss";
+
+/* BLOGS */
+@import "../css/components/blogs/_blogs.scss";
+
+/* VENDORS */
+@import "../css/vendors/icomoon.scss";
+@import '../css/vendors/swiper.scss';
+
+/* CUSTOM */
+@import "../css/custom.scss";
+
+/* SHOPIFY */
+#preview-bar-iframe {
+  display: none;
+}

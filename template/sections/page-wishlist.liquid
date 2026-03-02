@@ -1,0 +1,59 @@
+<div class="page__section-container container"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+    <div class="w-full h-full">
+        <div>{{ page.content }}</div>
+
+        <div class="wishlist-container {{ settings.reveal_animation_class }}">
+            {% if customer %}
+                Hello, {{ customer.first_name }}!
+                <br />
+            {% endif %}
+
+            <div x-show="$store.wishlist.products.length > 0" class="py-2">
+                Below are items that you've added to your wishlist
+            </div>
+
+            <div class="wishlist-items py-2" x-init="await ($store.wishlist.getMetaObject('{{ customer.metafields.custom.wishlist }}'))">
+                <div class="my-4 grid grid-cols-4">
+                    <template x-for="product in $store.wishlist.products">
+                        <li class="wishlist-item">
+                            <a :href="product.url">
+                                <img :src="product.featuredImage?.src"/>
+                                <div class="font-bold" x-text="product.title"></div>
+                                <div class="text-sm" x-text="product.price_calculated"></div>
+                            </a>
+
+                            <button class="bg-black text-white p-2 w-full"
+                                    x-on:click="await ($store.wishlist.removeFromWishlist(product.id))">
+                                Remove from Wishlist
+                            </button>
+                        </li>
+                    </template>
+                </div>
+
+                <div x-show="$store.wishlist.products.length <= 0">
+                    There are no products in your wishlist.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wishlist",
+  "class": "wishlist-main",
+  "templates": ["page"],
+  "tag": "section",
+  "settings": [
+
+  ],
+  "presets": [
+    {
+      "name": "Wishlist"
+    }
+  ]
+}
+{% endschema %}

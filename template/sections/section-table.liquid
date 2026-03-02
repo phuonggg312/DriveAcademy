@@ -1,0 +1,215 @@
+<div class="{{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }}">
+  <div class="section-table section-table-{{ section.id }} relative {{ settings.reveal_animation_class }}"
+       x-data="section({{ section.settings | json | escape }})"
+       :class="classes"
+  >
+    <div class="{{ section.settings.container_type }}">
+      <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] border-t border-black">
+        {% include 'react-props' %}
+          <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__section-table", props: data %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Table",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Table Header"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_table_headers",
+      "label": "Show Table Headers",
+      "default": true,
+      "info": "This will display the table headers."
+    },
+    {
+      "type": "text",
+      "id": "table_header_label",
+      "label": "Header Label",
+      "default": "Label",
+      "info": "This will display the table header label."
+    },
+    {
+      "type": "text",
+      "id": "table_header_link",
+      "label": "Header Link",
+      "default": "Link",
+      "info": "This will display the table header link."
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment",
+      "info": "This will align the content inside the section."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "label",
+      "name": "Table Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "row_label",
+          "label": "Row Label",
+          "default": "Label"
+        },
+        {
+          "type": "text",
+          "id": "row_link_label",
+          "label": "Row Link Label",
+          "default": "Link"
+        },
+        {
+          "type": "url",
+          "id": "row_link_url",
+          "label": "Row Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Table"
+    }
+  ]
+}
+{% endschema %}

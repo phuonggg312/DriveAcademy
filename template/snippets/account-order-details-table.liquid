@@ -1,0 +1,135 @@
+<div class="account-content-area">
+
+    <div class="flex justify-between items-center mb-[8px]">
+        <h2 class="b1">{{ 'customer.order.title' | t: name: order.name }}</h2>
+        <span class="order-status">
+            {%- if order.fulfillment_status == 'complete' -%}
+                <div class="text-[#36573B]">Delivered</div>
+            {%- elsif order.fulfillment_status == 'partial' -%}
+                <div class="text-[#FA700C]">Partially Delivered</div>
+            {%- elsif order.financial_status == 'refunded' or order.financial_status == 'voided' or order.financial_status == 'expired' -%}
+                <div class="text-[#D12727]">Cancelled</div>
+            {%- elsif order.fulfillment_status == 'fulfilled' or order.fulfillment_status == 'unfulfilled' -%}
+                <div class="text-[#FA700C]">In Process</div>
+            {%- else -%}
+                {{ order.fulfillment_status_label }}
+            {%- endif -%}
+        </span>
+    </div>
+    <p class="bc">{{ order.created_at | time_tag: format: 'date_at_time' }}</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6 mt-[40px]">
+        <div class="border p-4">
+            <h4 class="bc">SHIPPING ADDRESS</h4>
+            <p>{{ order.shipping_address.name }}</p>
+            <p>{{ order.shipping_address.address1 }}</p>
+            <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province }} {{ order.shipping_address.zip }}</p>
+            <p>{{ order.shipping_address.country }}</p>
+            <p>{{ order.shipping_address.phone }}</p>
+        </div>
+        <div class="border p-4">
+            <h4 class="bc">BILLING ADDRESS</h4>
+            <p>{{ order.billing_address.name }}</p>
+            <p>{{ order.billing_address.address1 }}</p>
+            <p>{{ order.billing_address.city }}, {{ order.billing_address.province }} {{ order.billing_address.zip }}</p>
+            <p>{{ order.billing_address.country }}</p>
+            <p>{{ order.billing_address.phone }}</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <div>
+            <h4 class="bc mb-[22px]">SHIPPING DETAILS</h4>
+            {% if order.shipping_methods.size > 0 %}
+                <p class="b3">{{ order.shipping_methods[0].title }}</p>
+            {% else %}
+                <p class="b3">No shipping set yet against order.</p>
+            {% endif %}
+        </div>
+        <div>
+            <h4 class="bc mb-[22px]">PAYMENT METHOD</h4>
+            <p class="b3">{{ order.transactions[0].gateway_display_name }}</p>
+        </div>
+    </div>
+
+    <h4 class="mt-[40px] mb-[28px]">Ordered Items</h4>
+    <table class="min-w-full divide-y divide-gray-200 mt-[24px] text-left lg:text-center">
+        <thead class="bg-white border-b-2 border-b-black flex lg:table-header-group">
+        <tr>
+            <th class="px-6 py-3 text-left b2 font-normal">Item <div class="lg:hidden mt-[18px]">Size</div></th>
+            <th class="px-6 py-3 text-left b2 font-normal">Description <div class="lg:hidden mt-[18px]">Quantity</div></th>
+            <th class="px-6 py-3 text-left b2 font-normal">Color <div class="lg:hidden mt-[18px]">Amount</div></th>
+            <th class="px-6 py-3 text-left b2 font-normal hidden lg:table-cell">Size</th>
+            <th class="px-6 py-3 text-left b2 font-normal hidden lg:table-cell">Quantity</th>
+            <th class="px-6 py-3 text-left b2 font-normal hidden lg:table-cell">Amount</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200 mb-[50px]">
+        {%- for line_item in order.line_items -%}
+            <tr class="my-[8px] flex lg:flex-col lg:table-row">
+                <td class="px-6 py-4 b3 text-[#54565A] flex flex-col lg:table-cell">
+                    <img src="{{ line_item.image | img_url: 'small' }}"
+                         alt="{{ line_item.title }}"
+                         class="w-16 h-16 object-cover"
+                    >
+                    <span class="lg:hidden b3 ml-4">{{ line_item.variant.option2 }}</span>
+                </td>
+                <td class="px-6 py-4 b3 text-[#54565A] flex flex-col lg:table-cell">
+                    <div>
+                        <p>{{ line_item.product.title }}</p>
+                        <p class="b3 text-[#54565A] mt-[19px]">{{ line_item.sku }}</p>
+                    </div>
+                    <span class="lg:hidden b3 ml-4">{{ line_item.quantity }}</span>
+                </td>
+                <td class="px-6 py-4 b3 text-[#54565A] flex flex-col lg:table-cell">
+                    {{ line_item.variant.option1 }}
+                    <span class="lg:hidden b3 ml-4">{{ line_item.final_price | money }}</span>
+                </td>
+                <td class="px-6 py-4 b3 text-[#54565A] flex-col hidden lg:table-cell">
+                    {{ line_item.variant.option2 }}
+                </td>
+                <td class="px-6 py-4 b3 text-[#54565A] flex-col hidden lg:table-cell">
+                    {{ line_item.quantity }}
+                </td>
+                <td class="px-6 py-4 b3 text-[#54565A] flex-col hidden lg:table-cell">
+                    {{ line_item.final_price | money }}
+                </td>
+            </tr>
+        {%- endfor -%}
+        </tbody>
+        <tfoot class="bg-white pt-[50px]">
+        <tr class="flex lg:flex-col justify-between flex-row lg:table-row">
+            <td colspan="5" class="py-2 md:py-0 text-left b1 text-[#BBBBBD] flex justify-between lg:justify-start lg:table-cell">
+                <span>Subtotal:</span>
+            </td>
+            <td class="bcp text-black px-6 py-2 text-left lg:text-right">{{ order.line_items_subtotal_price | money }}</td>
+        </tr>
+        <tr class="flex lg:flex-col justify-between flex-row lg:table-row">
+            <td colspan="5" class="py-2 md:py-0 text-left b1 text-[#BBBBBD] flex justify-between lg:justify-start lg:table-cell">
+                <span>GST:</span>
+            </td>
+            <td class="bcp text-black px-6 py-2 text-left lg:text-right">{{ order.tax_price | money }}</td>
+        </tr>
+        <tr class="flex lg:flex-col justify-between flex-row lg:table-row">
+            <td colspan="5" class="py-2 md:py-0 text-left b1 text-[#BBBBBD] flex justify-between lg:justify-start lg:table-cell">
+                <span>Shipping:</span>
+            </td>
+            <td class="bcp text-black px-6 py-2 text-left lg:text-right">
+                {% if order.shipping_price <= 0 %}
+                    FREE
+                {% else %}
+                    {{ order.shipping_price | money }}
+                {% endif %}
+            </td>
+        </tr>
+        <tr class="border-t-2 py-[4px] border-t-black lg:flex-col flex justify-between flex-row lg:table-row">
+            <td colspan="5" class="py-2 md:py-0 text-left b1 text-[#54565A] flex justify-between lg:justify-start lg:table-cell">
+                <span>Total price:</span>
+            </td>
+            <td class="bcp text-black px-6 py-2 text-left lg:text-right">{{ order.total_price | money }}</td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <a class="px-4 py-2 btn-outline button btn-link mt-[24px]" href="/account?view=orders">CLOSE</a>
+</div>

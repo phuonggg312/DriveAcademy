@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+
+# Env & secrets
+.env
+.env.*
+.dev.vars
+
+# Build / generated
+template/lib/
+*.log
+
+template/.gitignore
+template/.gitattributes
+template/.theme-check.yml
+template/.eslintrc
+template/.editorconfig
+template/.babelrc
+template/.shopifyignore

@@ -1,0 +1,305 @@
+{% assign metafield_namespace = 'ap21' %}
+{% assign provenance_metafield_key = 'provenance' %}
+{% assign performance_metafield_key = 'performance' %}
+{% assign ourimpact_metafield_key = 'ourImpact' %}
+
+{% assign provenance = null %}
+{% assign performance = null %}
+{% assign ourimpact = null %}
+
+{% assign metafields = product.metafields[metafield_namespace] %}
+
+{% if metafields %}
+  {% if metafields[provenance_metafield_key] %}
+    {% assign pdp_handle = metafields[provenance_metafield_key].value %}
+    {% assign metaobject_products = shop.metaobjects['pdp_section'].values %}
+    {% if metaobject_products %}
+      {% for entry in metaobject_products %}
+        {% if entry.pdp_handle == pdp_handle and entry.section_type == 'Provenance' %}
+          {% assign provenance = entry %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+
+  {% if metafields[performance_metafield_key] %}
+    {% assign pdp_handle = metafields[performance_metafield_key].value %}
+    {% assign metaobject_products = shop.metaobjects['pdp_section'].values %}
+    {% if metaobject_products %}
+      {% for entry in metaobject_products %}
+        {% if entry.pdp_handle == pdp_handle and entry.section_type == 'Performance' %}
+          {% assign performance = entry %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+
+  {% if metafields[ourimpact_metafield_key] %}
+    {% assign pdp_handle = metafields[ourimpact_metafield_key].value %}
+    {% assign metaobject_products = shop.metaobjects['pdp_section'].values %}
+    {% if metaobject_products %}
+      {% for entry in metaobject_products %}
+        {% if entry.pdp_handle == pdp_handle and entry.section_type == 'Our Impact' %}
+          {% assign ourimpact = entry %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+{% assign areas = 'our-impact,provenance,performance' | split: ","  %}
+
+<hr class="mt-[64px] lg:hidden"/>
+
+<div id="sustainability" class="section-cta-{{ section.id }} container">
+  <div class="tab-container {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+       x-data="section({{ section.settings | json | escape }})"
+       :class="classes"
+  >
+
+    <!-- Tabs Navigation -->
+    <div class="border-b border-gray-300 pr-[16px] hidden lg:flex">
+      {% if ourimpact %}
+      <a href="#" id="tab-our-impact" class="tab border-black text-black decoration-0 hover:no-underline p-[24px] relative top-0.5" onclick="switchTab(event, 'our-impact')"><h5>Our Impact</h5></a>
+      {% endif %}
+      {% if provenance %}
+        <a href="#" id="tab-provenance" class="tab text-gray-500 hover:text-black decoration-0 hover:no-underline p-[24px] relative top-0.5" onclick="switchTab(event, 'provenance')"><h5>Provenance</h5></a>
+      {% endif %}
+      {% if performance %}
+        <a href="#" id="tab-performance" class="tab text-gray-500 hover:text-black decoration-0 hover:no-underline p-[24px] relative top-0.5" onclick="switchTab(event, 'performance')"><h5>Performance</h5></a>
+      {% endif %}
+    </div>
+
+    <!-- Content Sections -->
+    {% for section in areas %}
+      {% if section == 'provenance' %}
+        {% assign entry = provenance %}
+      {% elsif section == 'performance' %}
+        {% assign entry = performance %}
+      {% elsif section == 'our-impact' %}
+        {% assign entry = ourimpact %}
+      {% else %}
+        {% assign entry = null %}
+      {% endif %}
+
+      <div id="{{ section }}" class="tab-content-twi grid grid-cols-1 md:grid-cols-2 gap-8 {% if entry == null %} hidden {% endif %} lg:hidden">
+        <!-- Left Column - Text Content -->
+        <div class="content py-[50px] lg:px-[16px]">
+          <h3 class="lg:hidden pb-[16px]">{{ section | replace: '-', ' ' | capitalize }}</h3>
+          <div class="lg:p-[8px]">
+            <div class="bc pb-[16px]">{{ section | replace: '-', ' ' | capitalize }}</div>
+            {% if entry %}
+              <h5 class="h5 pb-[32px] text-[#54565A]">{{ entry.description }}</h5>
+            {% else %}
+              <h5 class="h5 pb-[32px] text-[#54565A]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque.</h5>
+            {% endif %}
+          </div>
+          <div class="lg:p-[8px]">
+            {% if entry %}
+              <p class="b3 pb-[24px] text-[#54565A]">{{ entry.content }}</p>
+              {% if entry.show_button %}
+                <a href="{{ entry.button_url }}" class="button btn-primary">{{ entry.button_text }}</a>
+              {% endif %}
+            {% else %}
+              <p class="b3 pb-[24px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis.</p>
+              <a href="#" class="button btn-primary">Learn More</a>
+            {% endif %}
+          </div>
+        </div>
+        <!-- Right Column - Image Content -->
+        <div class="relative text-center">
+          {% if entry and entry.image %}
+            <img src="{{ entry.image.value | image_url: width: entry.image.width }}" alt="Impact Image" class="w-full h-full lg:h-[770px] object-cover">
+            <h3 class="absolute inset-0 flex items-center justify-center text-white p-[40px]">{{ entry.image_overlay_text }}</h3>
+          {% else %}
+            <img src="{{ 'impact_pdp.png' | file_img_url:'large' }}" alt="Impact Image" class="w-full h-full lg:h-[770px] object-cover">
+            <h3 class="absolute inset-0 flex items-center justify-center text-white p-[40px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h3>
+          {% endif %}
+        </div>
+      </div>
+      <hr class="my-[20px] lg:hidden {% if entry == null %} hidden {% endif %} "/>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  init();
+
+  function init(){
+    switchTab(null, '{{ areas[0] }}')
+  }
+  function switchTab(event, tabId) {
+    if (event){
+      event.preventDefault();
+    }
+
+    // Hide all tab contents
+    const tabContents = document.querySelectorAll('.tab-content-twi');
+    tabContents.forEach(content => {
+      content.classList.add('lg:hidden');
+    });
+
+    // Remove active classes from all tabs
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
+      tab.classList.remove('border-black', 'text-black', 'border-b-2');
+      tab.classList.add('border-white', 'border-b-2');
+      tab.classList.add('text-gray-500');
+    });
+
+    // Show the selected tab content
+    document.getElementById(tabId).classList.remove('hidden');
+    document.getElementById(tabId).classList.remove('lg:hidden');
+    document.getElementById(`tab-${tabId}`)?.classList.remove('text-gray-500');
+    document.getElementById(`tab-${tabId}`)?.classList.remove('border-white', 'border-b-2');
+    document.getElementById(tabId)?.classList.add('border-black', 'text-black');
+    document.getElementById(`tab-${tabId}`)?.classList.add('border-black', 'text-black', 'border-b-2');
+
+    // Set the active class on the selected tab
+    if (event) {
+      event.currentTarget.classList.remove('text-gray-500');
+      event.currentTarget.classList.add('border-black', 'text-black');
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Info & Accordions",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titles & Content"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "default": "default",
+      "options": [
+        {
+          "value": "default",
+          "label": "Standalone"
+        },
+        {
+          "value": "tabbed",
+          "label": "Tabbed"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Info & Accordions"
+    }
+  ]
+}
+
+{% endschema %}

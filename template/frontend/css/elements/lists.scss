@@ -1,0 +1,10 @@
+
+.page {
+  ol,
+  ul,
+  menu {
+    list-style: disc;
+    margin: initial;
+    padding: revert;
+  }
+}

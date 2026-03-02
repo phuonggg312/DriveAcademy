@@ -1,0 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "summary-message": "Taxes and shipping calculated at checkout",
+        "show_vendor": false,
+        "show_cart_note": true
+      }
+    },
+    "spacer_xHWLmP": {
+      "type": "section-spacer",
+      "settings": {
+        "use_divider_line": true,
+        "line_colour": "#e6e6e6",
+        "container_type": "container",
+        "padding_top": 12,
+        "padding_bottom": 12
+      }
+    }
+
+  },
+  "order": [
+    "main",
+    "spacer_xHWLmP"
+  ]
+}

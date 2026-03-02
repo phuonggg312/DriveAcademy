@@ -1,0 +1,376 @@
+{%- assign render_type = section.settings.render_type -%}
+{%- assign section_border = '' -%}
+
+{%- if section.settings.show_section_borders -%}
+  {%- assign section_border = 'section-border' -%}
+{%- endif -%}
+
+{% style %}
+  .marquee.section-marquee-{{ section.id }} .marquee-track {
+    gap: {{ section.settings.block_gap_mobile | default: 0 }}px;
+  }
+
+  @media (min-width: 1024px) {
+    .marquee.section-marquee-{{ section.id }} .marquee-track {
+      gap: {{ section.settings.block_gap | default: 0 }}px;
+    }
+  }
+{% endstyle %}
+<div class="{{ section.settings.custom_column_class }} {{ section_border }}">
+  <div
+    class="marquee section-marquee-{{ section.id }}
+    {{ settings.reveal_animation_class }}
+    color-{{ section.settings.color_schema }}"
+    x-data="section({{ section.settings | json | escape }})"
+    :class="classes"
+  >
+    <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }}">
+      {% include 'react-props' %}
+      <div id="react-data" data-injected-props='{{ data }}'></div>
+      {% render 'react-block', name: "theme__section-marquee", props: data  %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Marquee",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "marquee_block",
+      "name": "Marquee Block",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon",
+          "info": "Select an icon for the marquee block."
+        },
+        {
+          "type": "text",
+          "id": "icon_font",
+          "label": "Icon",
+          "info": "Icon that will be referenced from font"
+        },
+        {
+          "type": "checkbox",
+          "id": "icon_on_right",
+          "label": "Icon on right"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "info": "Enter the text for the marquee block."
+        },
+        {
+          "type": "text",
+          "id": "font_type",
+          "label": "Font Type",
+          "default": "b3",
+          "info": "Choose the font type for the marquee text on Desktop."
+        },
+        {
+          "type": "text",
+          "id": "font_type_mobile",
+          "label": "Font Type (Mobile)",
+          "default": "b4",
+          "info": "Choose the font type for the marquee text on Mobile."
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL",
+          "info": "URL for the marquee item"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Render settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "Choose when to display the marquee: on all devices, only on mobile, or only on desktop."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ],
+      "info": "Set the width of the marquee container."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme",
+      "info": "Choose a color scheme for the marquee."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "header",
+      "content": "Marquee settings"
+    },
+    {
+      "type": "range",
+      "id": "marquee_speed",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Marquee Speed",
+      "default": 50,
+      "info": "Adjust the speed of the marquee animation. (Lower is faster)"
+    },
+    {
+      "type": "select",
+      "id": "justify_setting",
+      "label": "Spacing",
+        "options": [
+            {
+                "value": "none",
+                "label": "Manual"
+            },
+            {
+                "value": "justify-between",
+                "label": "Even Spacing"
+            },
+            {
+              "value": "justify-center",
+              "label": "Centered"
+            }
+        ],
+        "default": "justify-between",
+      "info": "Use this if you want even spacing between the marquee items"
+    },
+    {
+      "type": "range",
+      "id": "render_iterations",
+      "label": "Render Iterations",
+      "min": 1,
+      "max": 5,
+      "default": 1,
+      "info": "If you want content to repeat the tiles, increase the render iterations (Max 5)"
+    },
+    {
+      "type": "number",
+      "id": "icon_sizes",
+      "label": "Icon Sizes",
+      "default": 24,
+      "info": "Size of the icons rendered"
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause on Hover",
+      "default": true,
+      "info": "If the mouse enters the marquee, will pause the scrolling."
+    },
+    {
+      "type": "checkbox",
+      "id": "marquee_play_pause",
+      "label": "Play/Pause Control",
+      "default": true,
+      "info": "Enable or disable play/pause control for the marquee."
+    },
+    {
+      "type": "checkbox",
+      "id": "marquee_play_pause_mobile",
+      "label": "Play/Pause Control (Mobile)",
+      "default": true,
+      "info": "Enable or disable play/pause control for the marquee. (Mobile)"
+    },
+    {
+      "type": "range",
+      "id": "block_gap",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Gap",
+      "default": 20,
+      "info": "Adjust the gap between each block in the marquee."
+    },
+    {
+      "type": "range",
+      "id": "block_gap_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Block Gap (Mobile)",
+      "default": 20,
+      "info": "Adjust the gap between each block in the marquee."
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0,
+      "info": "Adjust the top padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0,
+      "info": "Adjust the bottom padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0,
+      "info": "Adjust the left and right padding for desktop view."
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0,
+      "info": "Adjust the top padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0,
+      "info": "Adjust the bottom padding for mobile view."
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0,
+      "info": "Adjust the left and right padding for mobile view."
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop",
+      "info": "Set the position of the content for desktop view."
+    },
+    {
+      "type": "select",
+      "id": "content_position_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Mobile",
+      "info": "Set the position of the content for mobile view."
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee"
+    }
+  ]
+}
+{% endschema %}

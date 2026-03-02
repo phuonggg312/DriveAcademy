@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "collection_template": {
+      "empty": "Your collection is empty",
+      "use_fewer_filters_html": "Use fewer filters or <a href=\"{{ link }}\" class=\"{{ class }}\">clear all</a>"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<div class="payment-icons">
+    {% if block.settings.payments_render_type == 'store' %}
+        {% unless shop.enabled_payment_types == empty %}
+            <ul class="flex justify-center">
+                {% for type in shop.enabled_payment_types %}
+                    <li class="mr-2">
+                        {{ type | payment_type_svg_tag }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endunless %}
+    {% else %}
+        <img class="lg:ml-auto" src="{{ block.settings.payment_icons | image_url: width: block.settings.payment_icons.width }}"
+             height={{ block.settings.payment_icons.height }}
+             width={{ block.settings.payment_icons.width }} alt="payments" loading="lazy"/>
+    {% endif %}
+</div>

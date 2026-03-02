@@ -1,0 +1,12 @@
+.trackyourorder {
+  @apply py-8;
+  .trackyourorder__inputs {
+    @apply flex flex-row w-full mt-2;
+  }
+  &__details {
+    @apply flex flex-col;
+    &__container {
+      @apply slide-fade-in-element my-4;
+    }
+  }
+}

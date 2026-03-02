@@ -1,0 +1,17 @@
+@import "./product-carousels.scss";
+@import "./category-carousels.scss";
+.flickity-viewport {
+  @apply w-full;
+}
+
+.carousel-container {
+  @apply w-full block items-center justify-center relative;
+}
+.carousel-tab-link {
+  @apply px-2 text-lg uppercase font-bold tracking-widest hover:text-gray-500;
+}
+.flickity-dots-container .flickity-page-dots {
+  .dot {
+    @apply h-[8px] w-[8px];
+  }
+}

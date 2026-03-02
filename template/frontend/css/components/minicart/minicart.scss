@@ -1,0 +1,191 @@
+
+/* Minicart Styles */
+.minicart {
+  @apply w-full lg:w-[450px] flex flex-col h-auto bg-white shadow-[0_30px_130px_-8px_rgba(0,0,0,0.25)];
+
+  &-overlay {
+    @apply hidden fixed w-screen h-screen top-0 bg-[#030303] opacity-40 z-10;
+  }
+
+  &-wrapper {
+    @apply w-full md:max-w-[450px];
+    position: fixed;
+    top: 50px;
+    right: 50px;
+    z-index: 100;
+
+    @media (max-width: 576px) {
+      right: 20px;
+    }
+  }
+
+  &__info {
+    @apply font-medium text-[12px] leading-[18px] text-[#54565A] text-right mb-2;
+  }
+
+  &__totals {
+    @apply flex items-center justify-between mb-3;
+
+    .multi-line {
+      @apply items-start;
+    }
+  }
+
+  &__actions {
+    @apply flex flex-col;
+  }
+
+  &-empty {
+    &__button {
+      &:hover {
+        @apply no-underline;
+      }
+    }
+  }
+
+  .view-cart-details-link {
+    @apply flex justify-center items-center mt-5 w-full h-[43px] font-semibold bg-white border-2 border-black outline-none no-underline;
+
+    &:hover {
+      cursor: pointer;
+      @apply text-white bg-black;
+    }
+  }
+
+  .title-row {
+    @apply flex justify-between;
+
+    h2 {
+      margin: 0;
+    }
+
+    button {
+      @apply border-none bg-transparent cursor-pointer;
+
+      svg {
+        @apply block h-4;
+      }
+    }
+  }
+
+  .item {
+    @apply flex mb-2.5 py-2 lg:px-2 w-full gap-2.5;
+
+    &-details {
+      @apply flex flex-col justify-between ml-[10px];
+
+      &__title {
+        @apply mb-1;
+
+        &-product, &-colour {
+          @apply text-black;
+        }
+      }
+
+      .option-label {
+        @apply font-semibold;
+      }
+
+      .option {
+        @apply text-xs my-[2px] last:mb-0;
+      }
+
+      .price {
+        @apply justify-end;
+      }
+    }
+
+    &__image {
+      @apply w-[97px] h-auto object-cover;
+    }
+
+    &__remove {
+      @apply cursor-pointer text-[#54565A] underline;
+
+      &:hover {
+        @apply underline;
+      }
+    }
+  }
+
+  &__buttons {
+    @apply flex flex-col;
+  }
+
+  .item-count-message {
+    .minicart--item-count {
+      @apply font-semibold;
+    }
+  }
+
+  .minicart__totals .amount {
+    @apply font-semibold text-lg;
+    margin: 0;
+  }
+}
+
+/* Miscellaneous */
+.quantity-control-input {
+  @apply text-[#00263E] border-none pointer-events-none text-center bg-[#F5F5F5] h-full;
+  appearance: none !important;
+  -webkit-appearance: none;
+}
+
+.errors {
+  @apply my-2;
+}
+
+.cart_notes {
+  @apply flex flex-col gap-2;
+}
+
+#main-content,
+section {
+  @apply transition-all;
+}
+
+.minicart-open {
+  @apply overflow-y-hidden;
+
+  .shopify-section.site-minicart {
+    filter: none;
+  }
+
+  .shopify-section-group-header-group,
+  .shopify-section-group-header-group header,
+  #main-content,
+  .breadcrumbs-container {
+    // Uncomment this to apply blur
+    // @apply blur-md;
+  }
+
+  .minicart-overlay {
+    @apply lg:block;
+  }
+
+}
+
+.mobile-menu-visible {
+  overflow-y: hidden;
+}
+
+/* Drawer Styles */
+.minicart-wrapper.drawer {
+  top: 0;
+  right: 0;
+
+  .minicart {
+    height: 100dvh;
+  }
+}
+
+/* Custom Input Styling for Quantity Control */
+input[type="number"] {
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}

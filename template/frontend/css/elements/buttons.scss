@@ -1,0 +1,7 @@
+.button {
+  @apply inline-flex items-center justify-center gap-2 cursor-pointer transform-none;
+
+  &.pill-input-button {
+    @apply p-[16px];
+  }
+}

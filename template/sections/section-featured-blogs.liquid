@@ -1,0 +1,404 @@
+{% assign render_type = section.settings.render_type %}
+
+<div id="{{ section.settings.id }}" class="{{ section.settings.custom_column_class }} {% if section.settings.show_section_borders %}section-border{% endif %} color-{{ section.settings.color_schema }}">
+  <div class="section-featured-blogs-{{ section.id }} relative {% if render_type == 'mobile-only' %}flex lg:hidden{% elsif render_type == 'desktop-only' %}hidden lg:flex{% else %}flex{% endif %} {{ settings.reveal_animation_class }}
+  lg:justify-{{ section.settings.content_position_desktop }}
+    pt-[{{ section.settings.padding_top_mobile }}px]
+    lg:pt-[{{ section.settings.padding_top_desktop }}px]
+    pb-[{{ section.settings.padding_bottom_mobile }}px]
+    lg:pb-[{{ section.settings.padding_bottom_desktop }}px]
+  {% if section.settings.is_bleed_carousel_mobile %}
+    pl-[{{ section.settings.padding_left_right_mobile }}px]
+  {% else %}
+    px-[{{ section.settings.padding_left_right_mobile }}px]
+  {% endif %}
+  {% if section.settings.is_bleed_carousel %}
+    lg:pl-[{{ section.settings.padding_left_right_desktop }}px]
+    lg:pr-0
+  {% else %}
+    lg:px-[{{ section.settings.padding_left_right_desktop }}px]
+  {% endif %}
+  "
+  >
+    <div
+      class="
+        relative flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}]
+        {% if section.settings.is_bleed_carousel == false %}
+          {{ section.settings.container_type }}
+        {% endif %}
+      "
+    >
+      <div class="w-full react-node">
+        {% include 'react-props' %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__blog-articles-list", props: data %}
+      </div>
+  </div>
+</div>
+</div>
+
+{% schema %}
+{
+  "name": "Articles List",
+  "tag": "section",
+  "class": "section",
+  "blocks": [
+    {
+      "type": "article_block",
+      "name": "Article Block",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Article"
+        }
+      ]
+    },
+    {
+      "type": "content_block",
+      "name": "Content Block",
+      "settings": [
+      {
+        "type": "select",
+        "id": "position",
+        "label": "Position",
+        "default": "top",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "top",
+            "label": "Top"
+          }
+        ]
+      },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "heading_type",
+          "default": "h2",
+          "label": "Heading Style"
+        },
+        {
+          "type": "text",
+          "id": "subtext",
+          "label": "Subtext"
+        },
+        {
+          "type": "text",
+          "id": "subtext_type",
+          "default": "b2",
+          "label": "Subtext Style"
+        },
+        {
+          "type": "text",
+          "id": "cta_text",
+          "default": "View All",
+          "label": "CTA Text"
+        },
+        {
+          "type": "url",
+          "id": "cta_url",
+          "label": "CTA URL"
+        },
+        {
+          "type": "text",
+          "id": "cta_style",
+          "label": "CTA Style",
+          "default": "tertiary"
+        },
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Rendering settings"
+    },
+    {
+      "type": "select",
+      "id": "render_type",
+      "options": [
+        {
+          "value": "all",
+          "label": "All"
+        },
+        {
+          "value": "mobile-only",
+          "label": "Mobile Only"
+        },
+        {
+          "value": "desktop-only",
+          "label": "Desktop Only"
+        }
+      ],
+      "default": "all",
+      "label": "Render Type",
+      "info": "This will display this block based on Desktop, Mobile or both."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section_borders",
+      "label": "Show Section Borders"
+    },
+    {
+      "type": "select",
+      "id": "layout_type",
+      "label": "Layout",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "grid_reverse",
+          "label": "Grid Reverse"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "id",
+      "label": "ID",
+      "info": "This is used to identify the section and can be used for anchoring"
+    },
+    {
+      "type": "checkbox",
+      "id": "is_bleed_carousel",
+      "label": "Enable carousel bleed",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "layout_type_mobile",
+      "label": "Layout (Mobile)",
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid"
+        },
+        {
+          "value": "grid_reverse",
+          "label": "Grid Reverse"
+        },
+        {
+          "value": "carousel",
+          "label": "Carousel"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "is_bleed_carousel_mobile",
+      "label": "Enable carousel bleed (Mobile)",
+      "default": false
+    },
+
+    {
+      "type": "select",
+      "id": "nav_arrows_position",
+      "label": "Navigation Arrows Position",
+      "info": "Position of carousel arrows",
+      "default": "top",
+      "options": [
+        {
+          "value": "within",
+          "label": "Within Carousel"
+        },
+        {
+          "value": "top",
+          "label": "Above Carousel"
+        },
+        {
+          "value": "bottom",
+          "label": "Below Carousel"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "nav_arrows_position_mobile",
+      "label": "Navigation Arrows Position (Mobile)",
+      "info": "Position of carousel arrows on mobile",
+      "default": "top",
+      "options": [
+        {
+          "value": "within",
+          "label": "Within Carousel"
+        },
+        {
+          "value": "top",
+          "label": "Above Carousel"
+        },
+        {
+          "value": "bottom",
+          "label": "Below Carousel"
+        }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Articles List"
+    }
+  ]
+}
+
+{% endschema %}

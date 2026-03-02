@@ -1,0 +1,235 @@
+<div class="{{ section.settings.custom_column_class }}">
+  <div class="section-map section-map-{{ section.id }} color-{{ section.settings.color_schema }} relative {{ settings.reveal_animation_class }}"
+       x-data="section({{ section.settings | json | escape }})"
+       :class="classes"
+  >
+    <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}] {{ section.settings.container_type }} relative">
+        <section class="map-section">
+            <h2 class="mb-4 {{  section.settings.heading_type }}">{{ section.settings.heading }}</h2>
+            <p class="mb-6 {{  section.settings.subheading_type }}">
+                {{ section.settings.subheading | link_to: section.settings.contact_us_url, 'Contact Us' }}
+            </p>
+            <div class="flex items-center">
+                <p class="mr-[8px]">Show driving directions from </p>
+                <button class="button button-secondary">Show Directions</button>
+            </div>
+            <div class="image-map">
+                <img src="{{ section.settings.map_image | image_url: width: section.settings.map_image.width }}" alt="">
+            </div>
+        </section>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Map Area",
+  "settings": [
+    {
+        "type": "header",
+        "content": "Rendering settings"
+    },
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+          "type": "select",
+          "id": "container_type",
+          "label": "Container type",
+          "default": "container",
+          "options": [
+            {
+              "value": "container",
+              "label": "Use container width"
+            },
+            {
+              "value": "w-full",
+              "label": "Use full width"
+            }
+          ]
+        },
+        {
+          "type": "color_scheme",
+          "id": "color_schema",
+          "label": "Color scheme"
+        },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "heading_type",
+      "label": "Heading Type",
+      "default": "h3"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Section Subheading",
+      "default": "Lorem ipsum, if you have any further questions, please Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "subheading_type",
+      "label": "Sub Heading Type",
+      "default": "b2"
+    },
+    {
+      "type": "image_picker",
+      "id": "map_image",
+      "label": "Map Image"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Desktop"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment_mobile",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Alignment Mobile"
+    },
+    {
+      "type": "select",
+      "id": "content_position_desktop",
+      "options": [
+        {
+          "value": "start",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centre"
+        },
+        {
+          "value": "end",
+          "label": "Right"
+        }
+      ],
+      "default": "center",
+      "label": "Content Position Desktop"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Map Area",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

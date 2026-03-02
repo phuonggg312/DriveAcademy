@@ -1,0 +1,67 @@
+<div class="product-item">
+  <a
+    href="{{ product.url }}"
+    :title="product.title"
+    class="">
+    {%- comment -%}
+      .product-image class used for forced aspect ratio settings
+    {%- endcomment -%}
+    <div class="product-item__image product-image relative"
+         x-data="{is_sale:{% if product.compare_at_price > product.price %}true{% endif %}}"
+    >
+      <responsive-image
+        v-if="media"
+        :is-lazy-load="isLazyLoad"
+        :src="media.src"
+        :base-width="468"
+        :base-height="468 / media.aspect_ratio"
+        :sizes="imgSizes"
+        :alt="media.alt || product.title"
+        class="w-full"
+      ></responsive-image>
+      <div class="img-container">
+        <img src="{{ product.featured_image | image_url: '1000x' }}" height="100%" width="100%"
+             alt="{{ product.featured_image.alt | escape }}">
+      </div>
+      <template v-else>{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</template>
+
+      <span x-show="is_sale" class="product-badge product-badge--sale">
+          {{ 'products.product.on_sale' | t }}
+      </span>
+    </div>
+
+    <h3 class="h5" v-html="product.title">{{ product.title }}</h3>
+
+    {% render 'product-price', product:product %}
+  </a>
+
+  <form @submit.prevent="handleAddToCart" class="hidden lg:block mt-3">
+    <input
+      name="id"
+      :value="currentVariant ? currentVariant.id : product.variants[0].id"
+      type="hidden">
+
+    <template v-if="productOptions.length && !product.has_only_default_variant">
+      <div class="field option" v-for="(option, index) in productOptions">
+        <label
+          :for="'option' + option.position"
+          v-html="option.name"
+          class="sr-only"></label>
+
+        <select
+          :id="product.id + 'option' + option.position"
+          :name="'options[' + option.name + ']'"
+          v-model="selectedOptions[index]"
+          @change="updateVariant">
+          <option value="">Select ${ option.name }...</option>
+          <option
+            v-for="value in option.values"
+            :value="value"
+            v-html="value"></option>
+        </select>
+      </div>
+    </template>
+
+    {% render 'product-add-to-cart', product:product %}
+  </form>
+</div>

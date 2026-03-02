@@ -1,0 +1,38 @@
+<style>
+    .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Creates 2 equal columns */
+        gap: 16px; /* Adds some spacing between the grid items */
+    }
+</style>
+<div class="media" data-prodify-media-container>
+    {% if product.selected_variant and product.selected_variant.image %}
+        {% assign media = product.selected_variant.image %}
+    {% else %}
+        {% assign media = product.featured_image %}
+    {% endif %}
+
+    <div class="react-node">
+        {% capture data %}
+            {
+            "id": "{{ block.id }}",
+            "section": {{ section.settings | json }},
+            "product": {{ product | json }},
+            "video_url": "{{ product.metafields.ap21.productVideo }}",
+            "additional": [
+                {% for media in product.media %}
+                    {
+                        "src": "{{ media.src | image_url : width: 1440 }}",
+                        "thumbnail": "{{ media.src | image_url : width: 96 }}",
+                        "type": "{{ media.media_type }}"
+                    }{% unless forloop.last %},{% endunless %}
+                {% endfor %}
+                ]
+            }
+        {% endcapture %}
+        {% assign data = data |  escape  | replace: "'", "&#39;" %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% render 'react-block', name: "theme__ecommerce-product-gallery", props: data %}
+    </div>
+</div>
+

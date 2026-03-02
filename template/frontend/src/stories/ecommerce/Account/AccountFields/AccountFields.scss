@@ -1,0 +1,21 @@
+.account-page {
+  &__business-fields {
+    @apply  flex flex-col space-y-6
+  }
+  &__input {
+    :placeholder-shown {
+      @apply text-[#9ca3af];
+    }
+  }
+
+  .form-field__checkbox-indicator {
+    @apply rounded-sm;
+  }
+}
+.calltoaction  {
+  .account-page {
+    &__business-fields {
+      @apply  grid grid-cols-2 space-y-0
+    }
+  }
+}

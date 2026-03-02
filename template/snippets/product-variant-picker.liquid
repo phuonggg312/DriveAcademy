@@ -1,0 +1,164 @@
+{% comment %}
+  Renders product variant-picker
+
+  Accepts:
+  - product: {Object} product object.
+  - product_form_id: {String} Id of the product form to which the variant picker is associated.
+  - picker_type: 'select' || 'radio'
+  Usage:
+  {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
+{% endcomment %}
+
+{%
+    assign product_form_id = 'product-form-' | append: section.id | append: form_name
+%}
+{% assign optionCount = 0 %}
+{%- unless product.has_only_default_variant -%}
+  {% if picker_type == 'radio' %}
+    <div class="variant-radios">
+
+      {% for option in product.options_with_values %}
+          {% assign optionCount = optionCount | plus: 1 %}
+          <fieldset data-prodify-option-container name="{{ option.name }}" id="variant-option-{{ option.name }}"{%- if block.settings.show_option_1 == false and optionCount == 1 -%} style="display:none" {%- endif -%}>
+          <legend class="h5">
+            {{ option.name }}
+          </legend>
+          {% render 'product-variant-options', product: product, option: option, picker_type: picker_type, optionCount: optionCount, block: block, product_form_id:product_form_id, form_name: form_name %}
+        </fieldset>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% if picker_type == 'select' %}
+        <div class="variant-selects">
+        {% for option in product.options_with_values %}
+            <div data-prodify-option-container>
+            <label for="Option-{{ section.id }}-{{ forloop.index0 }}">
+                {{ option.name }}
+            </label>
+            <select
+                id="Option-{{ section.id }}-{{ forloop.index0 }}"
+                class="select__select p-2 my-2 border border-gray-500 rounded-lg w-full"
+                name="options[{{ option.name | escape }}]"
+                form="{{ product_form_id }}"
+                data-option-position="{{ forloop.index }}">
+                {% render 'product-variant-options', product: product, option: option, picker_type: picker_type %}
+            </select>
+            </div>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if picker_type == 'swatches' %}
+        <div x-data="variants" class="variant-selects">
+        {% for option in product.options_with_values %}
+            <div data-prodify-option-container>
+          {% assign first_variant = product.variants | first %}
+            <div class="h5"> {{ option.name }}: <span class="h5" data-arctheme-variant-title>
+                    {{ first_variant.title }}</span>
+            </div>
+            <div class="flex space-x-2 mt-2">
+                {% for value in option.values %}
+                    {% for variant in product.variants %}
+                    {% if variant.title == value %}
+                        {% assign swatch_color = variant.metafields.custom.swatch.value %}
+
+                        {% for included_product in variant.metafields.custom.products_included.value %}
+                            {% if included_product %}
+                                {% assign product_handles = product_handles | append: included_product.id | append: ',' %}
+                            {% endif %}
+                        {% endfor %}
+
+                        {% assign setFirstOption = false %}
+                        {% if block.settings.set_first_option_default and optionCount == 0 %}
+                            {% assign setFirstOption = true %}
+                        {% endif %}
+
+                        {% assign optionCount = optionCount | plus: 1 %}
+                        {% if swatch_color %}
+
+                            <input
+                                    type="radio"
+                                    class="w-[32px] h-[32px] rounded-full cursor-pointer cursor-pointer {% if setFirstOption == true %}selected{% endif %}"
+                                    style="background-color: {{ swatch_color }}; width: 32px; height: 32px;"
+                                    id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}-{{ form_name }}"
+                                    name="{{ option.name }}-{{ form_name }}"
+                                    value="{{ value | escape }}"
+                                    form="{{ product_form_id }}"
+                                    x-on:click="selectVariant"
+                                    data-variant-id={{ variant.id }}
+                                    {% if variant.image != blank %}data-variant-image={{ variant.image.src }} {% endif %}
+                                    data-variant-available={{ variant.available }}
+                                    {% if product_handles != blank %}data-variant-metafields={{ product_handles }} {% endif %}
+                                    data-variant-price={{ variant.price | money }}
+                                    data-variant-compareprice={{ variant.compare_at_price | money }}
+                                    {% if setFirstOption == true %}
+                                      checked="checked"
+                                    {% endif %}
+                                    {% if option_unavailable %}
+                                      class="disabled hidden [&:checked+label]:bg-[#00263E] [&:checked+label]:text-white"
+                                    {% else %}
+                                      class="hidden [&:checked+label]:bg-[#00263E] [&:checked+label]:text-white"
+                                    {% endif %}
+                            />
+                        {% else %}
+                            <div class="w-[32px] h-[32px] rounded-full bg-gray-300"></div>
+                        {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endunless %}
+
+<noscript class="product-form__noscript-wrapper-{{ section.id }}">
+  <div class="product-form__input{% if product.has_only_default_variant %} hidden{% endif %}">
+    <label class="form__label" for="Variants-{{ section.id }}">
+      {{- 'products.product.product_variants' | t -}}
+    </label>
+    <div class="select">
+      <select
+        name="id"
+        id="Variants-{{ section.id }}"
+        class="select__select"
+        form="{{ product_form_id }}"
+      >
+        {%- for variant in product.variants -%}
+          <option
+            {% if variant == product.selected_or_first_available_variant %}
+              selected="selected"
+            {% endif %}
+            {% if variant.available == false %}
+              disabled
+            {% endif %}
+            value="{{ variant.id }}"
+          >
+            {%- liquid
+              echo variant.title
+              echo variant.price | money | strip_html | prepend: ' - '
+              if variant.available == false
+                echo 'products.product.sold_out' | t | prepend: ' - '
+              endif
+              if variant.quantity_rule.increment > 1
+                echo 'products.product.quantity.multiples_of' | t: quantity: variant.quantity_rule.increment | prepend: ' - '
+              endif
+              if variant.quantity_rule.min > 1
+                echo 'products.product.quantity.minimum_of' | t: quantity: variant.quantity_rule.min | prepend: ' - '
+              endif
+              if variant.quantity_rule.max != null
+                echo 'products.product.quantity.maximum_of' | t: quantity: variant.quantity_rule.max | prepend: ' - '
+              endif
+              assign cart_quantity = cart | item_count_for_variant: variant.id
+              if cart_quantity > 0
+                echo 'products.product.quantity.in_cart_html' | t: quantity: cart_quantity | prepend: ' - '
+              endif
+            -%}
+          </option>
+        {%- endfor -%}
+      </select>
+        {% render 'icons-static', icon:'caret' %}
+    </div>
+  </div>
+</noscript>

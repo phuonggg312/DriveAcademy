@@ -1,0 +1,16 @@
+<div class="social-links">
+    <div class="react-node w-full">
+        {% capture data %}
+            {
+                "settings": {{ block.settings | json }},
+                "shop": {
+                    "name": "{{ shop.name }}",
+                    "social_links": {{ shop.brand.metafields.social_links | json }}
+                }
+            }
+        {% endcapture %}
+        {% assign data = data %}
+        <div id="react-data" data-injected-props='{{ data }}'></div>
+        {% liquid render 'react-block', name: "theme__social-links", props: data %}
+    </div>
+</div>

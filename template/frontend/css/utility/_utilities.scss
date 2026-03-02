@@ -1,0 +1,66 @@
+@import "./accordion.scss";
+@import "./helpers.scss";
+@import "./forms.scss";
+@import "./positioning.scss";
+@import "./animations.scss";
+@import "./spinner.scss";
+@import "./collapsible.scss";
+@import "./pagination.scss";
+@import "./skip-content.scss";
+@import "./slider.scss";
+@import "./overlay.scss";
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}
+
+  .pin {
+    @apply inset-0;
+  }
+
+  .pin-x {
+    @apply inset-x-0;
+  }
+
+
+/* TOOLTIP */
+
+  .tooltip {
+    @apply absolute border border-gray-300 bg-white p-2.5 z-10 w-max max-w-xs;
+  }
+  .tooltip.left {
+    left: -215px;
+    top: -100%;
+  }
+  .tooltip.right {
+    left: 110%;
+    top: -100%;
+  }
+  .tooltip.bottom {
+    top: 110%;
+    left: -100%;
+  }
+
+
+.h-inherit {
+  height:inherit;
+}
+.min-h-inherit {
+  min-height: inherit;
+}
+.hx-inherit {
+  height:inherit;
+  min-height: inherit;
+}
+
+.tag {
+  @apply relative rounded-sm px-1 text-xs shadow-sm uppercase
+}

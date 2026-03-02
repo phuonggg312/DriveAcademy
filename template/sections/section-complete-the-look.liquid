@@ -1,0 +1,163 @@
+<div id="complete-the-look"
+     class="section complete-the-look section-complete-the-look-{{ section.id }} {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+  <div class="react-node">
+    {% capture data %}
+      {
+        "id": "{{ section.id }}",
+        "product": {{ product | json }},
+        "section": {{ section.settings | json }},
+      }
+    {% endcapture %}
+    <div id="react-data" data-injected-props='{{ data | replace: "'", "&#39;" }}'></div>
+    {% render 'react-block', name: "theme__completethelook", props: data %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Complete the Look",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Titles & Content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Block Title",
+      "default": "Complete the Look"
+    },
+    {
+      "type": "text",
+      "id": "content",
+      "label": "Content"
+    },
+    {
+      "type": "header",
+      "content": "Data settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_metafields",
+      "label": "Use Metafields",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "metafield_name",
+      "label": "Metafield Name"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_tags",
+      "label": "Use Tags",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "tag_name",
+      "label": "Tag Name"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left",
+      "label": "Content Alignment"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Complete the Look"
+    }
+  ]
+}
+
+{% endschema %}

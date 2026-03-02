@@ -1,0 +1,367 @@
+<div class="footer-terms flex-col gap-4 {{ settings.reveal_animation_class }} color-{{ section.settings.color_schema }}"
+     x-data="section({{ section.settings | json | escape }})"
+     :class="classes"
+>
+  <div class="{{ section.settings.container_type }}">
+    <hr class="opacity-50 w-full max-lg:hidden mb-4">
+    <div class="flex flex-col lg:flex-row justify-{{ section.settings.content_style }} gap-y-[8px] items-center lg:items-center">
+
+      {%- for block in section.blocks -%}
+        <div class="footer-terms__bottom flex-1 {{ settings.reveal_animation_class }} order-[{{ block.settings.sort_order_mobile }}] lg:-order-none" data-animation-delay="0.2s">
+            {% if block.type == 'social_links' %}
+              {% render 'footer-sociallinks', block:block %}
+            {% endif %}
+            {% if block.type == 'payment_icons' %}
+              {% render 'footer-payments', block:block %}
+            {% endif %}
+            {% if block.type == 'copyright' %}
+              {% render 'footer-copyright', block:block %}
+            {% endif %}
+            {% if block.type == 'links' %}
+              {% render 'footer-links', block:block %}
+            {% endif %}
+            {% if block.type == 'currency' %}
+              {% render 'footer-currency', block:block %}
+            {% endif %}
+            {% if block.type == 'copyright_links' %}
+              {% render 'footer-copyright-links', block:block %}
+            {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "footer",
+  "tag": "footer",
+  "blocks": [
+    {
+      "type": "payment_icons",
+      "name": "Payment Icons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        },
+        {
+          "type": "select",
+          "id": "payments_render_type",
+          "options": [
+            {
+              "value": "store",
+              "label": "Store"
+            },
+            {
+              "value": "Image",
+              "label": "Image"
+            }
+          ],
+          "default": "store",
+          "label": "Icons rendered from",
+          "info": "How the rendering will be done for icons?"
+        },
+        {
+          "type": "image_picker",
+          "id": "payment_icons",
+          "label": "Payment Icons Image"
+        }
+      ]
+    },
+    {
+      "type": "copyright",
+      "name": "Copyright",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "text_style",
+          "label": "Text Style",
+          "default": "h5",
+          "info": "Set the text style for the disclaimer."
+        },
+        {
+          "type": "text",
+          "id": "copyright",
+          "label": "Copyright text",
+          "default": "Arctheme"
+        }
+      ]
+    },
+    {
+      "type": "currency",
+      "name": "Currency Selector",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "links",
+      "name": "Links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "link_list",
+          "id": "links",
+          "label": "Link List"
+        }
+      ]
+    },
+    {
+      "type": "copyright_links",
+      "name": "Copyright & Links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "copyright",
+          "label": "Copyright text",
+          "default": "Arctheme"
+        },
+        {
+          "type": "text",
+          "id": "link_1_label",
+          "label": "Link 1 Label"
+        },
+        {
+          "type": "url",
+          "id": "link_1_url",
+          "label": "Link 1 URL"
+        },
+        {
+          "type": "text",
+          "id": "link_2_label",
+          "label": "Link 2 Label"
+        },
+        {
+          "type": "url",
+          "id": "link_2_url",
+          "label": "Link 2 URL"
+        }
+      ]
+    },
+    {
+      "type": "social_links",
+      "name": "Social Links",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "number",
+          "id": "sort_order_mobile",
+          "label": "Sort order (Mobile)",
+          "default": 0
+        },
+        {
+          "type": "image_picker",
+          "id": "youtube_icon",
+          "label": "Youtube Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "facebook_icon",
+          "label": "Facebook Icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "instagram_icon",
+          "label": "Instagram Icon"
+        },
+        {
+          "type": "select",
+          "id": "render_type",
+          "options": [
+            {
+              "value": "all",
+              "label": "All"
+            },
+            {
+              "value": "mobile-only",
+              "label": "Mobile Only"
+            },
+            {
+              "value": "desktop-only",
+              "label": "Desktop Only"
+            }
+          ],
+          "default": "all",
+          "label": "Render Type",
+          "info": "This will display this block based on Desktop, Mobile or both."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        {
+          "value": "container",
+          "label": "Use container width"
+        },
+        {
+          "value": "w-full",
+          "label": "Use full width"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "content_style",
+      "label": "Content Style",
+      "default": "between",
+      "options": [
+        {
+          "value": "between",
+          "label": "Evenly Spaced"
+        },
+        {
+          "value": "center",
+          "label": "Centered"
+        }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "CLS / Performance"
+    },
+    {
+      "type": "number",
+      "id": "desktop_min_height",
+      "label": "Min height (Desktop)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    },
+    {
+      "type": "number",
+      "id": "mobile_min_height",
+      "label": "Min height (Mobile)",
+      "default": 0,
+      "info": "Set a minimum height for the section. This can help prevent layout shifts when the content loads."
+    }
+  ]
+}
+{% endschema %}

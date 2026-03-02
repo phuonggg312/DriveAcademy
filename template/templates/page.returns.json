@@ -1,0 +1,151 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main_page_header_JUEttG": {
+      "type": "main-page-header",
+      "blocks": {
+        "title_XUCc3K": {
+          "type": "title",
+          "settings": {
+            "title": "{{ page.title }}",
+            "heading_type": "h3",
+            "heading_type_mobile": "h2",
+            "padding_top_desktop": 0,
+            "padding_bottom_desktop": 0,
+            "padding_top_mobile": 0,
+            "padding_bottom_mobile": 0
+          }
+        }
+      },
+      "block_order": [
+        "title_XUCc3K"
+      ],
+      "settings": {
+        "container_type": "container",
+        "color_schema": "",
+        "title": "{{ page.title }}",
+        "content": "",
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 16,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {
+      }
+    },
+    "section_accordions_4zA9JF": {
+      "type": "section-accordions",
+      "blocks": {
+        "accordion_4W8hrK": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Return eligibility & options",
+            "accordion_content": "<p>At M.J. Bale, your satisfaction is our priority.</p><p>We offer refunds, exchanges, and credit notes on all full-priced products. If you wish to return a sale item, we offer a credit note or exchange.</p><p>Products need to be returned in its original condition with tags attached, no alterations or personalisation, within 30 days of receipt.</p><p>M.J. Bale does not offer refund for change of mind on the following below unless deemed faulty.</p><ul><li>Made-To-Measure, altered, or personalised products</li><li>Items purchased from our Laneway sale events</li><li>M.J. Bale gifts cards, online gift vouchers or credit notes</li><li>Antibacterial Masks</li></ul><p>You may return or exchange product purchased from <a href=\"http://www.mjbale.com/\"><strong>www.mjbale.com</strong></a> at any of our retail stores (excluding Myer and David Jones concessions) or via post.</p><p>Return postage is at the expense of the customer and is not covered by M.J. Bale.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_GFtYtA": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Exchanges & Credit Notes",
+            "accordion_content": "<ul><li><strong>Exchanges</strong></li></ul><p>Exchanges are subject to availability. If you wish to exchange an item that was purchased online for a different size, colour or style, we strongly suggest that you place a new order with the product you desire and send your original item back to our online returns team for a full refund.</p><p>This will ensure that you don’t miss out on the size/style you are after.</p><p>If your original item is a sale item simply include your new order number on your returns form in the “Return my order for” section so that we know that you’re eligible for a full refund (the new item must be of equal or greater value than the original item).</p><p></p><ul><li><strong>Credit notes</strong></li></ul><p>All credit notes issued by our online returns team can be redeemed online and in-store.</p><p>All credit notes issued instore can only be redeemed in-store and cannot be redeemed online.</p><p></p><p>Please find terms and conditions <a href=\"https://www.mjbale.com/pages/terms-of-service\" target=\"_self\">here.</a></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_beAWKQ": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "How to complete an online return",
+            "accordion_content": "<p>To return your online purchase via post please follow the steps below:</p><ol><li>Pack the item(s) you wish to return in its original condition</li><li><a href=\"https://cdn.shopify.com/s/files/1/0223/4377/8384/files/MJBale_ReturnsForm_Sept20.pdf?v=1600925583\"><strong>Download</strong></a> , print and complete the returns form to indicate the item(s) you are returning</li><li>Send your package with the completed returns form to the following address:</li></ol><p><strong>M.J. Bale Online Returns<br/>Level 2, Suite 2.15, 100 Collins Street<br/>Alexandria NSW 2015</strong></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_bfrDpy": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Afterpay & Zip Pay returns",
+            "accordion_content": "<p>Any purchases completed through Afterpay or Zip Pay must be returned at the same location of purchase.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_RecjP6": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Myer & David Jones returns",
+            "accordion_content": "<p>Any M.J Bale items purchased through our concession stores/website (Myer and David Jones) are subject to their relevant returns policies and procedures.</p><p>We are unable to process any returns purchased at Myer or David Jones.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_irmhBX": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Faulty items",
+            "accordion_content": "<p>Our quality control team inspects all of our garments prior to despatch to ensure our garments meet our quality standards. However, in the rare occasion that you receive a faulty or damaged item/s please contact us at <a href=\"mailto:service@mjbale.com\"><span style=\"text-decoration:underline\">service@mjbale.com</span></a> to advise on next steps.</p><p></p><p><strong>FAULTY ITEMS PURCHASED INSTORE:</strong> If you believe your product(s) purchase instore are faulty, simply take them with your proof of purchase into your local or nearest store for assessment.</p><p>The M.J Bale team will assess the products to determine if it is deemed faulty. Please note that the process cannot always be completed on the spot as multiple assessments might be required to reach an outcome. We will ensure to follow up with you on the results as soon as possible.</p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        },
+        "accordion_Ngwzkj": {
+          "type": "accordion",
+          "settings": {
+            "accordion_title": "Need more help?",
+            "accordion_content": "<p>If you still need more help on returning or exchanging your item/s, please feel free to call our customer service team on <a href=\"tel:+61386579466\">+61386579466 </a>or email <a href=\"mailto:service@mjbale.com\"><strong>service@mjbale.com </strong></a>during our business hours. See business hours here<a href=\"https://www.mjbale.com/pages/contact-us\">https://www.mjbale.com/pages/contact-us</a></p>",
+            "title_class": "h3",
+            "content_class": "b2"
+          }
+        }
+      },
+      "block_order": [
+        "accordion_4W8hrK",
+        "accordion_GFtYtA",
+        "accordion_beAWKQ",
+        "accordion_bfrDpy",
+        "accordion_RecjP6",
+        "accordion_irmhBX",
+        "accordion_Ngwzkj"
+      ],
+      "settings": {
+        "render_type": "all",
+        "container_type": "container",
+        "color_schema": "",
+        "heading": "",
+        "heading_type": "h3",
+        "subheading": "",
+        "subheading_type": "b2",
+        "contact_us_url": "",
+        "padding_top_desktop": 32,
+        "padding_bottom_desktop": 32,
+        "padding_left_right_desktop": 24,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "content_alignment_desktop": "center",
+        "content_alignment_mobile": "center",
+        "content_position_desktop": "center"
+      }
+    }
+  },
+  "order": [
+    "main_page_header_JUEttG",
+    "main",
+    "section_accordions_4zA9JF"
+  ]
+}
