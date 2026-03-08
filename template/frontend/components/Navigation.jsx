@@ -27,6 +27,12 @@ export function HeaderComponent({ ...props }) {
     );
 }
 
+DriveAcademyHeaderComponent.displayName = "theme__drive-academy-header";
+export function DriveAcademyHeaderComponent({ ...props }) {
+    const DriveAcademyHeader = lazyComponents['DriveAcademyHeader'];
+    return <DriveAcademyHeader settings={props.settings} />;
+}
+
 FooterComponent.displayName = "theme__navigation-footer";
 export function FooterComponent({ ...props }) {
     const Footer = lazyComponents['Footer'];

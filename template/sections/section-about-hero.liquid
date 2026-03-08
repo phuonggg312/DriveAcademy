@@ -1,0 +1,169 @@
+{%- if section.settings.background_image -%}
+  {%- assign bg_url = section.settings.background_image | image_url: width: 1920 -%}
+{%- else -%}
+  {%- assign bg_url = '' -%}
+{%- endif -%}
+{%- assign o = section.settings.overlay_opacity | default: 60 -%}
+{%- if o >= 100 -%}{%- assign overlay_css = '1' -%}
+{%- elsif o >= 10 -%}{%- assign overlay_css = '0.' | append: o -%}
+{%- else -%}{%- assign overlay_css = '0.0' | append: o -%}
+{%- endif -%}
+<div
+  class="section-about-hero color-{{ section.settings.color_schema }} relative w-full overflow-hidden {{ settings.reveal_animation_class }}"
+  id="section-{{ section.id }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  {% if bg_url != '' %}
+    <div class="absolute inset-0 z-0">
+      <img src="{{ bg_url }}" alt="" class="w-full h-full object-cover" aria-hidden="true" />
+      <div class="absolute inset-0 z-[1]" style="background: rgba(0,0,0,{{ overlay_css }});"></div>
+    </div>
+  {% else %}
+    <div class="absolute inset-0 z-[1] bg-[rgb(var(--color-shadow))]"></div>
+  {% endif %}
+  <div class="relative z-[2] {{ section.settings.container_type }} flex flex-col items-center justify-center text-center min-h-[280px] md:min-h-[320px]">
+    <p class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+      {{ section.settings.title | default: 'About Us' }}
+    </p>
+    {% if section.settings.show_breadcrumb %}
+      <nav class="text-sm text-white/90" aria-label="Breadcrumb">
+        <a href="{{ routes.root_url }}" class="text-white no-underline hover:opacity-80">{{ section.settings.breadcrumb_home | default: 'Home' }}</a>
+        <span class="mx-2 text-white">/</span>
+        <span class="text-[#F0D32A]">{{ section.settings.breadcrumb_current | default: 'About Us' }}</span>
+      </nav>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "About Us"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_home",
+      "label": "Breadcrumb home label",
+      "default": "Home"
+    },
+    {
+      "type": "text",
+      "id": "breadcrumb_current",
+      "label": "Breadcrumb current page",
+      "default": "About Us"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image",
+      "info": "Recommended: wide image (e.g. people in car). Blurred/darkened on front."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Overlay darkness",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "w-full", "label": "Full width" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 16
+    }
+  ],
+  "presets": [
+    { "name": "About Hero", "category": "About" }
+  ]
+}
+{% endschema %}

@@ -1,10 +1,8 @@
 {% assign metaobject_values = null %}
 
 {% if section.settings.faq_metaobject_type == 'product' %}
-
   {% assign metafield_notations = section.settings.metaobject_entries | split: "." %}
   {% assign count = 0 %}
-
   {% for notation in metafield_notations %}
     {% if count == 0 %}
       {% assign metaobject_values = product.metafields[notation] %}
@@ -13,28 +11,64 @@
     {% endif %}
     {% assign count = count | plus: 1 %}
   {% endfor %}
-
   {% assign metaobject_values = metaobject_values.value %}
-  {% comment %}{% assign metaobject_values = product.metafields[section.settings.metaobject_entries].value %}{% endcomment %}
-{% else %}
+{% elsif section.settings.faq_metaobject_type == 'page' and page %}
+  {% assign metafield_notations = section.settings.metaobject_entries | split: "." %}
+  {% assign count = 0 %}
+  {% for notation in metafield_notations %}
+    {% if count == 0 %}
+      {% assign metaobject_values = page.metafields[notation] %}
+    {% else %}
+      {% assign metaobject_values = metaobject_values[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+  {% endfor %}
+  {% assign metaobject_values = metaobject_values.value %}
+{% elsif section.settings.faq_metaobject_type == 'article' and article %}
+  {% assign metafield_notations = section.settings.metaobject_entries | split: "." %}
+  {% assign count = 0 %}
+  {% for notation in metafield_notations %}
+    {% if count == 0 %}
+      {% assign metaobject_values = article.metafields[notation] %}
+    {% else %}
+      {% assign metaobject_values = metaobject_values[notation] %}
+    {% endif %}
+    {% assign count = count | plus: 1 %}
+  {% endfor %}
+  {% assign metaobject_values = metaobject_values.value %}
+{% elsif section.settings.faq_metaobject_type == 'global' and section.settings.metaobject_entries != blank %}
   {% assign metaobject_values = shop.metaobjects[section.settings.metaobject_entries].values %}
 {% endif %}
 
-{% if section.settings.metaobject_entries != blank %}
+{% if section.settings.metaobject_entries != blank and section.settings.faq_metaobject_type != 'manual' %}
   {% assign faqs = metaobject_values %}
-  {% capture faqData %}
-    "faqs": {% if faqs %} [
-    {% for faq in faqs %}
-      {
-      "title": "{{ faq.question | escape }}",
-      {% if faq.image  %}"image": "{{ faq.image | image_url: faq.image.width }}",{% endif %}
-      "content": "{{ faq.answer | escape }}",
-      "filter_tag": "{{ faq.dropdown_label | escape }}"
-      }{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-    ]{% else %}null{% endif %}
-  {% endcapture %}
 {% endif %}
+
+{% capture faqData %}
+  "faqs": {% if section.settings.faq_metaobject_type == 'manual' %} [
+  {% assign first_manual = true %}
+  {% for block in section.blocks %}
+    {% if block.type == 'faq_item' %}
+      {% unless first_manual %},{% endunless %}
+      {% assign first_manual = false %}
+      {"title": {{ block.settings.question | default: "" | json }}, "content": {{ block.settings.answer | default: "" | json }}}
+    {% elsif block.type == 'column_block' %}
+      {% unless first_manual %},{% endunless %}
+      {% assign first_manual = false %}
+      {"title": {{ block.settings.title | default: "" | json }},{% if block.settings.image %}"image": "{{ block.settings.image | image_url: width: 600 }}",{% endif %}"content": {{ block.settings.content | default: "" | json }}}
+    {% endif %}
+  {% endfor %}
+  ]{% elsif faqs %} [
+  {% for faq in faqs %}
+    {
+    "title": "{{ faq.question | escape }}",
+    {% if faq.image %}"image": "{{ faq.image | image_url: width: 600 }}",{% endif %}
+    "content": "{{ faq.answer | escape }}",
+    "filter_tag": "{{ faq.dropdown_label | escape }}"
+    }{% unless forloop.last %},{% endunless %}
+  {% endfor %}
+  ]{% else %}[]{% endif %}
+{% endcapture %}
 
 <div class="{{ section.settings.custom_column_class }} color-{{ section.settings.color_schema }}">
 <div class="section-faq section-faq-{{ section.id }} color-{{ section.settings.color_schema }} relative {{ settings.reveal_animation_class }}"
@@ -57,6 +91,23 @@
   "tag": "section",
   "class": "section",
   "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "limit": 50,
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    },
     {
       "type": "column_block",
       "name": "FAQ Block",
@@ -236,25 +287,23 @@
     {
       "type": "select",
       "id": "faq_metaobject_type",
-      "label": "FAQ Metaobject Type",
+      "label": "FAQ source",
       "default": "global",
       "options": [
-        {
-          "value": "global",
-          "label": "Global"
-        },
-        {
-          "value": "product",
-          "label": "Product"
-        }
+        { "value": "manual", "label": "Manual (add FAQ blocks below)" },
+        { "value": "global", "label": "Global (shop metaobject)" },
+        { "value": "page", "label": "Page metafield" },
+        { "value": "article", "label": "Article metafield" },
+        { "value": "product", "label": "Product metafield" }
       ],
-      "info": "Use this if you want to have the FAQ data based on metaobject type for where the FAQ data is stored."
+      "info": "Manual: add FAQ blocks below. Or use metaobject/metafield (see Metaobject key field)."
     },
     {
       "type": "text",
       "id": "metaobject_entries",
-      "label": "FAQ Metaobject",
-      "info": "Use this if you want to have the FAQ data based on metaobject entries"
+      "label": "Metaobject key or metafield",
+      "placeholder": "e.g. faq (Global) or custom.faq_list (Page/Article/Product)",
+      "info": "Global: type the metaobject Type key only (e.g. faq). Page/Article/Product: type metafield as namespace.key (e.g. custom.faq_list)."
     },
     {
       "type": "checkbox",

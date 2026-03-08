@@ -36,7 +36,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <a href="{{ section.settings.button_url }}" class="button btn-dark view-all-articles">
+                <a href="{% if section.settings.button_url != blank %}{{ section.settings.button_url }}{% else %}{{ blog.url }}{% endif %}" class="button btn-dark view-all-articles no-underline inline-flex items-center justify-center px-5 py-2.5 rounded font-semibold bg-[rgb(var(--color-button))] text-[rgb(var(--color-button-text))] hover:opacity-90 transition-opacity">
                   {{ section.settings.button_text }}
                 </a>
             </div>

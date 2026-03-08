@@ -11,58 +11,32 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "footer_promotional_bar_zedkqM": {
-      "type": "footer-promotional-bar",
-      "blocks": {
-        "promotional_item_BntVn4": {
-          "type": "promotional_item",
-          "settings": {
-            "icon": "shopify://shop_images/Icon-AB-Delivery-Black.png",
-            "title": "FREE SHIPPING",
-            "description": "For Orders Over $100"
-          }
-        },
-        "promotional_item_QAPfb8": {
-          "type": "promotional_item",
-          "settings": {
-            "icon": "shopify://shop_images/Icon-Returns-Black_800x800_818afaec-c1a9-4004-84d7-d2d0717dcba6.svg",
-            "title": "EASY 14-DAY RETURNS",
-            "description": "Lorem Ipsum"
-          }
-        },
-        "promotional_item_CPzgpB": {
-          "type": "promotional_item",
-          "settings": {
-            "icon": "shopify://shop_images/Icon-AB-Rewards-Black.png",
-            "title": "ACADEMY REWARDS",
-            "description": "Lorem Ipsum"
-          }
-        },
-        "promotional_item_qEBqUz": {
-          "type": "promotional_item",
-          "settings": {
-            "icon": "shopify://shop_images/Icon-AB-click_and_collect.png",
-            "title": "CLICK AND COLLECT",
-            "description": "Lorem Ipsum"
-          }
-        }
-      },
-      "block_order": [
-        "promotional_item_BntVn4",
-        "promotional_item_QAPfb8",
-        "promotional_item_CPzgpB",
-        "promotional_item_qEBqUz"
-      ],
-      "name": "Footer Promotional Bar",
+    "section_drive_academy_footer_VrCXrF": {
+      "type": "section-drive-academy-footer",
+      "name": "Drive Academy Footer",
       "settings": {
+        "logo_text": "Autoguru",
+        "description": "Our certified programs are designed to provide structured, professional training that builds safe and confident drivers.",
+        "facebook_url": "",
+        "twitter_url": "",
+        "instagram_url": "shopify://metaobjects/diy_projects/cerulean-sunset-1",
+        "linkedin_url": "shopify://blogs/news/instructor-training",
+        "quick_links_title": "Quick Links",
+        "quick_links": "main-menu",
+        "courses_title": "Our Courses",
+        "courses_menu": "main-menu",
+        "newsletter_heading": "Subscribe To Newsletter",
+        "newsletter_description": "Our certified programs are designed to provide structure, professional training that builds both driving skills and confidence.",
+        "newsletter_placeholder": "Enter Email Address*",
+        "copyright": "Copyright © 2026 All Rights Reserved.",
+        "color_schema": "dark",
         "container_type": "container",
-        "color_schema": "scheme-a6785905-1459-4f93-be48-f8f8f984a21b",
-        "padding_top_desktop": 20,
-        "padding_bottom_desktop": 19,
-        "padding_left_right_desktop": 120,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24,
-        "padding_left_right_mobile": 16
+        "padding_top_desktop": 40,
+        "padding_bottom_desktop": 40,
+        "padding_left_right_desktop": 40,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "padding_left_right_mobile": 10
       }
     },
     "footer_links_LX3AMd": {
@@ -71,7 +45,7 @@
         "list_mKhDFF": {
           "type": "list",
           "settings": {
-            "link_list": "discover",
+            "link_list": "",
             "text_column_width": "",
             "margin_left_right_desktop": 0,
             "margin_left_right_mobile": 0
@@ -80,7 +54,7 @@
         "list_hLWJEC": {
           "type": "list",
           "settings": {
-            "link_list": "help",
+            "link_list": "",
             "text_column_width": "",
             "margin_left_right_desktop": 0,
             "margin_left_right_mobile": 0
@@ -89,7 +63,7 @@
         "list_KqBXrW": {
           "type": "list",
           "settings": {
-            "link_list": "about",
+            "link_list": "",
             "text_column_width": "",
             "margin_left_right_desktop": 0,
             "margin_left_right_mobile": 0
@@ -118,6 +92,7 @@
         "list_KqBXrW",
         "email_subscribe_xxtQK9"
       ],
+      "disabled": true,
       "settings": {
         "layout": "multicolumns",
         "container_type": "container",
@@ -165,7 +140,7 @@
           "type": "links",
           "settings": {
             "sort_order_mobile": 3,
-            "links": "footer-legal-links"
+            "links": ""
           }
         }
       },
@@ -175,6 +150,7 @@
         "copyright_footer",
         "footer_links_bottom"
       ],
+      "disabled": true,
       "settings": {
         "container_type": "container",
         "content_style": "between",
@@ -192,7 +168,7 @@
     }
   },
   "order": [
-    "footer_promotional_bar_zedkqM",
+    "section_drive_academy_footer_VrCXrF",
     "footer_links_LX3AMd",
     "footer"
   ]

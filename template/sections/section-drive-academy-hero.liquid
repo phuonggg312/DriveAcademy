@@ -1,0 +1,253 @@
+{%- if section.settings.background_image -%}
+  {%- assign bg_url = section.settings.background_image | image_url: width: 1920 -%}
+{%- else -%}
+  {%- assign bg_url = '' -%}
+{%- endif -%}
+{%- if section.settings.mobile_background_image -%}
+  {%- assign mobile_bg_url = section.settings.mobile_background_image | image_url: width: 768 -%}
+{%- else -%}
+  {%- assign mobile_bg_url = '' -%}
+{%- endif -%}
+
+{% capture custom_data %}
+{
+  "background_image_url": {% if section.settings.background_image %}"{{ bg_url }}"{% else %}null{% endif %},
+  "mobile_background_image_url": {% if section.settings.mobile_background_image %}"{{ mobile_bg_url }}"{% else %}null{% endif %},
+  "section": {
+    "tagline": "{{ section.settings.tagline | escape }}",
+    "heading": "{{ section.settings.heading | escape }}",
+    "description": "{{ section.settings.description | escape }}",
+    "primary_button_text": "{{ section.settings.primary_button_text | escape }}",
+    "primary_button_url": "{{ section.settings.primary_button_url | escape }}",
+    "secondary_button_text": "{{ section.settings.secondary_button_text | escape }}",
+    "secondary_button_url": "{{ section.settings.secondary_button_url | escape }}",
+    "overlay_opacity": {{ section.settings.overlay_opacity | default: 50 }},
+    "min_height_desktop": {{ section.settings.min_height_desktop | default: 600 }},
+    "min_height_mobile": {{ section.settings.min_height_mobile | default: 460 }},
+    "content_alignment": "{{ section.settings.content_alignment | default: 'center' | escape }}",
+    "padding_top_mobile": {{ section.settings.padding_top_mobile | default: 16 }},
+    "padding_bottom_mobile": {{ section.settings.padding_bottom_mobile | default: 0 }},
+    "padding_left_right_mobile": {{ section.settings.padding_left_right_mobile | default: 16 }},
+    "padding_top_desktop": {{ section.settings.padding_top_desktop | default: 24 }},
+    "padding_bottom_desktop": {{ section.settings.padding_bottom_desktop | default: 24 }},
+    "padding_left_right_desktop": {{ section.settings.padding_left_right_desktop | default: 0 }}
+  },
+  "section_id": "{{ section.id }}"
+}
+{% endcapture %}
+{% assign data = custom_data | strip_newlines | replace: "'", "&#39;" %}
+<div class="{{ section.settings.container_type }} color-{{ section.settings.color_schema }} w-full">
+  <div
+    class="drive-academy-hero-wrapper {{ settings.reveal_animation_class }}"
+    id="section-{{ section.id }}"
+    x-data="section({{ section.settings | json | escape }})"
+    :class="classes"
+  >
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__drive-academy-hero", props: data %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Drive Academy Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "w-full",
+      "options": [
+        { "value": "container", "label": "Use container width" },
+        { "value": "w-full",    "label": "Use full width" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image",
+      "info": "Recommended: 1920×1080px"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_background_image",
+      "label": "Background Image (Mobile)",
+      "info": "Recommended: 768×1024px. Leave empty to use desktop image."
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Dark Overlay Opacity",
+      "default": 50
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Learn Driving With Confidence & Safety",
+      "info": "Short line displayed above the heading with a bullet point"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Professional Driving Lessons For Real Road Confidence"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Learn from certified instructors with modern training vehicles and a step-by-step learning approach that helps you gain confidence, control, and real-world driving skills from day one."
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Button Text",
+      "default": "Book A Free Trial"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button (Watch Video)"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Button Text",
+      "default": "Watch Our Video"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_url",
+      "label": "Button URL (video link)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content Alignment",
+      "default": "center",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right",  "label": "Right" }
+      ]
+    },
+    {
+      "type": "number",
+      "id": "min_height_desktop",
+      "label": "Min Height Desktop (px)",
+      "default": 600
+    },
+    {
+      "type": "number",
+      "id": "min_height_mobile",
+      "label": "Min Height Mobile (px)",
+      "default": 460
+    },
+    {
+      "type": "header",
+      "content": "Style"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Drive Academy Hero"
+    }
+  ]
+}
+{% endschema %}

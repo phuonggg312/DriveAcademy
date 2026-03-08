@@ -15,12 +15,12 @@
         "block_image_L6w968": {
           "type": "block_image",
           "settings": {
-            "image": "shopify://shop_images/5.png",
-            "mobile_image": "shopify://shop_images/5.png",
+            "image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+            "mobile_image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
             "darken_image": false,
             "image_url": "",
             "color_schema": "",
-            "show_overlay": true,
+            "show_overlay": false,
             "tagline": "NEW OCTOBER DEALS",
             "title": "<p>ANY SHIRT + SHORT<br/><br/></p>",
             "title_heading_type": "h2",
@@ -32,12 +32,6 @@
             "button_style": "button-text",
             "button_icon": "ur-arrow",
             "button_reverse_icon": true,
-            "button_2_text": "SHOP WOMENS",
-            "button_2_url": "#",
-            "button_2_style": "button-text",
-            "button_3_text": "SHOP WOMENS",
-            "button_3_url": "#",
-            "button_3_style": "button-text",
             "content_alignment_desktop": "center",
             "content_alignment_mobile": "center",
             "content_position_desktop": "center",
@@ -54,6 +48,7 @@
       "block_order": [
         "block_image_L6w968"
       ],
+      "disabled": true,
       "name": "Banner",
       "settings": {
         "color_schema": "",
@@ -84,359 +79,293 @@
       "type": "main-index",
       "settings": {}
     },
-    "section_complete_the_look_Cxemp7": {
-      "type": "section-complete-the-look",
-      "name": "Complete the Look",
+    "section_drive_academy_hero_CFWyJN": {
+      "type": "section-drive-academy-hero",
+      "name": "Drive Academy Hero",
       "settings": {
-        "title": "Complete the Look",
-        "content": "",
-        "use_metafields": false,
-        "metafield_name": "",
-        "use_tags": false,
-        "tag_name": "",
-        "color_schema": "",
-        "content_alignment": "left",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_left_right_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0,
-        "padding_left_right_mobile": 0
-      }
-    },
-    "section_shop_by_category_jBJij6": {
-      "type": "section-shop-by-category",
-      "blocks": {
-        "category_block_xFmmak": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "TEES",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "shopify://products/glass",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "category_block_KKjk87": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "SHORTS",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "#",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "category_block_Cr9aNq": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "SHIRTS",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "#",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "category_block_hRqEc4": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "TEES",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "#",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "category_block_gDkDJa": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "KNIT SHIRTS",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "shopify://collections/glasses",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "category_block_GJPcmd": {
-          "type": "category_block",
-          "settings": {
-            "image": "shopify://shop_images/26S05_Black_Friday-Category-KnitShirt.webp",
-            "grayscale": true,
-            "darken_overlay": false,
-            "discount_text": "25% OFF",
-            "discount_font_type": "h2",
-            "category_name": "TEES",
-            "category_font_type": "h1",
-            "text_color": "#ffffff",
-            "button_text": "SHOP NOW",
-            "button_url": "",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        }
-      },
-      "block_order": [
-        "category_block_xFmmak",
-        "category_block_KKjk87",
-        "category_block_Cr9aNq",
-        "category_block_hRqEc4",
-        "category_block_gDkDJa",
-        "category_block_GJPcmd"
-      ],
-      "name": "Shop by Category",
-      "settings": {
-        "title": "SHOP BY CATEGORY",
-        "title_font_type": "h6",
-        "show_pagination": false,
-        "show_navigation": true,
-        "fade_partial": false,
-        "autoplay": 0,
-        "container_type": "container",
-        "color_schema": "",
-        "custom_class": "",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      }
-    },
-    "section_shopthelook_TEEHHU": {
-      "type": "section-shopthelook",
-      "blocks": {
-        "text_WipVfW": {
-          "type": "text",
-          "settings": {
-            "title": "SHOP THE LOOK",
-            "description": ""
-          }
-        }
-      },
-      "block_order": [
-        "text_WipVfW"
-      ],
-      "name": "Shop the Look",
-      "settings": {
-        "image_one": "shopify://shop_images/lookbook-t-shirt.png",
-        "image_two": "shopify://shop_images/lookbok-girl.png",
-        "product_one": "carreca",
-        "product_two": "dior"
-      }
-    },
-    "section_academy_rewards_bzErQf": {
-      "type": "section-academy-rewards",
-      "name": "Academy Rewards",
-      "settings": {
-        "title": "ACADEMY REWARDS",
-        "subtitle": "Earn rewards for every purchase",
-        "button_text": "DISCOVER NOW",
-        "button_url": "shopify://collections/sunglasses",
-        "image": "shopify://shop_images/bannerr.webp",
-        "container_type": "container",
-        "color_schema": "",
-        "padding_top": 0,
-        "padding_bottom": 0
-      }
-    },
-    "section_visit_us_pfGCA7": {
-      "type": "section-visit-us",
-      "name": "Visit Us Banner",
-      "settings": {
-        "image": "shopify://shop_images/bannerstf.webp",
-        "title": "VISIT US",
-        "subtitle": "FIND YOUR NEAREST STORE",
-        "button_text": "Find Store",
-        "button_url": "",
-        "color_schema": "",
-        "overlay_opacity": 15,
+        "container_type": "w-full",
+        "background_image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+        "mobile_background_image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+        "overlay_opacity": 50,
+        "tagline": "Learn Driving With Confidence & Safety",
+        "heading": "Professional Driving Lessons For Real Road Confidence",
+        "description": "Learn from certified instructors with modern training vehicles and a step-by-step learning approach that helps you gain confidence, control, and real-world driving skills from day one.",
+        "primary_button_text": "Book A Free Trial",
+        "primary_button_url": "",
+        "secondary_button_text": "",
+        "secondary_button_url": "",
+        "content_alignment": "center",
         "min_height_desktop": 600,
-        "min_height_mobile": 400,
-        "padding_top": 20,
-        "padding_bottom": 0
-      }
-    },
-    "section_split_banner_C6Fzbb": {
-      "type": "section-split-banner",
-      "blocks": {
-        "split_block_Ywq6Xm": {
-          "type": "split_block",
-          "settings": {
-            "image": "shopify://shop_images/Column_858e2a87-75bb-4afc-bcd3-a6885e4dbf40.png",
-            "darken_image": false,
-            "tagline": "",
-            "tagline_font_type": "b2",
-            "title": "<p>TOPS</p>",
-            "title_font_type": "h1",
-            "subtext": "<p>SHOP SHIRTS</p>",
-            "subtext_font_type": "b2",
-            "text_color": "#ffffff",
-            "button_text": "",
-            "button_url": "",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        },
-        "split_block_xPrBJn": {
-          "type": "split_block",
-          "settings": {
-            "image": "shopify://shop_images/Column_858e2a87-75bb-4afc-bcd3-a6885e4dbf40.png",
-            "darken_image": false,
-            "tagline": "",
-            "tagline_font_type": "b2",
-            "title": "<p>PANTS</p>",
-            "title_font_type": "h1",
-            "subtext": "<p>SHOP SHIRTS</p>",
-            "subtext_font_type": "b2",
-            "text_color": "#ffffff",
-            "button_text": "",
-            "button_url": "",
-            "button_style": "button-primary",
-            "button_icon": ""
-          }
-        }
-      },
-      "block_order": [
-        "split_block_Ywq6Xm",
-        "split_block_xPrBJn"
-      ],
-      "name": "Split Banner",
-      "settings": {
-        "container_type": "w-full",
-        "custom_class": "",
-        "block_height": 600,
-        "block_height_mobile": 400,
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      }
-    },
-    "section_responsive_banner_RtkkXi": {
-      "type": "section-responsive-banner",
-      "name": "Responsive Banner",
-      "settings": {
-        "image_desktop": "shopify://shop_images/Frame_427320115.png",
-        "image_mobile": "shopify://shop_images/Frame_427320115_dda1703e-67c0-4cc3-9437-d7b491b029c4.png",
-        "darken_image": false,
-        "desktop_height": 600,
-        "tagline": "",
-        "tagline_font_type": "b2",
-        "title": "<p>TOPS</p>",
-        "title_font_type": "h1",
-        "subtext": "<p>SHOP SHIRTS</p>",
-        "subtext_font_type": "b2",
-        "text_color": "#ffffff",
-        "content_alignment_desktop": "center",
-        "button_text": "",
-        "button_url": "",
-        "button_style": "button-primary",
-        "button_icon": "",
-        "container_type": "w-full",
-        "custom_class": "",
-        "padding_top_desktop": 0,
-        "padding_bottom_desktop": 0,
-        "padding_top_mobile": 0,
-        "padding_bottom_mobile": 0
-      }
-    },
-    "section_categories_r9NN4H": {
-      "type": "section-categories",
-      "name": "Categories",
-      "settings": {
-        "image_mens": "shopify://shop_images/Column_03ac4ac9-5c5a-4882-a60e-ee1b9dd95db1.png",
-        "title_mens": "MENS",
-        "description_mens": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-        "button_text_mens": "SHOP ALL",
-        "button_url_mens": "",
-        "image_womens": "shopify://shop_images/Column.png",
-        "title_womens": "WOMENS",
-        "description_womens": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-        "button_text_womens": "SHOP ALL",
-        "button_url_womens": "",
-        "image_kids": "shopify://shop_images/Column_fca94f2d-b4ae-4629-b63f-ac9c17688a21.png",
-        "title_kids": "KIDS",
-        "description_kids": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.",
-        "button_text_kids": "SHOP ALL",
-        "button_url_kids": "",
-        "color_schema": ""
-      }
-    },
-    "section_black_friday_capsule_jrzVdz": {
-      "type": "section-black-friday-capsule",
-      "name": "Black Friday Capsule",
-      "settings": {
-        "collection": "glasses",
-        "products_limit": 8,
-        "show_only_sale": true,
-        "title": "BLACK FRIDAY CAPSULE",
-        "title_style": "h6",
-        "view_all_text": "VIEW ALL",
-        "view_all_url": "shopify://collections",
-        "exclusive_button_text": "EXCLUSIVE DROP",
-        "exclusive_button_url": "shopify://products/gucci",
-        "layout_type": "list-default",
-        "container_type": "container",
+        "min_height_mobile": 460,
         "color_schema": "",
-        "show_navbuttons": true,
-        "show_indicators": false,
-        "fade_edgeitems": true,
-        "product_tile_wishlist_show": true,
-        "product_tile_price_show": true,
-        "product_tile_color_swatches_show": true,
         "padding_top_desktop": 0,
         "padding_bottom_desktop": 0,
         "padding_left_right_desktop": 0,
         "padding_top_mobile": 0,
         "padding_bottom_mobile": 0,
         "padding_left_right_mobile": 0
+      }
+    },
+    "section_why_choose_us_aAweYQ": {
+      "type": "section-why-choose-us",
+      "blocks": {
+        "benefit_bJVjnx": {
+          "type": "benefit",
+          "settings": {
+            "icon": "target",
+            "title": "Advanced Driving Program",
+            "description": "Learn from skilled, patient, and certified trainers who guide you step-by-step with clear techniques and safe practices."
+          }
+        },
+        "benefit_NwFpmz": {
+          "type": "benefit",
+          "settings": {
+            "icon": "diamond",
+            "title": "Personalized Learning Experience",
+            "description": "Learn from skilled, patient, and certified trainers who guide you step-by-step with clear techniques and safe practices."
+          }
+        },
+        "benefit_7zMK8a": {
+          "type": "benefit",
+          "settings": {
+            "icon": "building",
+            "title": "High Driving Test Success Rate",
+            "description": "Learn from skilled, patient, and certified trainers who guide you step-by-step with clear techniques and safe practices."
+          }
+        },
+        "stat_wqpAMV": {
+          "type": "stat",
+          "settings": {
+            "icon": "target",
+            "number": "1.5k+",
+            "description": "Learners who mastered safe and confident driving with us."
+          }
+        },
+        "stat_nhrqhE": {
+          "type": "stat",
+          "settings": {
+            "icon": "money",
+            "number": "98%",
+            "description": "Trusted by thousands for professional and effective training."
+          }
+        },
+        "stat_8RkUrH": {
+          "type": "stat",
+          "settings": {
+            "icon": "globe",
+            "number": "100%",
+            "description": "Committed to safe driving practices with well-maintained vehicles."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_bJVjnx",
+        "benefit_NwFpmz",
+        "benefit_7zMK8a",
+        "stat_wqpAMV",
+        "stat_nhrqhE",
+        "stat_8RkUrH"
+      ],
+      "name": "Why Choose Us",
+      "settings": {
+        "tagline": "Why Choose Us",
+        "heading": "Why our driving school is trusted by learners",
+        "description": "We focus on delivering safe, skilled, and confident drivers through expert training, modern vehicles, and personalized learning methods. Our certified instructors provide patient, step-by-step guidance.",
+        "image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+        "overlay_heading": "Certified & Experienced Instructors",
+        "overlay_bullet_1": "Certified and experienced driving instructor",
+        "overlay_bullet_2": "Step-by-step, easy-to-follow training method",
+        "color_schema": "",
+        "container_type": "container",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_left_right_desktop": 60,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 16
+      }
+    },
+    "section_our_services_WrFawh": {
+      "type": "section-our-services",
+      "blocks": {
+        "service_mgFXXk": {
+          "type": "service",
+          "settings": {
+            "icon": "steering",
+            "title": "Beginner Driving Course",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Expensive training packages\nUnfriendly or rude instructors",
+            "link_text": "View Service",
+            "link_url": ""
+          }
+        },
+        "service_CfQmjG": {
+          "type": "service",
+          "settings": {
+            "icon": "gear",
+            "title": "License Test Preparation",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Increased road awareness\nBetter control in challenges",
+            "link_text": "View Service",
+            "link_url": ""
+          }
+        },
+        "service_Df3Mex": {
+          "type": "service",
+          "settings": {
+            "icon": "car",
+            "title": "Automatic Car Driving",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Expert instructor guidance\nStep-by-step test-focused",
+            "link_text": "View Service",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "service_mgFXXk",
+        "service_CfQmjG",
+        "service_Df3Mex"
+      ],
+      "name": "Our Services",
+      "settings": {
+        "tagline": "Our Services",
+        "heading": "Expert driving services to build confident drivers",
+        "footer_text": "Let's make something great work together.",
+        "footer_link_text": "Get Free Quote",
+        "footer_link_url": "",
+        "color_schema": "light",
+        "container_type": "w-full",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_left_right_desktop": 60,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 16
+      }
+    },
+    "section_what_we_do_gDATNG": {
+      "type": "section-what-we-do",
+      "blocks": {
+        "card_kEQEta": {
+          "type": "card",
+          "settings": {
+            "icon": "steering",
+            "title": "Advanced Driving Skills",
+            "description": "We teach the fundamentals of driving, including steering control, braking, gear shifting, and road awareness."
+          }
+        },
+        "card_ihdt6h": {
+          "type": "card",
+          "settings": {
+            "icon": "book",
+            "title": "Beginner Driving Training",
+            "description": "We teach the fundamentals of driving, including steering control, braking, gear shifting, and road awareness."
+          }
+        },
+        "card_CjKRBH": {
+          "type": "card",
+          "settings": {
+            "icon": "folder",
+            "title": "License Test Preparation",
+            "description": "We teach the fundamentals of driving, including steering control, braking, gear shifting, and road awareness."
+          }
+        }
+      },
+      "block_order": [
+        "card_kEQEta",
+        "card_ihdt6h",
+        "card_CjKRBH"
+      ],
+      "name": "What We Do",
+      "settings": {
+        "background_image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+        "overlay_opacity": 60,
+        "tagline": "What We Do",
+        "heading": "Helping learners master real world driving skills",
+        "description": "We provide professional driving training designed to help learners become safe, confident, and responsible drivers. Our programs combine classroom knowledge with hands-on road practice.",
+        "contact_text": "Contact Us",
+        "contact_url": "",
+        "video_url": "",
+        "color_schema": "default",
+        "container_type": "w-full",
+        "padding_top_desktop": 20,
+        "padding_bottom_desktop": 20,
+        "padding_left_right_desktop": 20,
+        "padding_top_mobile": 10,
+        "padding_bottom_mobile": 10,
+        "padding_left_right_mobile": 0
+      }
+    },
+    "section_drive_academy_blog_az7HMr": {
+      "type": "section-drive-academy-blog",
+      "name": "Latest from Our Blog",
+      "settings": {
+        "blog": "news",
+        "tagline": "BLOG POST",
+        "heading": "Latest from Our Blog",
+        "read_more_text": "READ MORE",
+        "view_all_text": "VIEW ALL",
+        "bottom_text": "",
+        "articles_to_show": 3,
+        "color_schema": "default",
+        "container_type": "container",
+        "padding_top_desktop": 24,
+        "padding_bottom_desktop": 24,
+        "padding_left_right_desktop": 24,
+        "padding_top_mobile": 16,
+        "padding_bottom_mobile": 16,
+        "padding_left_right_mobile": 16
+      }
+    },
+    "section_faq_AwL4t4": {
+      "type": "section-faq",
+      "name": "FAQ",
+      "settings": {
+        "render_type": "all",
+        "container_type": "container",
+        "show_section_borders": false,
+        "custom_column_class": "",
+        "layout_type": "stacked",
+        "layout_type_mobile": "stacked",
+        "faq_metaobject_type": "global",
+        "metaobject_entries": "faq",
+        "show_filter_bar": false,
+        "show_search_bar": false,
+        "faq_to_left": false,
+        "use_load_more": false,
+        "load_more_limit": 5,
+        "width": 768,
+        "width_mobile": 0,
+        "title": "",
+        "heading_type": "sh3",
+        "heading_type_mobile": "sh5",
+        "subtext": "",
+        "subheading_type": "b2",
+        "subheading_type_mobile": "b3",
+        "button_label": "",
+        "button_url": "",
+        "color_schema": "",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 40,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0,
+        "content_alignment_desktop": "center",
+        "content_alignment_mobile": "center",
+        "content_position_desktop": "center"
       }
     }
   },
   "order": [
     "main_banner_KtBnY9",
     "main",
-    "section_complete_the_look_Cxemp7",
-    "section_shop_by_category_jBJij6",
-    "section_shopthelook_TEEHHU",
-    "section_academy_rewards_bzErQf",
-    "section_visit_us_pfGCA7",
-    "section_split_banner_C6Fzbb",
-    "section_responsive_banner_RtkkXi",
-    "section_categories_r9NN4H",
-    "section_black_friday_capsule_jrzVdz"
+    "section_drive_academy_hero_CFWyJN",
+    "section_why_choose_us_aAweYQ",
+    "section_our_services_WrFawh",
+    "section_what_we_do_gDATNG",
+    "section_drive_academy_blog_az7HMr",
+    "section_faq_AwL4t4"
   ]
 }

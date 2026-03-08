@@ -5,20 +5,45 @@
   >
         <div class="flex flex-col w-full lg:max-w-[{{ section.settings.content_width }}]">
             <div class="main-blog page-width section-{{ section.id }}-padding {{ section.settings.container_type }}">
+                {% assign articles_per_page = section.settings.articles_per_page | default: 12 | at_least: 1 %}
+                {% paginate blog.articles by articles_per_page %}
                 {% capture data %}
                   {
-                    "articles": {{ blog.articles | json }},
+                    "articles": [
+                      {% for article in blog.articles %}
+                        {
+                          "title": {{ article.title | json }},
+                          "url": "{{ article.url | escape }}",
+                          "image": {% if article.image %}"{{ article.image | image_url: width: 800 }}"{% else %}null{% endif %},
+                          "published_at": "{{ article.published_at | date: '%d %b, %y' }}",
+                          "author": {{ article.author | json }},
+                          "category": {% if article.tags.size > 0 %}{{ article.tags[0] | json }}{% else %}{{ blog.title | json }}{% endif %}
+                        }{% unless forloop.last %},{% endunless %}
+                      {% endfor %}
+                    ],
                     "blog": {
                       "title": "{{ blog.title | escape }}",
-                      "handle": "{{ blog.handle | escape }}",
+                      "handle": "{{ blog.handle | escape }}"
                     },
                     "section": {{ section.settings | json }},
-                    "color_schema": {% if section.settings.color_schema %} "{{ section.settings.color_schema.id | escape }}" {% else %}null{% endif %},
+                    "read_more_text": {{ section.settings.read_more_text | default: 'READ MORE' | json }},
+                    "pagination": {
+                      "previous_url": {% if paginate.previous %}"{{ paginate.previous.url }}"{% else %}null{% endif %},
+                      "next_url": {% if paginate.next %}"{{ paginate.next.url }}"{% else %}null{% endif %},
+                      "current_page": {{ paginate.current_page }},
+                      "pages": {{ paginate.pages }},
+                      "parts": [
+                        {% for part in paginate.parts %}
+                        {"title": {{ part.title | json }}, "url": {% if part.is_link %}"{{ part.url }}"{% else %}null{% endif %}, "is_link": {% if part.is_link %}true{% else %}false{% endif %}}{% unless forloop.last %},{% endunless %}
+                        {% endfor %}
+                      ]
+                    }
                   }
                 {% endcapture %}
                 {% assign data = data %}
                 <div id="react-data" data-injected-props='{{ data | escape | replace: "'", "&#39;"}}'></div>
                 {% render 'react-block', name: "theme__blog-articles-list", props: data %}
+                {% endpaginate %}
             </div>
         </div>
     </div>
@@ -122,6 +147,16 @@
       "label": "Columns per row"
     },
     {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 3,
+      "max": 24,
+      "step": 1,
+      "default": 12,
+      "label": "Articles per page",
+      "info": "Number of blog posts shown per page (pagination)."
+    },
+    {
       "type": "checkbox",
       "id": "show_image",
       "default": true,
@@ -161,8 +196,14 @@
     {
       "type": "checkbox",
       "id": "show_author",
-      "default": false,
+      "default": true,
       "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "text",
+      "id": "read_more_text",
+      "label": "Read more button text",
+      "default": "READ MORE"
     },
     {
       "type": "paragraph",

@@ -1,0 +1,264 @@
+{% capture nl %}
+{% endcapture %}
+{% capture custom_data %}
+{
+  "section": {
+    "tagline": "{{ section.settings.tagline | escape }}",
+    "heading": "{{ section.settings.heading | escape }}",
+    "footer_text": "{{ section.settings.footer_text | escape }}",
+    "footer_link_text": "{{ section.settings.footer_link_text | escape }}",
+    "footer_link_url": "{{ section.settings.footer_link_url | escape }}"
+  },
+  "blocks": [
+    {% for block in section.blocks %}
+    {% assign bullet_str = block.settings.bullets | default: "" | replace: '\', '\\\\' | replace: '"', '\\"' | replace: nl, '\\n' %}
+    {
+      "id": "{{ block.id }}",
+      "type": "{{ block.type | escape }}",
+      "settings": {
+        "icon": "{{ block.settings.icon | escape }}",
+        "title": "{{ block.settings.title | escape }}",
+        "description": "{{ block.settings.description | escape }}",
+        "bullets": "{{ bullet_str }}",
+        "link_text": "{{ block.settings.link_text | escape }}",
+        "link_url": "{{ block.settings.link_url | escape }}"
+      }
+    }{% unless forloop.last %},{% endunless %}
+    {% endfor %}
+  ]
+}
+{% endcapture %}
+{% assign data = custom_data | strip_newlines | replace: "'", "&#39;" %}
+<div
+  class="section-our-services color-{{ section.settings.color_schema }} w-full {{ settings.reveal_animation_class }}"
+  id="section-{{ section.id }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  <div class="{{ section.settings.container_type }}">
+    <div id="react-data" data-injected-props='{{ data }}'></div>
+    {% render 'react-block', name: "theme__our-services", props: data %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Our Services",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Our Services"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Expert driving services to build confident drivers"
+    },
+    {
+      "type": "header",
+      "content": "Footer CTA"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "Let's make something great work together."
+    },
+    {
+      "type": "text",
+      "id": "footer_link_text",
+      "label": "Footer link text",
+      "default": "Get Free Quote"
+    },
+    {
+      "type": "url",
+      "id": "footer_link_url",
+      "label": "Footer link URL"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container type",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Use container width" },
+        { "value": "w-full", "label": "Use full width" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Padding & Alignment settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "service",
+      "name": "Service card",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon (default)",
+          "default": "steering",
+          "info": "Used when no custom image is set.",
+          "options": [
+            { "value": "steering", "label": "Steering / Beginner" },
+            { "value": "gear", "label": "Gear / License" },
+            { "value": "car", "label": "Car / Automatic" }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Custom icon image",
+          "info": "Optional. If set, this image is used instead of the default icon above."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Beginner Driving Course"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "A complete training program for new learners covering basic controls."
+        },
+        {
+          "type": "textarea",
+          "id": "bullets",
+          "label": "Bullet points (one per line)",
+          "default": "Increased road awareness\nBetter control in challenges"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "View Service"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Services",
+      "blocks": [
+        {
+          "type": "service",
+          "settings": {
+            "icon": "steering",
+            "title": "Beginner Driving Course",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Expensive training packages\nUnfriendly or rude instructors",
+            "link_text": "View Service"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "icon": "gear",
+            "title": "License Test Preparation",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Increased road awareness\nBetter control in challenges",
+            "link_text": "View Service"
+          }
+        },
+        {
+          "type": "service",
+          "settings": {
+            "icon": "car",
+            "title": "Automatic Car Driving",
+            "description": "A complete training program for new learners covering basic controls.",
+            "bullets": "Expert instructor guidance\nStep-by-step test-focused",
+            "link_text": "View Service"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -129,7 +129,7 @@
         {% sections 'footer-group' %}
 
         {% if settings.enable_modal %}
-            {% section 'modal' %}
+            {% render 'modal', title: settings.modal_title, content: settings.modal_description, modal_id: 'theme-modal' %}
         {% endif %}
 
         {% render 'liquid-ajax-cart' %}

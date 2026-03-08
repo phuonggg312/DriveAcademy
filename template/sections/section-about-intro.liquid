@@ -1,0 +1,174 @@
+<div
+  class="section-about-intro color-{{ section.settings.color_schema }} {{ section.settings.container_type }} {{ settings.reveal_animation_class }}"
+  id="section-{{ section.id }}"
+  x-data="section({{ section.settings | json | escape }})"
+  :class="classes"
+>
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+    <div class="relative rounded-xl overflow-hidden bg-[rgb(var(--color-background-contrast))] min-h-[280px] md:min-h-[360px] lg:min-h-[420px]">
+      {% if section.settings.image != blank %}
+        <img
+          src="{{ section.settings.image | image_url: width: 800 }}"
+          alt=""
+          class="w-full h-full object-cover"
+          loading="lazy"
+          width="800"
+          height="420"
+        />
+      {% else %}
+        <div class="absolute inset-0 flex items-center justify-center text-inherit opacity-50 text-sm">
+          <p>Add an image in section settings</p>
+        </div>
+      {% endif %}
+    </div>
+    <div class="flex flex-col justify-center">
+      {% if section.settings.title != blank %}
+        <p class="text-xl md:text-2xl lg:text-3xl font-bold text-inherit uppercase mb-4 md:mb-6">
+          {{ section.settings.title }}
+        </p>
+      {% endif %}
+      <div class="space-y-3 md:space-y-4">
+        {% if section.settings.paragraph_1 != blank %}
+          <p class="text-sm text-inherit opacity-90 leading-relaxed">{{ section.settings.paragraph_1 }}</p>
+        {% endif %}
+        {% if section.settings.paragraph_2 != blank %}
+          <p class="text-sm text-inherit opacity-90 leading-relaxed">{{ section.settings.paragraph_2 }}</p>
+        {% endif %}
+        {% if section.settings.paragraph_3 != blank %}
+          <p class="text-sm text-inherit opacity-90 leading-relaxed">{{ section.settings.paragraph_3 }}</p>
+        {% endif %}
+        {% if section.settings.paragraph_4 != blank %}
+          <p class="text-sm text-inherit opacity-90 leading-relaxed">{{ section.settings.paragraph_4 }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Intro",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Image on the left (e.g. team or facility photo)."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "About Us"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_1",
+      "label": "Paragraph 1",
+      "default": "We are a driving academy with years of experience helping learners become safe, confident drivers."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_2",
+      "label": "Paragraph 2",
+      "default": "Our mission is to deliver convenient, learner-friendly training with modern facilities and a customer-first approach."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_3",
+      "label": "Paragraph 3",
+      "default": "We offer certified training and testing for various licence categories, with a track record of thousands of graduates."
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph_4",
+      "label": "Paragraph 4",
+      "default": "Our courses are designed to build confidence step by step, with high satisfaction among our students."
+    },
+    {
+      "type": "select",
+      "id": "container_type",
+      "label": "Container",
+      "default": "container",
+      "options": [
+        { "value": "container", "label": "Container" },
+        { "value": "w-full", "label": "Full width" }
+      ]
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_schema",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_desktop",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Desktop",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Top Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Bottom Mobile",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_left_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding Left & Right Mobile",
+      "default": 16
+    }
+  ],
+  "presets": [
+    { "name": "About Intro", "category": "About" }
+  ]
+}
+{% endschema %}

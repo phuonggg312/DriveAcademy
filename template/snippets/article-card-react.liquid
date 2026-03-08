@@ -6,10 +6,12 @@
             "handle": "{{ article.handle | escape }}",
             "blog": {
                 "title": "{{ blog.title | escape }}",
-                "handle": "{{ blog.handle | escape }}",
+                "handle": "{{ blog.handle | escape }}"
             },
             "url": "{{ article.url | escape }}",
-            "image": "{{ article.image | image_url: '800x' | escape }}",
+            "image": {% if article.image %}"{{ article.image | image_url: width: 800 }}"{% else %}null{% endif %},
+            "published_at": "{{ article.published_at | date: '%d %b, %y' }}",
+            "author": {{ article.author | json }},
             "tags": {% if article.tags %} [
                 {% for tag in article.tags %}
                     "{{ tag | escape }}"

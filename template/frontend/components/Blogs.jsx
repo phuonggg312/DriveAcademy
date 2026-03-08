@@ -18,7 +18,7 @@ export function FeaturedBlogComponent({ ...props }) {
     );
 }
 
-BlogArticleTileComponent.displayName = '';
+BlogArticleTileComponent.displayName = 'theme__blog-tile';
 export function BlogArticleTileComponent({ ...props }) {
     const BlogArticleTile = lazyComponents['BlogArticleTile'];
     return (

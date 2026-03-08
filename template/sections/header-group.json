@@ -23,7 +23,7 @@
         "menu_dwqEAe": {
           "type": "menu",
           "settings": {
-            "link_list": "about"
+            "link_list": ""
           }
         }
       },
@@ -36,13 +36,10 @@
         "container_type": "",
         "layout": "carousel",
         "show_promo_bar_on_homepage_only": false,
-        "color_schema": "scheme-a6785905-1459-4f93-be48-f8f8f984a21b",
+        "color_schema": "light",
         "autoplay": false,
         "animation_speed": 0,
-        "show_arrows": true,
-        "show_currency": true,
-        "right_link_text": "Rewards",
-        "right_link_url": ""
+        "show_arrows": true
       }
     },
     "header": {
@@ -63,6 +60,7 @@
       "block_order": [
         "account_popup_J7HHk7"
       ],
+      "disabled": true,
       "settings": {
         "mobile_menu_icon": "icon-list-thin",
         "mobile_menu_icon_close": "icon-close",
@@ -83,12 +81,6 @@
         "account_icon": "icon-user-thin",
         "use_account_popup": true,
         "account_popup_trigger": "click",
-        "enable_wishlist": true,
-        "wishlist_icon": "icon-wishlist",
-        "wishlist_url": "",
-        "enable_address": true,
-        "address_icon": "icon-location-pin",
-        "address_url": "",
         "enable_minicart": true,
         "cart_icon": "icon-shopping-cart-simple-thin",
         "padding_top_desktop": 0,
@@ -112,11 +104,32 @@
         "empty_text_two": "",
         "empty_button": "Continue Shopping"
       }
+    },
+    "section_drive_academy_header_E9Rhwc": {
+      "type": "section-drive-academy-header",
+      "name": "Drive Academy Header",
+      "settings": {
+        "logo_text": "Autoguru",
+        "menu": "main-menu",
+        "cta_text": "Enroll Now",
+        "cta_url": "",
+        "sticky_header": true,
+        "show_cart": true,
+        "container_type": "w-full",
+        "color_schema": "default",
+        "padding_top_desktop": 0,
+        "padding_bottom_desktop": 0,
+        "padding_left_right_desktop": 0,
+        "padding_top_mobile": 0,
+        "padding_bottom_mobile": 0,
+        "padding_left_right_mobile": 0
+      }
     }
   },
   "order": [
     "header_promotion",
     "header",
-    "minicart"
+    "minicart",
+    "section_drive_academy_header_E9Rhwc"
   ]
 }

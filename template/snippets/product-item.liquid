@@ -26,7 +26,10 @@
       <template v-else>{{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}</template>
 
       <span x-show="is_sale" class="product-badge product-badge--sale">
-          {{ 'products.product.on_sale' | t }}
+          {{ 'products.product.sale_badge' | t }}
+      </span>
+      <span x-show="is_sold_out" class="product-badge product-badge--sold-out">
+        {{ 'products.product.sold_out_badge' }}
       </span>
     </div>
 

@@ -237,6 +237,42 @@ export function SectionQuickLinks({ ...props }) {
   )
 }
 
+SectionDriveAcademyHero.displayName = 'theme__drive-academy-hero';
+export function SectionDriveAcademyHero({ ...props }) {
+  const DriveAcademyHero = lazyComponents['DriveAcademyHero'];
+  return <DriveAcademyHero settings={props.settings} />;
+}
+
+SectionWhatWeDo.displayName = 'theme__what-we-do';
+export function SectionWhatWeDo({ ...props }) {
+  const WhatWeDo = lazyComponents['WhatWeDo'];
+  return <WhatWeDo settings={props.settings} />;
+}
+
+SectionOurServices.displayName = 'theme__our-services';
+export function SectionOurServices({ ...props }) {
+  const OurServices = lazyComponents['OurServices'];
+  return <OurServices settings={props.settings} />;
+}
+
+SectionWhyChooseUs.displayName = 'theme__why-choose-us';
+export function SectionWhyChooseUs({ ...props }) {
+  const WhyChooseUs = lazyComponents['WhyChooseUs'];
+  return <WhyChooseUs settings={props.settings} />;
+}
+
+SectionDriveAcademyFooter.displayName = 'theme__drive-academy-footer';
+export function SectionDriveAcademyFooter({ ...props }) {
+  const DriveAcademyFooter = lazyComponents['DriveAcademyFooter'];
+  return <DriveAcademyFooter settings={props.settings} />;
+}
+
+SectionDriveAcademyBlog.displayName = 'theme__drive-academy-blog';
+export function SectionDriveAcademyBlog({ ...props }) {
+  const LatestBlog = lazyComponents['LatestBlog'];
+  return <LatestBlog settings={props.settings} />;
+}
+
 SectionFeaturedCollections.displayName = 'theme__featured-collections';
 export function SectionFeaturedCollections({ ...props }) {
   const { settings } = props;

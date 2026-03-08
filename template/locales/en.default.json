@@ -1,4 +1,9 @@
 {
+  "blogs": {
+    "article": {
+      "back": "Back to blog"
+    }
+  },
   "sections": {
     "collection_template": {
       "empty": "Your collection is empty",

@@ -32,8 +32,10 @@
        x-data="section({{ section.settings | json | escape }})"
        :class="classes"
   >
-    <div class="{{ section.settings.container_type }} overflow-hidden relative w-full flex flex-col">
+    <div class="{{ section.settings.container_type }} overflow-hidden relative w-full flex flex-col px-[{{ section.settings.padding_left_right_mobile }}px] pt-[{{ section.settings.padding_top_mobile }}px] pb-[{{ section.settings.padding_bottom_mobile }}px] lg:px-[{{ section.settings.padding_left_right_desktop }}px] lg:pt-[{{ section.settings.padding_top_desktop }}px] lg:pb-[{{ section.settings.padding_bottom_desktop }}px]">
+        <div class="article-content rte max-w-none prose prose-headings:font-bold prose-p:leading-relaxed">
         {{ article.content }}
+        </div>
     </div>
   </div>
 </div>

@@ -15,7 +15,9 @@
         "layout": "default",
         "container_type": "w-full",
         "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
+        "default_shop_url": "",
         "spacing": 8,
+        "spacing_mobile": 4,
         "icon": "icon-caret-right-thin",
         "icon_size": 18,
         "text_style": "b2",
@@ -26,80 +28,105 @@
         "padding_left_right_desktop": 40,
         "padding_top_mobile": 8,
         "padding_bottom_mobile": 8,
-        "padding_left_right_mobile": 16
+        "padding_left_right_mobile": 16,
+        "desktop_min_height": 0,
+        "mobile_min_height": 0
       }
     },
-    "main_page_header_JUEttG": {
-      "type": "main-page-header",
-      "blocks": {
-        "title_XUCc3K": {
-          "type": "title",
-          "settings": {
-            "sort_order_mobile": 0,
-            "column": 1,
-            "title": "{{ page.title }}",
-            "heading_type": "h3",
-            "heading_type_mobile": "h2",
-            "url": "",
-            "padding_top_desktop": 0,
-            "padding_bottom_desktop": 0,
-            "padding_left_right_desktop": 0,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_right_mobile": 0,
-            "content_alignment_desktop": "left",
-            "content_alignment_mobile": "left"
-          }
-        },
-        "description_nieVHV": {
-          "type": "description",
-          "settings": {
-            "sort_order_mobile": 0,
-            "column": 2,
-            "text": "Explore our full range of eco-friendly products, designed to help you live a greener, more sustainable life.  From refillable household essential. Misson Lorem ipsum  Explore our full range of eco-friendly products, designed to help you live a greener, more sustainable life.  From refillable household essential.",
-            "text_style": "b2",
-            "padding_top_desktop": 0,
-            "padding_bottom_desktop": 0,
-            "padding_left_right_desktop": 0,
-            "padding_top_mobile": 0,
-            "padding_bottom_mobile": 0,
-            "padding_left_right_mobile": 0,
-            "content_alignment_desktop": "left",
-            "content_alignment_mobile": "left"
-          }
-        }
-      },
-      "block_order": [
-        "title_XUCc3K",
-        "description_nieVHV"
-      ],
+    "section_about_hero": {
+      "type": "section-about-hero",
       "settings": {
-        "header_height": 0,
-        "render_type": "all",
+        "title": "About Us",
+        "show_breadcrumb": true,
+        "breadcrumb_home": "Home",
+        "breadcrumb_current": "About Us",
+        "background_image": "shopify://shop_images/eugene-chystiakov-KInxPaM1_gc-unsplash2.jpg",
+        "overlay_opacity": 60,
         "container_type": "container",
-        "layout_type": "2column",
-        "layout_type_mobile": "stacked",
-        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6",
-        "title": "{{ page.title }}",
-        "content": "",
-        "padding_top_desktop": 40,
-        "padding_bottom_desktop": 40,
-        "padding_left_right_desktop": 40,
-        "padding_top_mobile": 24,
-        "padding_bottom_mobile": 24,
-        "padding_left_right_mobile": 16,
-        "content_alignment": "center"
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6"
+      }
+    },
+    "section_about_intro": {
+      "type": "section-about-intro",
+      "settings": {
+        "image": "shopify://shop_images/image-14-1170x658.jpg",
+        "title": "About Us",
+        "paragraph_1": "We are a driving academy with years of experience helping learners become safe, confident drivers.",
+        "paragraph_2": "Our mission is to deliver convenient, learner-friendly training with modern facilities and a customer-first approach.",
+        "paragraph_3": "We offer certified training and testing for various licence categories, with a track record of thousands of graduates.",
+        "paragraph_4": "Our courses are designed to build confidence step by step, with high satisfaction among our students.",
+        "container_type": "container",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6"
       }
     },
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
+        "color_schema": ""
+      }
+    },
+    "section_about_features_mE84pA": {
+      "type": "section-about-features",
+      "blocks": {
+        "feature_Et6jwb": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-Rewards-Black.png",
+            "number": "01",
+            "title": "Choosing A Driving School",
+            "description": "The right driving school is accredited according to state laws and will prepare you to be a safe, confident driver."
+          }
+        },
+        "feature_nEXJ7t": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-Delivery-Black.png",
+            "number": "02",
+            "title": "Driving Basics",
+            "description": "When you first start learning to drive, it can seem a little overwhelming. We know that, but don't worry."
+          }
+        },
+        "feature_ECWcQ3": {
+          "type": "feature",
+          "settings": {
+            "icon": "shopify://shop_images/Icon-AB-Returns-Black.png",
+            "number": "03",
+            "title": "Road Test Preparation",
+            "description": "Practice makes perfect! We know you've heard that before, but it's especially true with driving."
+          }
+        }
+      },
+      "block_order": [
+        "feature_Et6jwb",
+        "feature_nEXJ7t",
+        "feature_ECWcQ3"
+      ],
+      "name": "About Features",
+      "settings": {
+        "tagline": "OUR FEATURES",
+        "heading": "Who Should Get Driving Lessons?",
+        "container_type": "container",
+        "color_schema": ""
+      }
+    },
+    "section_about_video": {
+      "type": "section-about-video",
+      "settings": {
+        "heading": "See how we teach",
+        "video_url": "",
+        "video": "shopify://files/videos/cf85358ef2c642d2b21ef6b116b1c72b.HD-720p-1.6Mbps.mp4",
+        "container_type": "w-full",
+        "color_schema": "scheme-cd193d1d-052e-49f4-8db9-fb0bbb9bfee6"
       }
     }
   },
   "order": [
     "section_breadcrumbs_8KmTzy",
-    "main_page_header_JUEttG",
-    "main"
+    "section_about_hero",
+    "section_about_intro",
+    "main",
+    "section_about_features_mE84pA",
+    "section_about_video"
   ]
 }
